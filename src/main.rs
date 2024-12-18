@@ -1,20 +1,27 @@
 use std::collections::VecDeque;
 use std::collections::HashSet;
+use std::fmt::Write as FmtWrite;
+use std::fs::File;
+use std::io::BufWriter;
+use std::io::Write;
 use lse_solver::*;
 
 
-fn main() {
-    let state = State {
-        top_back: PieceInfo::create(Piece::TopLeft),
-        top_left: PieceInfo::create(Piece::TopFront),
-        top_front: PieceInfo::create(Piece::BottomFront),
-        top_right: PieceInfo::create(Piece::TopBack),
-        bottom_back: PieceInfo::create(Piece::BottomBack),
-        bottom_front: PieceInfo::create(Piece::TopRight),
-        m_parity: 0,
-        u_parity: 0,
-    };
-    print_solution(solve(state));
+fn main() -> std::io::Result<()> {
+    let algs: Vec<Algorithm> = (0..360).into_iter().map(|i| {
+        let state = State::create_eo_from_num(i);
+        let solution = solution_to_string(solve(state.clone()));
+        Algorithm {
+            state,
+            solution,
+        }
+    }).collect();
+
+    let file = File::create("algs.json")?;
+    let mut writer = BufWriter::new(file);
+    serde_json::to_writer_pretty(&mut writer, &algs)?;
+    writer.flush()?;
+    Ok(())
 }
 
 fn solve(state: State) -> Vec<Move> {
@@ -55,16 +62,21 @@ fn solve(state: State) -> Vec<Move> {
     return Vec::new();
 }
 
-fn print_solution(moves: Vec<Move>) {
-    for m in &moves {
+fn solution_to_string(moves: Vec<Move>) -> String {
+    let mut s = String::new();
+
+    for (i, m) in moves.iter().enumerate() {
         match m {
-            Move::M => print!("M "),
-            Move::Mp => print!("M' "),
-            Move::Mt => print!("M2 "),
-            Move::U => print!("U "),
-            Move::Up => print!("U' "),
-            Move::Ut => print!("U2 "),
+            Move::M => write!(s, "M").unwrap(),
+            Move::Mp => write!(s, "M'").unwrap(),
+            Move::Mt => write!(s, "M2").unwrap(),
+            Move::U => write!(s, "U").unwrap(),
+            Move::Up => write!(s, "U'").unwrap(),
+            Move::Ut => write!(s, "U2").unwrap(),
+        }
+        if i != moves.len() - 1 {
+            write!(s, " ").unwrap();
         }
     }
-    println!();
+    s
 }
