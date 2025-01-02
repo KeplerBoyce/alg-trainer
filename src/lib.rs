@@ -136,29 +136,29 @@ impl State {
         let mut result = Self::default();
         let mut num = num;
         let mut available = vec![
+            Piece::BottomBack,
+            Piece::BottomFront,
             Piece::TopBack,
             Piece::TopLeft,
             Piece::TopFront,
             Piece::TopRight,
-            Piece::BottomBack,
-            Piece::BottomFront,
         ];
         
-        result.top_back.piece = available.remove(num / 60);
+        result.bottom_back.piece = available.remove(num / 60);
         num %= 60;
-        result.top_left.piece = available.remove(num / 12);
+        result.bottom_front.piece = available.remove(num / 12);
         num %= 12;
-        result.top_front.piece = available.remove(num / 3);
+        result.top_back.piece = available.remove(num / 3);
         num %= 3;
-        result.top_right.piece = available.remove(num);
-        result.bottom_back.piece = available.remove(0);
-        result.bottom_front.piece = available.remove(0);
+        result.top_left.piece = available.remove(num);
+        result.top_front.piece = available.remove(0);
+        result.top_right.piece = available.remove(0);
         if result.even_parity() {
             return result;
         }
-        let temp_piece = result.bottom_back;
-        result.bottom_back = result.bottom_front;
-        result.bottom_front = temp_piece;
+        let temp_piece = result.top_front;
+        result.top_front = result.top_right;
+        result.top_right = temp_piece;
         return result;
     }
 
