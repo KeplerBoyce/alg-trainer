@@ -7,15 +7,18 @@ use std::io::Write;
 use lse_solver::*;
 
 
+
 fn main() -> std::io::Result<()> {
-    let algs: Vec<Algorithm> = (0..360).into_iter().map(|i| {
-        let state = State::create_eo_from_num(i);
+    let mut algs = LseAlgs::new();
+    for num in 0..360 {
+        let state = State::create_eo_from_num(num);
         let solution = solution_to_string(solve(state.clone()));
-        Algorithm {
+        let alg = Algorithm {
             state,
             solution,
-        }
-    }).collect();
+        };
+        add_merge_dupes(alg, &mut algs);
+    }
 
     let file = File::create("algs.json")?;
     let mut writer = BufWriter::new(file);
@@ -79,4 +82,44 @@ fn solution_to_string(moves: Vec<Move>) -> String {
         }
     }
     s
+}
+
+fn add_merge_dupes(new_alg: Algorithm, algs: &mut LseAlgs) {
+    let color_perm = new_alg.state.to_color_perm();
+    let alg_set = if new_alg.state.is_d_solved() {
+        &mut algs.d_solved
+    } else if new_alg.state.is_d_swapped() {
+        &mut algs.d_swapped
+    } else if new_alg.state.is_one_d_solved() {
+        &mut algs.one_d_solved
+    } else if new_alg.state.is_one_d_swapped() {
+        &mut algs.one_d_swapped
+    } else if new_alg.state.is_d_edges_u_opposites() {
+        &mut algs.d_edges_u_opposites
+    } else {
+        &mut algs.d_edges_u_adjacents
+    };
+
+    let mut dupe_type: Option<&mut Vec<Algorithm>> = None;
+    for case in &mut *alg_set {
+        let existing_color_perm = case.normal[0].state.to_color_perm();
+        if existing_color_perm.is_duplicate(color_perm) {
+            dupe_type = Some(&mut case.normal);
+            break;
+        } else if existing_color_perm.is_duplicate(color_perm.mirror_m()) {
+            dupe_type = Some(&mut case.mirror_m);
+            break;
+        } else if existing_color_perm.is_duplicate(color_perm.mirror_s()) {
+            dupe_type = Some(&mut case.mirror_s);
+            break;
+        } else if existing_color_perm.is_duplicate(color_perm.mirror_m().mirror_s()) {
+            dupe_type = Some(&mut case.mirror_both);
+            break;
+        }
+    }
+    if let Some(d) = dupe_type {
+        d.push(new_alg);
+    } else {
+        alg_set.push(AlgWithDupes::new_one_alg(new_alg));
+    }
 }
