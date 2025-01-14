@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { type Algorithm, type Color, COLOR_MAP } from "$lib/types";
+  import { type Algorithm, type Color } from "$lib/types";
   import { getEdgeColor } from "$lib/helpers";
+  import { COLOR_MAP } from "$lib/constants";
 
   export let alg: Algorithm;
   export let name: string;
@@ -75,7 +76,7 @@
     <p class="font-bold">
       {name}
     </p>
-    <p class="max-w-full">
+    <p class="max-w-full text-left">
       {alg.solution}
     </p>
   </div>
