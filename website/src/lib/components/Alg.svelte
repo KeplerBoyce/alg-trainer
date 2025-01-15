@@ -4,7 +4,7 @@
   import { COLOR_MAP } from "$lib/constants";
 
   export let alg: Algorithm;
-  export let name: string;
+  export let name: string | undefined;
 
   const squareStyle = (color: Color) => {
     return `w-8 h-8 border border-black rounded-md ${COLOR_MAP[color]}`
@@ -73,9 +73,11 @@
   </div>
 
   <div class="flex gap-2">
-    <p class="font-bold">
-      {name}
-    </p>
+    {#if name}
+      <p class="font-bold">
+        {name}
+      </p>
+    {/if}
     <p class="max-w-full text-left">
       {alg.solution}
     </p>

@@ -8,12 +8,10 @@
 
   let modalOpen = false;
   let modalAlg: AlgWithDupes;
-  let modalAlgName: string;
 
-  const openAlg = (alg: AlgWithDupes, name: string) => {
+  const openAlg = (alg: AlgWithDupes) => {
     modalOpen = true;
     modalAlg = alg;
-    modalAlgName = name;
   }
 </script>
 
@@ -24,7 +22,7 @@
     </p>
     <div class="flex justify-center flex-wrap gap-4 mb-12">
       {#each algs as alg, i}
-        <AlgButton alg={alg} name={`${i + 1}.`} callback={() => openAlg(alg, `${i + 1}.`)} />
+        <AlgButton alg={alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
       {/each}
     </div>
   {/each}
@@ -32,7 +30,7 @@
 
 <Modal open={modalOpen} close={() => {modalOpen = false}}>
   <div class="bg-white p-8 rounded-xl flex flex-col gap-8">
-    {#if modalAlg && modalAlgName}
+    {#if modalAlg}
       <AlgMirrorGroup algs={modalAlg.normal} name="Normal case" />
       <AlgMirrorGroup algs={modalAlg.mirrorM} name="Mirrored across M case" />
       <AlgMirrorGroup algs={modalAlg.mirrorS} name="Mirrored across S case" />

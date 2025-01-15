@@ -13,7 +13,7 @@
     </h2>
     <div class="flex gap-8">
       {#each algs as alg}
-        <Alg alg={alg} name={""} />
+        <Alg alg={alg} />
       {/each}
     </div>
   </div>
