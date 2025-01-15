@@ -4,9 +4,7 @@
 	let { children } = $props();
 </script>
 
-<div class="w-screen h-screen flex flex-col items-center">
-  <Header />
-  <div class="p-4 pt-12 pb-24 overflow-y-scroll">
-    {@render children()}
-  </div>
+<Header />
+<div class="w-screen h-screen p-4 pt-24 pb-24 overflow-y-scroll">
+  {@render children()}
 </div>
