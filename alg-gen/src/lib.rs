@@ -518,6 +518,7 @@ impl ColorPerm {
 }
 
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AlgWithDupes {
     pub normal: Vec<Algorithm>,
     pub mirror_m: Vec<Algorithm>,
@@ -537,6 +538,7 @@ impl AlgWithDupes {
 }
 
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LseAlgs {
     pub d_solved: Vec<AlgWithDupes>,
     pub d_swapped: Vec<AlgWithDupes>,

@@ -1,5 +1,5 @@
 {
-  "d_solved": [
+  "dSolved": [
     {
       "normal": [
         {
@@ -34,9 +34,9 @@
           "solution": ""
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -165,9 +165,9 @@
           "solution": "M2 U M2 U2 M' U2 M' U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -296,9 +296,9 @@
           "solution": "M2 U M U2 M U2 M2 U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -334,9 +334,9 @@
           "solution": "M2 U M2 U2 M2 U M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -403,12 +403,12 @@
           "solution": "M2 U M U2 M2 U2 M U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     }
   ],
-  "d_swapped": [
+  "dSwapped": [
     {
       "normal": [
         {
@@ -474,9 +474,9 @@
           "solution": "U M2 U2 M2 U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -605,9 +605,9 @@
           "solution": "M2 U M U2 M U2 M2 U M2 U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -736,9 +736,9 @@
           "solution": "M2 U' M' U2 M U M2 U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -774,9 +774,9 @@
           "solution": "M U' M2 U' M2 U' M' U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -812,12 +812,12 @@
           "solution": "M U M2 U M2 U M' U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     }
   ],
-  "one_d_solved": [
+  "oneDSolved": [
     {
       "normal": [
         {
@@ -945,8 +945,8 @@
           "solution": "M U M2 U2 M2 U M'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -1072,7 +1072,7 @@
           "solution": "U2 M' U M2 U2 M2 U M U2"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -1201,9 +1201,9 @@
           "solution": "M U2 M' U' M' U2 M' U M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -1457,9 +1457,9 @@
           "solution": "M U2 M' U M' U2 M' U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -1713,8 +1713,8 @@
           "solution": "U2 M' U2 M"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -1840,7 +1840,7 @@
           "solution": "M U2 M' U2"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -1969,9 +1969,9 @@
           "solution": "U2 M' U2 M U M' U2 M U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -2225,9 +2225,9 @@
           "solution": "U2 M' U2 M U' M' U2 M U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -2481,9 +2481,9 @@
           "solution": "U2 M' U2 M' U M' U2 M U M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -2737,9 +2737,9 @@
           "solution": "M U2 M U' M' U2 M' U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -2993,8 +2993,8 @@
           "solution": "M2 U' M2 U' M U2 M'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -3120,7 +3120,7 @@
           "solution": "M2 U' M2 U M U2 M U2 M2"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -3249,9 +3249,9 @@
           "solution": "U2 M' U2 M' U' M' U2 M U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -3505,9 +3505,9 @@
           "solution": "M U2 M U M' U2 M' U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -3761,8 +3761,8 @@
           "solution": "M2 U M2 U M U2 M'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -3888,10 +3888,10 @@
           "solution": "M2 U M2 U' M U2 M U2 M2"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     }
   ],
-  "one_d_swapped": [
+  "oneDSwapped": [
     {
       "normal": [
         {
@@ -4019,8 +4019,8 @@
           "solution": "M' U2 M' U2 M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -4146,7 +4146,7 @@
           "solution": "M2 U2 M U2 M"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -4275,9 +4275,9 @@
           "solution": "M' U2 M' U' M' U2 M U M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -4531,9 +4531,9 @@
           "solution": "M' U2 M' U M' U2 M U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -4787,8 +4787,8 @@
           "solution": "U M2 U2 M2 U M U2 M' U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -4914,7 +4914,7 @@
           "solution": "M U2 M' U M2 U2 M2 U'"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -5043,9 +5043,9 @@
           "solution": "M2 U' M U2 M U' M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -5299,9 +5299,9 @@
           "solution": "M2 U M U2 M U M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -5555,9 +5555,9 @@
           "solution": "M2 U M' U2 M' U M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -5811,9 +5811,9 @@
           "solution": "M U2 M U M' U2 M U2 M2 U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -6067,8 +6067,8 @@
           "solution": "M2 U' M2 U M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -6194,7 +6194,7 @@
           "solution": "U M U M2 U' M2 U' M'"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -6323,9 +6323,9 @@
           "solution": "M2 U' M' U2 M' U' M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -6579,9 +6579,9 @@
           "solution": "M U2 M U M2 U2 M' U2 M U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": [
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": [
         {
           "state": {
             "topBack": {
@@ -6835,8 +6835,8 @@
           "solution": "M2 U M2 U' M' U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [
+      "mirrorM": [],
+      "mirrorS": [
         {
           "state": {
             "topBack": {
@@ -6962,10 +6962,10 @@
           "solution": "U' M U' M2 U M2 U M'"
         }
       ],
-      "mirror_both": []
+      "mirrorBoth": []
     }
   ],
-  "d_edges_u_opposites": [
+  "dEdgesUOpposites": [
     {
       "normal": [
         {
@@ -7093,9 +7093,9 @@
           "solution": "U2 M U2 M2 U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -7348,9 +7348,9 @@
           "solution": "M2 U M U2 M' U2 M2 U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -7603,9 +7603,9 @@
           "solution": "M2 U M2 U2 M' U2 M U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -7734,9 +7734,9 @@
           "solution": "M U M2 U2 M2 U' M' U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -7989,9 +7989,9 @@
           "solution": "M2 U' M' U2 M' U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -8244,9 +8244,9 @@
           "solution": "M2 U M U2 M U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -8375,9 +8375,9 @@
           "solution": "M2 U' M2 U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -8506,12 +8506,12 @@
           "solution": "M2 U M2 U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     }
   ],
-  "d_edges_u_adjacents": [
+  "dEdgesUAdjacents": [
     {
       "normal": [
         {
@@ -8763,9 +8763,9 @@
           "solution": "M' U2 M U2 M2 U' M2 U"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -9018,9 +9018,9 @@
           "solution": "U M U2 M U M U2 M U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -9273,9 +9273,9 @@
           "solution": "M2 U2 M U2 M U M2 U M U2 M"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -9528,9 +9528,9 @@
           "solution": "U2 M' U2 M' U M2 U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -9783,7 +9783,7 @@
           "solution": "M U2 M' U M2 U2 M' U2 M' U"
         }
       ],
-      "mirror_m": [
+      "mirrorM": [
         {
           "state": {
             "topBack": {
@@ -10033,8 +10033,8 @@
           "solution": "M2 U2 M U2 M U M U2 M' U"
         }
       ],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -10287,7 +10287,7 @@
           "solution": "M U2 M' U M2 U M' U2 M' U2"
         }
       ],
-      "mirror_m": [
+      "mirrorM": [
         {
           "state": {
             "topBack": {
@@ -10537,8 +10537,8 @@
           "solution": "M' U M U' M U' M' U' M' U' M U'"
         }
       ],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -10791,9 +10791,9 @@
           "solution": "M U2 M' U M' U2 M U'"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -11046,9 +11046,9 @@
           "solution": "U M2 U2 M U2 M' U' M2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -11301,9 +11301,9 @@
           "solution": "M U2 M' U M2 U' M U2 M"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     },
     {
       "normal": [
@@ -11556,9 +11556,9 @@
           "solution": "U M U2 M U' M2 U2"
         }
       ],
-      "mirror_m": [],
-      "mirror_s": [],
-      "mirror_both": []
+      "mirrorM": [],
+      "mirrorS": [],
+      "mirrorBoth": []
     }
   ]
 }
