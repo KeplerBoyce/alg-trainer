@@ -8,10 +8,10 @@ export const COLOR_MAP = {
 };
 
 export const ALGSET_NAME_MAP = {
-    "d_solved": "D edges solved",
-    "d_swapped": "D edges swapped",
-    "one_d_solved": "One D edge solved",
-    "one_d_swapped": "One D edge swapped",
-    "d_edges_u_opposites": "D edges are U opposites",
-    "d_edges_u_adjacents": "D edges are U adjacents",
+    "dSolved": "D edges solved",
+    "dSwapped": "D edges swapped",
+    "oneDSolved": "One D edge solved",
+    "oneDSwapped": "One D edge swapped",
+    "dEdgesUOpposites": "D edges are U opposites",
+    "dEdgesUAdjacents": "D edges are U adjacents",
 }

@@ -1,5 +1,5 @@
 export type Color = "WHITE" | "YELLOW" | "GREEN" | "BLUE" | "RED" | "ORANGE";
-export type AlgSet = "d_solved" | "d_swapped" | "one_d_solved" | "one_d_swapped" | "d_edges_u_opposites" | "d_edges_u_adjacents";
+export type AlgSet = "dSolved" | "dSwapped" | "oneDSolved" | "oneDSwapped" | "dEdgesUOpposites" | "dEdgesUAdjacents";
 export type Piece = "TOP_BACK" | "TOP_LEFT" | "TOP_FRONT" | "TOP_RIGHT" | "BOTTOM_BACK" | "BOTTOM_FRONT";
 
 export type PieceInfo = {

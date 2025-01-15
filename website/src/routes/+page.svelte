@@ -2,7 +2,19 @@
   import AlgButton from "$lib/components/AlgButton.svelte";
   import ALGS from "$lib/algs.json";
   import { ALGSET_NAME_MAP } from "$lib/constants";
-  import type { AlgSet } from "$lib/types";
+  import { type AlgSet, type AlgWithDupes } from "$lib/types";
+  import Modal from "$lib/components/Modal.svelte";
+  import AlgMirrorGroup from "$lib/components/AlgMirrorGroup.svelte";
+
+  let modalOpen = false;
+  let modalAlg: AlgWithDupes;
+  let modalAlgName: string;
+
+  const openAlg = (alg: AlgWithDupes, name: string) => {
+    modalOpen = true;
+    modalAlg = alg;
+    modalAlgName = name;
+  }
 </script>
 
 <div class="flex flex-col">
@@ -12,8 +24,19 @@
     </p>
     <div class="flex justify-center flex-wrap gap-4 mb-12">
       {#each algs as alg, i}
-        <AlgButton alg={alg} name={`${i + 1}.`} />
+        <AlgButton alg={alg} name={`${i + 1}.`} callback={() => openAlg(alg, `${i + 1}.`)} />
       {/each}
     </div>
   {/each}
 </div>
+
+<Modal open={modalOpen} close={() => {modalOpen = false}}>
+  <div class="bg-white p-8 rounded-xl flex flex-col gap-8">
+    {#if modalAlg && modalAlgName}
+      <AlgMirrorGroup algs={modalAlg.normal} name="Normal case" />
+      <AlgMirrorGroup algs={modalAlg.mirrorM} name="Mirrored across M case" />
+      <AlgMirrorGroup algs={modalAlg.mirrorS} name="Mirrored across S case" />
+      <AlgMirrorGroup algs={modalAlg.mirrorBoth} name="Mirrored across both M and S case" />
+    {/if}
+  </div>
+</Modal>
