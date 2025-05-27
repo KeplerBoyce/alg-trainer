@@ -1,29 +1,33 @@
 export type Color = "WHITE" | "YELLOW" | "GREEN" | "BLUE" | "RED" | "ORANGE";
-export type AlgSet = "dSolved" | "dSwapped" | "oneDSolved" | "oneDSwapped" | "dEdgesUOpposites" | "dEdgesUAdjacents";
-export type Piece = "TOP_BACK" | "TOP_LEFT" | "TOP_FRONT" | "TOP_RIGHT" | "BOTTOM_BACK" | "BOTTOM_FRONT";
 
-export type PieceInfo = {
-    piece: Piece,
-    flipped: boolean,
-};
+export type Layer = "L" | "M" | "R" | "U" | "E" | "D" | "F" | "S" | "B";
 
-export type Algorithm = {
-    state: {
-        topBack: PieceInfo,
-        topLeft: PieceInfo,
-        topFront: PieceInfo,
-        topRight: PieceInfo,
-        bottomBack: PieceInfo,
-        bottomFront: PieceInfo,
-        mParity: 0 | 1 | 2 | 3,
-        uParity: 0 | 1 | 2 | 3,
-    },
-    solution: string,
-};
+// FULL shows all six faces
+// LL shows only stickers of U layer
+// ROUX shows all stickers of U layer as well as middle column of D layer
+export type NetStyle = "FULL" | "LL" | "ROUX";
 
-export type AlgWithDupes = {
-    normal: Algorithm[],
-    mirrorM: Algorithm[],
-    mirrorS: Algorithm[],
-    mirrorBoth: Algorithm[],
+export type AlgSet = string[];
+
+export type Row = {
+    left: Color,
+    middle: Color,
+    right: Color,
+}
+
+export type Face = {
+    top: Row,
+    middle: Row,
+    bottom: Row,
+}
+
+// Top/down/left/right orientation of faces is based on the following rotations for each face:
+// U: x', D: x, F: no rotation, B: y2, L: y', R: y
+export type Stickers = {
+    u: Face,
+    d: Face,
+    l: Face,
+    r: Face,
+    f: Face,
+    b: Face,
 }

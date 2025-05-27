@@ -1,3 +1,5 @@
+import type { Color } from "./types";
+
 export const COLOR_MAP = {
     "WHITE": "bg-white",
     "YELLOW": "bg-yellow-400",
@@ -7,11 +9,19 @@ export const COLOR_MAP = {
     "ORANGE": "bg-amber-500",
 };
 
-export const ALGSET_NAME_MAP = {
-    "dSolved": "D edges solved",
-    "dSwapped": "D edges swapped",
-    "oneDSolved": "One D edge solved",
-    "oneDSwapped": "One D edge swapped",
-    "dEdgesUOpposites": "D edges are U opposites",
-    "dEdgesUAdjacents": "D edges are U adjacents",
+const faceWithColor = (color: Color) => {
+    return {
+        top: {left: color, middle: color, right: color},
+        middle: {left: color, middle: color, right: color},
+        bottom: {left: color, middle: color, right: color},
+    }
+}
+
+export const DEFAULT_STICKERS = {
+    u: faceWithColor("YELLOW"),
+    d: faceWithColor("WHITE"),
+    l: faceWithColor("RED"),
+    r: faceWithColor("ORANGE"),
+    f: faceWithColor("GREEN"),
+    b: faceWithColor("BLUE"),
 }
