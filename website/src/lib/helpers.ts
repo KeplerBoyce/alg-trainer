@@ -1,24 +1,116 @@
 import { COLOR_MAP, DEFAULT_STICKERS } from "./constants"
 import type { Color, Face, Layer, Stickers } from "./types"
+import CubeJS from 'cubejs';
+const Cube = CubeJS;
+
+Cube.initSolver();
 
 export const casesStr = (num: number) => {
     return `${num} case${num != 1 ? "s" : ""}`;
 }
 
-export const squareStyle = (color: Color) => {
-    return `flex-shrink-0 w-8 h-8 border border-black rounded-md ${COLOR_MAP[color]}`
+export const squareStyle = (color: Color, small?: boolean) => {
+    if (small) {
+        return `flex-shrink-0 w-4 h-4 border border-black rounded-sm ${COLOR_MAP[color]}`;
+    }
+    return `flex-shrink-0 w-8 h-8 border border-black rounded-md ${COLOR_MAP[color]}`;
 }
 
-export const horizStyle = (color: Color) => {
-    return `flex-shrink-0 w-8 h-4 border border-black rounded-md ${COLOR_MAP[color]}`
+export const horizStyle = (color: Color, small?: boolean) => {
+    if (small) {
+        return `flex-shrink-0 w-4 h-2 border border-black rounded-sm ${COLOR_MAP[color]}`;
+    }
+    return `flex-shrink-0 w-8 h-4 border border-black rounded-md ${COLOR_MAP[color]}`;
 }
 
-export const vertStyle = (color: Color) => {
-    return `flex-shrink-0 w-4 h-8 border border-black rounded-md ${COLOR_MAP[color]}`
+export const vertStyle = (color: Color, small?: boolean) => {
+    if (small) {
+        return `flex-shrink-0 w-2 h-4 border border-black rounded-sm ${COLOR_MAP[color]}`;
+    }
+    return `flex-shrink-0 w-4 h-8 border border-black rounded-md ${COLOR_MAP[color]}`;
 }
 
-export const emptyStyle = () => {
+export const emptyStyle = (small?: boolean) => {
+    if (small) {
+        return "flex-shrink-0 w-2 h-2";
+    }
     return "flex-shrink-0 w-4 h-4";
+}
+
+const simplifySolution = (solution: string[], index: number) => {
+    while (index > 0) {
+        const move1 = solution[index - 1];
+        const move2 = solution[index];
+
+        if (move1[0] === move2[0]) {
+            let amount = 0;
+            // Rotation amount from first move
+            if (move1.length === 1) {
+                amount = 1;
+            } else if (move1[1] === '2') {
+                amount = 2;
+            } else {
+                amount = 3;
+            }
+            // Rotation amount from second move (find the sum)
+            if (move2.length === 1) {
+                amount += 1;
+            } else if (move2[1] === '2') {
+                amount += 2;
+            } else {
+                amount += 3;
+            }
+            amount %= 4;
+            // Replace move based on total amount of the two moves after merging
+            if (amount === 0) {
+                solution = [...solution.slice(0, index - 1), ...solution.slice(index + 1)];
+                index -= 1;
+            } else if (amount === 1) {
+                solution = [...solution.slice(0, index - 1), move1[0], ...solution.slice(index + 1)];
+                break;
+            } else if (amount === 2) {
+                solution = [...solution.slice(0, index - 1), `${move1[0]}2`, ...solution.slice(index + 1)];
+                break;
+            } else {
+                solution = [...solution.slice(0, index - 1), `${move1[0]}'`, ...solution.slice(index + 1)];
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+    return solution;
+}
+
+// Generates a "random" looking scramble to produce the inverse state of an algorithm
+export const randomAlgScramble = (alg: string, numRandom: number) => {
+    const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
+                      "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
+    const inverse = Cube.inverse(alg);
+    const targetCube = new Cube();
+    targetCube.move(inverse);
+
+    let currState = targetCube.clone();
+    let randomMoves = [];
+
+    let lastFace = '';
+    for (let i = 0; i < numRandom; i++) {
+        while (true) {
+            const chosenMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+            const chosenFace = chosenMove[0];
+
+            if (chosenFace !== lastFace) {
+                randomMoves.push(chosenMove);
+                currState.move(chosenMove);
+                lastFace = chosenMove[0];
+                break;
+            }
+        }
+    }
+    let solution = `${randomMoves.join(' ')} ${currState.solve()}`.split(' ');
+    // Check for merging last random move with first solution move if same face
+    const simplified = simplifySolution(solution, numRandom).join(' ');
+    return Cube.inverse(simplified);
 }
 
 export const getAlgStickers = (alg: string) => {

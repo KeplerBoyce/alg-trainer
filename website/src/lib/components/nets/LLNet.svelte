@@ -7,45 +7,47 @@
 
   let {
     stickers,
+    small,
   }: {
     stickers: Stickers
+    small?: boolean,
   } = $props();
 </script>
 
 <div class={colStyle}>
   <div class={rowStyle}>
-    <div class={emptyStyle()}></div>
-    <div class={horizStyle(stickers.b.top.right)}></div>
-    <div class={horizStyle(stickers.b.top.middle)}></div>
-    <div class={horizStyle(stickers.b.top.left)}></div>
-    <div class={emptyStyle()}></div>
+    <div class={emptyStyle(small)}></div>
+    <div class={horizStyle(stickers.b.top.right, small)}></div>
+    <div class={horizStyle(stickers.b.top.middle, small)}></div>
+    <div class={horizStyle(stickers.b.top.left, small)}></div>
+    <div class={emptyStyle(small)}></div>
   </div>
   <div class={rowStyle}>
-    <div class={vertStyle(stickers.l.top.left)}></div>
-    <div class={squareStyle(stickers.u.top.left)}></div>
-    <div class={squareStyle(stickers.u.top.middle)}></div>
-    <div class={squareStyle(stickers.u.top.right)}></div>
-    <div class={vertStyle(stickers.r.top.right)}></div>
+    <div class={vertStyle(stickers.l.top.left, small)}></div>
+    <div class={squareStyle(stickers.u.top.left, small)}></div>
+    <div class={squareStyle(stickers.u.top.middle, small)}></div>
+    <div class={squareStyle(stickers.u.top.right, small)}></div>
+    <div class={vertStyle(stickers.r.top.right, small)}></div>
   </div>
   <div class={rowStyle}>
-    <div class={vertStyle(stickers.l.top.middle)}></div>
-    <div class={squareStyle(stickers.u.middle.left)}></div>
-    <div class={squareStyle(stickers.u.middle.middle)}></div>
-    <div class={squareStyle(stickers.u.middle.right)}></div>
-    <div class={vertStyle(stickers.r.top.middle)}></div>
+    <div class={vertStyle(stickers.l.top.middle, small)}></div>
+    <div class={squareStyle(stickers.u.middle.left, small)}></div>
+    <div class={squareStyle(stickers.u.middle.middle, small)}></div>
+    <div class={squareStyle(stickers.u.middle.right, small)}></div>
+    <div class={vertStyle(stickers.r.top.middle, small)}></div>
   </div>
   <div class={rowStyle}>
-    <div class={vertStyle(stickers.l.top.right)}></div>
-    <div class={squareStyle(stickers.u.bottom.left)}></div>
-    <div class={squareStyle(stickers.u.bottom.middle)}></div>
-    <div class={squareStyle(stickers.u.bottom.right)}></div>
-    <div class={vertStyle(stickers.r.top.left)}></div>
+    <div class={vertStyle(stickers.l.top.right, small)}></div>
+    <div class={squareStyle(stickers.u.bottom.left, small)}></div>
+    <div class={squareStyle(stickers.u.bottom.middle, small)}></div>
+    <div class={squareStyle(stickers.u.bottom.right, small)}></div>
+    <div class={vertStyle(stickers.r.top.left, small)}></div>
   </div>
   <div class={rowStyle}>
-    <div class={emptyStyle()}></div>
-    <div class={horizStyle(stickers.f.top.left)}></div>
-    <div class={horizStyle(stickers.f.top.middle)}></div>
-    <div class={horizStyle(stickers.f.top.right)}></div>
-    <div class={emptyStyle()}></div>
+    <div class={emptyStyle(small)}></div>
+    <div class={horizStyle(stickers.f.top.left, small)}></div>
+    <div class={horizStyle(stickers.f.top.middle, small)}></div>
+    <div class={horizStyle(stickers.f.top.right, small)}></div>
+    <div class={emptyStyle(small)}></div>
   </div>
 </div>

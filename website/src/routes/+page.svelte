@@ -34,7 +34,7 @@
 
       <div class="flex justify-center flex-wrap gap-4 mb-12">
         {#each algs as alg, i}
-          <AlgButton alg={alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
+          <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
         {/each}
       </div>
     {/each}

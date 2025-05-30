@@ -7,8 +7,10 @@
 
   let {
     stickers,
+    small,
   }: {
-    stickers: Stickers
+    stickers: Stickers,
+    small?: boolean,
   } = $props();
 </script>
 
@@ -17,19 +19,19 @@
   <!-- B face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.b.bottom.right)}></div>
-      <div class={squareStyle(stickers.b.bottom.middle)}></div>
-      <div class={squareStyle(stickers.b.bottom.left)}></div>
+      <div class={squareStyle(stickers.b.bottom.right, small)}></div>
+      <div class={squareStyle(stickers.b.bottom.middle, small)}></div>
+      <div class={squareStyle(stickers.b.bottom.left, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.b.middle.right)}></div>
-      <div class={squareStyle(stickers.b.middle.middle)}></div>
-      <div class={squareStyle(stickers.b.middle.left)}></div>
+      <div class={squareStyle(stickers.b.middle.right, small)}></div>
+      <div class={squareStyle(stickers.b.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.b.middle.left, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.b.top.right)}></div>
-      <div class={squareStyle(stickers.b.top.middle)}></div>
-      <div class={squareStyle(stickers.b.top.left)}></div>
+      <div class={squareStyle(stickers.b.top.right, small)}></div>
+      <div class={squareStyle(stickers.b.top.middle, small)}></div>
+      <div class={squareStyle(stickers.b.top.left, small)}></div>
     </div>
   </div>
   <div></div>
@@ -37,57 +39,57 @@
   <!-- L face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.l.bottom.left)}></div>
-      <div class={squareStyle(stickers.l.middle.left)}></div>
-      <div class={squareStyle(stickers.l.top.left)}></div>
+      <div class={squareStyle(stickers.l.bottom.left, small)}></div>
+      <div class={squareStyle(stickers.l.middle.left, small)}></div>
+      <div class={squareStyle(stickers.l.top.left, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.l.bottom.middle)}></div>
-      <div class={squareStyle(stickers.l.middle.middle)}></div>
-      <div class={squareStyle(stickers.l.top.middle)}></div>
+      <div class={squareStyle(stickers.l.bottom.middle, small)}></div>
+      <div class={squareStyle(stickers.l.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.l.top.middle, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.l.bottom.right)}></div>
-      <div class={squareStyle(stickers.l.middle.right)}></div>
-      <div class={squareStyle(stickers.l.top.right)}></div>
+      <div class={squareStyle(stickers.l.bottom.right, small)}></div>
+      <div class={squareStyle(stickers.l.middle.right, small)}></div>
+      <div class={squareStyle(stickers.l.top.right, small)}></div>
     </div>
   </div>
 
   <!-- U face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.u.top.left)}></div>
-      <div class={squareStyle(stickers.u.top.middle)}></div>
-      <div class={squareStyle(stickers.u.top.right)}></div>
+      <div class={squareStyle(stickers.u.top.left, small)}></div>
+      <div class={squareStyle(stickers.u.top.middle, small)}></div>
+      <div class={squareStyle(stickers.u.top.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.u.middle.left)}></div>
-      <div class={squareStyle(stickers.u.middle.middle)}></div>
-      <div class={squareStyle(stickers.u.middle.right)}></div>
+      <div class={squareStyle(stickers.u.middle.left, small)}></div>
+      <div class={squareStyle(stickers.u.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.u.middle.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.u.bottom.left)}></div>
-      <div class={squareStyle(stickers.u.bottom.middle)}></div>
-      <div class={squareStyle(stickers.u.bottom.right)}></div>
+      <div class={squareStyle(stickers.u.bottom.left, small)}></div>
+      <div class={squareStyle(stickers.u.bottom.middle, small)}></div>
+      <div class={squareStyle(stickers.u.bottom.right, small)}></div>
     </div>
   </div>
 
   <!-- R face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.r.top.right)}></div>
-      <div class={squareStyle(stickers.r.middle.right)}></div>
-      <div class={squareStyle(stickers.r.bottom.right)}></div>
+      <div class={squareStyle(stickers.r.top.right, small)}></div>
+      <div class={squareStyle(stickers.r.middle.right, small)}></div>
+      <div class={squareStyle(stickers.r.bottom.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.r.top.middle)}></div>
-      <div class={squareStyle(stickers.r.middle.middle)}></div>
-      <div class={squareStyle(stickers.r.bottom.middle)}></div>
+      <div class={squareStyle(stickers.r.top.middle, small)}></div>
+      <div class={squareStyle(stickers.r.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.r.bottom.middle, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.r.top.left)}></div>
-      <div class={squareStyle(stickers.r.middle.left)}></div>
-      <div class={squareStyle(stickers.r.bottom.left)}></div>
+      <div class={squareStyle(stickers.r.top.left, small)}></div>
+      <div class={squareStyle(stickers.r.middle.left, small)}></div>
+      <div class={squareStyle(stickers.r.bottom.left, small)}></div>
     </div>
   </div>
 
@@ -95,19 +97,19 @@
   <!-- F face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.f.top.left)}></div>
-      <div class={squareStyle(stickers.f.top.middle)}></div>
-      <div class={squareStyle(stickers.f.top.right)}></div>
+      <div class={squareStyle(stickers.f.top.left, small)}></div>
+      <div class={squareStyle(stickers.f.top.middle, small)}></div>
+      <div class={squareStyle(stickers.f.top.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.f.middle.left)}></div>
-      <div class={squareStyle(stickers.f.middle.middle)}></div>
-      <div class={squareStyle(stickers.f.middle.right)}></div>
+      <div class={squareStyle(stickers.f.middle.left, small)}></div>
+      <div class={squareStyle(stickers.f.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.f.middle.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.f.bottom.left)}></div>
-      <div class={squareStyle(stickers.f.bottom.middle)}></div>
-      <div class={squareStyle(stickers.f.bottom.right)}></div>
+      <div class={squareStyle(stickers.f.bottom.left, small)}></div>
+      <div class={squareStyle(stickers.f.bottom.middle, small)}></div>
+      <div class={squareStyle(stickers.f.bottom.right, small)}></div>
     </div>
   </div>
   <div></div>
@@ -116,19 +118,19 @@
   <!-- D face -->
   <div class={colStyle}>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.d.top.left)}></div>
-      <div class={squareStyle(stickers.d.top.middle)}></div>
-      <div class={squareStyle(stickers.d.top.right)}></div>
+      <div class={squareStyle(stickers.d.top.left, small)}></div>
+      <div class={squareStyle(stickers.d.top.middle, small)}></div>
+      <div class={squareStyle(stickers.d.top.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.d.middle.left)}></div>
-      <div class={squareStyle(stickers.d.middle.middle)}></div>
-      <div class={squareStyle(stickers.d.middle.right)}></div>
+      <div class={squareStyle(stickers.d.middle.left, small)}></div>
+      <div class={squareStyle(stickers.d.middle.middle, small)}></div>
+      <div class={squareStyle(stickers.d.middle.right, small)}></div>
     </div>
     <div class={rowStyle}>
-      <div class={squareStyle(stickers.d.bottom.left)}></div>
-      <div class={squareStyle(stickers.d.bottom.middle)}></div>
-      <div class={squareStyle(stickers.d.bottom.right)}></div>
+      <div class={squareStyle(stickers.d.bottom.left, small)}></div>
+      <div class={squareStyle(stickers.d.bottom.middle, small)}></div>
+      <div class={squareStyle(stickers.d.bottom.right, small)}></div>
     </div>
   </div>
   <div></div>

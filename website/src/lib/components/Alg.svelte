@@ -9,32 +9,38 @@
     alg,
     netStyle,
     name,
+    hideSolution,
+    small,
   }: {
     alg: string,
     netStyle: NetStyle,
     name?: string,
+    hideSolution?: boolean,
+    small?: boolean,
   } = $props();
 
   let stickers = $derived(getAlgStickers(alg));
 </script>
 
-<div class="flex flex-col gap-4 w-min">
+<div class="flex flex-col items-center gap-4 min-w-min">
   {#if netStyle === "FULL"}
-    <FullNet stickers={stickers} />
+    <FullNet {stickers} {small} />
   {:else if netStyle === "LL"}
-    <LLNet stickers={stickers} />
+    <LLNet {stickers} {small} />
   {:else}
-    <RouxNet stickers={stickers} />
+    <RouxNet {stickers} />
   {/if}
 
-  <div class="flex gap-2">
-    {#if name}
-      <p class="font-bold">
-        {name}
+  {#if !hideSolution}
+    <div class="flex gap-2">
+      {#if name}
+        <p class="font-bold">
+          {name}
+        </p>
+      {/if}
+      <p class="max-w-full text-left">
+        {alg}
       </p>
-    {/if}
-    <p class="max-w-full text-left">
-      {alg}
-    </p>
-  </div>
+    </div>
+  {/if}
 </div>
