@@ -38,7 +38,6 @@
       let allSelected = true;
       Object.values(subsets).forEach(subset => {
         subset.forEach(a => {
-          console.log(a);
           if (!selected[a]) {
             allSelected = false;
             return;
@@ -69,7 +68,6 @@
       Object.entries(subsets).forEach(([subset, algs]) => {
         let allSelected = true;
         algs.forEach(a => {
-          console.log(a);
           if (!selected[a]) {
             allSelected = false;
             return;
@@ -82,9 +80,9 @@
   });
 </script>
 
-<div class="flex flex-col w-1/3 max-w-2xl">
+<div class="flex flex-col w-1/3 max-w-2xl gap-2">
   {#each Object.entries(ALGS) as [set, subsets]}
-    <div class="flex mb-2 items-center gap-4">
+    <div class="flex items-center gap-4">
       <button
         onclick={() => {
           if (setsMinimized[set]) {
@@ -144,7 +142,7 @@
 
     {#if !setsMinimized[set]}
       {#each Object.entries(subsets) as [subset, algs]}
-        <div class="flex mb-2 items-center gap-4 pl-4">
+        <div class="flex items-center gap-4 pl-4">
           <button
             onclick={() => {
               if (subsetsMinimized[set]?.[subset]) {
@@ -177,18 +175,14 @@
               // If all are selected, deselect all, otherwise select all
               if (subsetsAllSelected[set][subset]) {
                 const newSelected = {...selected};
-                Object.values(subsets).forEach(subset => {
-                  subset.forEach(a => {
-                    newSelected[a] = false;
-                  });
+                algs.forEach(a => {
+                  newSelected[a] = false;
                 });
                 setSelected(newSelected);
               } else {
                 const newSelected = {...selected};
-                Object.values(subsets).forEach(subset => {
-                  subset.forEach(a => {
-                    newSelected[a] = true;
-                  });
+                algs.forEach(a => {
+                  newSelected[a] = true;
                 });
                 setSelected(newSelected);
               }
@@ -198,7 +192,7 @@
               : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
             `}
           >
-            {allSelected[set] ? "Deselect All" : "Select All"}
+            {subsetsAllSelected[set][subset] ? "Deselect All" : "Select All"}
           </button>
         </div>
 

@@ -1,5 +1,19 @@
 {
   "2-Gen Last Layer": {
+    "T": [
+      "y2 R U' R' U2 R U R' U2 R U R' U R U' R'",
+      "y' R U R' U R U2 R' U' R U2 R' U' R U' R'",
+      "y' R U R' U R U' R' U R' U' R2 U' R2 U2 R",
+      " R U2 R' U' R U' R' U R U R' U R U2 R'",
+      " y' R' U' R U' R' U R U' R U R2 U R2 U2 R'",
+      " y2 R' U2 R U R' U R U' R' U' R U' R' U2 R",
+      "y' R' U' R2 U R2 U R2 U2 R' U R' U R",
+      "y' R U R2 U' R2 U' R2 U2 R U' R U' R'",
+      "R U2 R' U' R U' R2 U2 R U R' U R",
+      "y2 R' U2 R U R' U R2 U2 R' U' R U' R'",
+      "R' U R U2 R' U' R U' R U R' U' R' U' R U R U' R'",
+      "y' R U R' U R U2 R' U2 R' U' R U' R' U2 R"
+    ],
     "U": [
       "y' R' U' R U R' U R U2 R' U R U2 R' U' R",
       "y' R U R' U' R U' R' U2 R U' R' U2 R U R'",

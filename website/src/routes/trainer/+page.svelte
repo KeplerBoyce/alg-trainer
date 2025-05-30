@@ -31,6 +31,23 @@
   });
   let algIndex = $state(0);
   let alg = $derived(selectedArr?.[algIndex] ?? "");
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    // Prevent repetition when user is holding down keys
+    if (event.repeat) {
+      return;
+    }
+    if (event.key === ' ') {
+      // Go to next case on spacebar
+      algIndex += 1;
+      algIndex %= selectedArr.length;
+      showSolution = false;
+      event.preventDefault();
+    } else if (event.key === 'Backspace') {
+      // Reveal solution on backspace
+      showSolution = true;
+    }
+  }
 </script>
 
 <div class="w-full h-full flex justify-center gap-12">
@@ -100,3 +117,5 @@
   </div>
   <AlgSelector {selected} {setSelected} />
 </div>
+
+<svelte:window on:keydown={handleKeydown} />
