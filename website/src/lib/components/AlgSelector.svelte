@@ -116,19 +116,21 @@
         onclick={() => {
           // If all are selected, deselect all, otherwise select all
           if (allSelected[set]) {
+            const newSelected = {...selected};
             Object.values(subsets).forEach(subset => {
               subset.forEach(a => {
-                selected[a] = false;
+                newSelected[a] = false;
               });
             });
-            setSelected({...selected});
+            setSelected(newSelected);
           } else {
+            const newSelected = {...selected};
             Object.values(subsets).forEach(subset => {
               subset.forEach(a => {
-                selected[a] = true;
+                newSelected[a] = true;
               });
             });
-            setSelected({...selected});
+            setSelected(newSelected);
           }
         }}
         class={`transition px-2 py-1 rounded-lg ${allSelected[set]
@@ -174,19 +176,21 @@
             onclick={() => {
               // If all are selected, deselect all, otherwise select all
               if (subsetsAllSelected[set][subset]) {
+                const newSelected = {...selected};
                 Object.values(subsets).forEach(subset => {
                   subset.forEach(a => {
-                    selected[a] = false;
+                    newSelected[a] = false;
                   });
                 });
-                setSelected({...selected});
+                setSelected(newSelected);
               } else {
+                const newSelected = {...selected};
                 Object.values(subsets).forEach(subset => {
                   subset.forEach(a => {
-                    selected[a] = true;
+                    newSelected[a] = true;
                   });
                 });
-                setSelected({...selected});
+                setSelected(newSelected);
               }
             }}
             class={`transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
