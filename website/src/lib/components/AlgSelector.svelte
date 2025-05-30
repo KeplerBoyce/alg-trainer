@@ -121,14 +121,14 @@
                 selected[a] = false;
               });
             });
-            selected = {...selected};
+            setSelected({...selected});
           } else {
             Object.values(subsets).forEach(subset => {
               subset.forEach(a => {
                 selected[a] = true;
               });
             });
-            selected = {...selected};
+            setSelected({...selected});
           }
         }}
         class={`transition px-2 py-1 rounded-lg ${allSelected[set]
@@ -179,14 +179,14 @@
                     selected[a] = false;
                   });
                 });
-                selected = {...selected};
+                setSelected({...selected});
               } else {
                 Object.values(subsets).forEach(subset => {
                   subset.forEach(a => {
                     selected[a] = true;
                   });
                 });
-                selected = {...selected};
+                setSelected({...selected});
               }
             }}
             class={`transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
