@@ -16,7 +16,7 @@ const faceWithColor = (color: Color) => {
         middle: {left: color, middle: color, right: color},
         bottom: {left: color, middle: color, right: color},
     }
-}
+};
 
 export const DEFAULT_STICKERS = {
     u: faceWithColor("YELLOW"),
@@ -25,8 +25,7 @@ export const DEFAULT_STICKERS = {
     r: faceWithColor("ORANGE"),
     f: faceWithColor("GREEN"),
     b: faceWithColor("BLUE"),
-}
-
+};
 
 export const DEFAULT_STICKERS_TOP_ONLY = {
     u: faceWithColor("YELLOW"),
@@ -35,4 +34,44 @@ export const DEFAULT_STICKERS_TOP_ONLY = {
     r: faceWithColor("BLANK"),
     f: faceWithColor("BLANK"),
     b: faceWithColor("BLANK"),
-}
+};
+
+export const AUF_ALGS = [
+    "",
+    "U",
+    "U2",
+    "U'",
+];
+
+export const EPLL_ALGS = [
+    "",
+    "M2 U' M2 U2 M2 U' M2",
+    "y2 M2 U M U2 M' U M2",
+    "y2 M2 U' M U2 M' U' M2",
+    "M2 U M2 U M' U2 M2 U2 M'",
+];
+
+export const PLL_ALGS = [
+    "",
+    "x R' U R' D2 R U' R' D2 R2 x'",
+    "x R2 D2 R U R' D2 R U' R x'",
+    "y R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R",
+    "R2 U R' U R' U' R U' R2 D U' R' U R D'",
+    "R' U' R U D' R2 U R' U R U' R U' R2 D",
+    "R2 U' R U' R U R' U R2 D' U R U' R' D",
+    "R U R' U' D R2 U' R U' R' U R' U R2 D'",
+    "y R' U L' U2 R U' R' U2 R L",
+    "R U R' F' R U R' U' R' F R2 U' R'",
+    "y R U' R' U' R U R D R' U' R D' R' U2 R'",
+    "R' U2 R U2 R' F R U R' U' R' F' R2",
+    "R U R' U' R' F R2 U' R' U' R U R' F'",
+    "M2 U' M2 U2 M2 U' M2",
+    "y2 M2 U M U2 M' U M2",
+    "y2 M2 U' M U2 M' U' M2",
+    "M2 U M2 U M' U2 M2 U2 M'",
+    "y x' R U' R' D R U R' D' R U R' D R U' R' D' x",
+    "R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'",
+    "R' U R U' R' F' U' F R U R' F R' F' R U' R",
+    "R' U R' U' R D' R' D R' U D' R2 U' R2 D R2",
+    "F R U' R' U' R U R' F' R U R' U' R' F R F'",
+];

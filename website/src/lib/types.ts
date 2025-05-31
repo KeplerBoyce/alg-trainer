@@ -8,6 +8,8 @@ export type Layer = "L" | "M" | "R" | "U" | "E" | "D" | "F" | "S" | "B";
 // ROUX shows all stickers of U layer as well as middle column of D layer
 export type NetStyle = "FULL" | "LL" | "ROUX";
 
+export type Randomization = "AUF" | "EPLL" | "PLL";
+
 export type AlgSet = string[];
 
 export type Row = {
@@ -35,7 +37,8 @@ export type Stickers = {
 
 export type AlgSetConfig = {
     [key: string]: {
-        netStyle: string,
+        netStyle: NetStyle,
+        randomization: Randomization,
         topOnly: boolean,
     },
 };

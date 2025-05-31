@@ -1,14 +1,22 @@
 {
   "OLL": {
     "netStyle": "LL",
+    "randomization": "PLL",
     "topOnly": true
   },
   "PLL": {
     "netStyle": "LL",
+    "randomization": "AUF",
+    "topOnly": false
+  },
+  "COLL": {
+    "netStyle": "LL",
+    "randomization": "EPLL",
     "topOnly": false
   },
   "2-Gen Last Layer": {
     "netStyle": "LL",
+    "randomization": "AUF",
     "topOnly": false
   }
 }

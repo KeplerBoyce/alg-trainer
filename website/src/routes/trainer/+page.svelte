@@ -1,39 +1,43 @@
 <script lang="ts">
+  import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
   import { randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
+  import { type AlgSetConfig } from "$lib/types";
 
   let showSolution = $state(false);
+  // Tuples of alg, algset
   let selected: {
-    [key: string]: boolean,
+    [key: string]: [boolean, string],
   } = $state({});
   const setSelected = (x: {
-    [key: string]: boolean,
+    [key: string]: [boolean, string],
   }) => {
     selected = x;
   }
 
-  let selectedArr: string[] = $derived.by(() => {
-    const arr: string[] = [];
+  // Tuples of alg, algset
+  let selectedArr: [string, string][] = $derived.by(() => {
+    const arr: [string, string][] = [];
     Object.keys(selected).forEach((a) => {
-      if (selected[a]) {
-        arr.push(a);
+      if (selected[a]?.[0]) {
+        arr.push([a, selected[a][1]]);
       }
     });
     return arr;
   });
-  let alg: string = $derived.by(() => {
+  let [alg, set]: [string, string] = $derived.by(() => {
     if (selectedArr.length === 0) {
-      return "";
+      return ["", ""];
     }
     // Sort selected algs in order by knowledge level
     const arr = [...selectedArr];
-    arr.sort((a: string, b: string) => {
-      return ($knowledge[a] ?? 0) - ($knowledge[b] ?? 0);
+    arr.sort((a: [string, string], b: [string, string]) => {
+      return ($knowledge[a[1]]?.[a[0]] ?? 0) - ($knowledge[b[1]]?.[b[0]] ?? 0);
     });
     // Choose alg to be the one with lowest knowledge level, avoiding repeats if possible
-    if (arr.length > 1 && arr[0] === prevAlg) {
+    if (arr.length > 1 && arr[0][0] === prevAlg) {
       return arr[1];
     }
     return arr[0];
@@ -53,8 +57,8 @@
       updateAndNext(3);
     } else if (event.key === '4') {
       updateAndNext(4);
-    } else if (event.key === 'Backspace') {
-      // Reveal solution on backspace
+    } else if (event.key === ' ') {
+      // Reveal solution on spacebar press
       showSolution = true;
     }
   }
@@ -63,16 +67,15 @@
     if (!alg) {
       return;
     }
-    const currAlg = alg;
-    prevAlg = currAlg;
+    prevAlg = alg;
     if (difficulty === 1) {
-      $knowledge[currAlg] = updateKnowledgeForgot($knowledge[currAlg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeForgot($knowledge[set][alg] ?? 0);
     } else if (difficulty === 2) {
-      $knowledge[currAlg] = updateKnowledgeHard($knowledge[currAlg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeHard($knowledge[set][alg] ?? 0);
     } else if (difficulty === 3) {
-      $knowledge[currAlg] = updateKnowledgeGood($knowledge[currAlg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeGood($knowledge[set][alg] ?? 0);
     } else if (difficulty === 4) {
-      $knowledge[currAlg] = updateKnowledgeEasy($knowledge[currAlg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeEasy($knowledge[set][alg] ?? 0);
     }
     showSolution = false;
   }
@@ -95,7 +98,7 @@
           </p>
         {:else}
           <p>
-            {randomAlgScramble(alg, 2)}
+            {randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF")}
           </p>
         {/if}
       </div>
@@ -109,12 +112,17 @@
           </p>
         {:else}
           <p>
-            {$knowledge[alg] ?? 0}/100
+            {$knowledge[set]?.[alg] ?? 0}/100
           </p>
         {/if}
       </div>
     </div>
-    <Alg {alg} netStyle="LL" hideSolution />
+    <Alg
+      {alg}
+      netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
+      topOnly={(ALGS_CONFIG as AlgSetConfig)[set]?.topOnly ?? false}
+      hideSolution
+    />
 
     <div class="flex flex-col items-center">
       {#if selectedArr.length === 0}
@@ -130,7 +138,7 @@
               }}
               class="transition bg-gray-200 hover:bg-sky-200 active:bg-sky-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
             >
-              Reveal solution (Backspace)
+              Reveal solution (Spacebar)
             </button>
           {:else}
             <div class="flex gap-2">

@@ -11,10 +11,10 @@
     setSelected,
   }: {
     selected: {
-      [key: string]: boolean,
+      [key: string]: [boolean, string],
     },
     setSelected: (x: {
-      [key: string]: boolean,
+      [key: string]: [boolean, string],
     }) => void,
   } = $props();
 
@@ -48,7 +48,7 @@
       let allSelected = true;
       Object.values(subsets).forEach(subset => {
         subset.forEach(a => {
-          if (!selected[a]) {
+          if (!selected[a]?.[0]) {
             allSelected = false;
             return;
           }
@@ -78,7 +78,7 @@
       Object.entries(subsets).forEach(([subset, algs]) => {
         let allSelected = true;
         algs.forEach(a => {
-          if (!selected[a]) {
+          if (!selected[a]?.[0]) {
             allSelected = false;
             return;
           }
@@ -127,7 +127,7 @@
             const newSelected = {...selected};
             Object.values(subsets).forEach(subset => {
               subset.forEach(a => {
-                newSelected[a] = false;
+                newSelected[a] = [false, set];
               });
             });
             setSelected(newSelected);
@@ -135,7 +135,7 @@
             const newSelected = {...selected};
             Object.values(subsets).forEach(subset => {
               subset.forEach(a => {
-                newSelected[a] = true;
+                newSelected[a] = [true, set];
               });
             });
             setSelected(newSelected);
@@ -186,13 +186,13 @@
               if (subsetsAllSelected[set][subset]) {
                 const newSelected = {...selected};
                 algs.forEach(a => {
-                  newSelected[a] = false;
+                  newSelected[a] = [false, set];
                 });
                 setSelected(newSelected);
               } else {
                 const newSelected = {...selected};
                 algs.forEach(a => {
-                  newSelected[a] = true;
+                  newSelected[a] = [true, set];
                 });
                 setSelected(newSelected);
               }
@@ -211,19 +211,19 @@
             {#each algs as a}
               <button
                 onclick={() => {
-                  if (selected[a]) {
+                  if (selected[a]?.[0]) {
                     setSelected({
                       ...selected,
-                      [a]: false,
+                      [a]: [false, set],
                     });
                   } else {
                     setSelected({
                       ...selected,
-                      [a]: true,
+                      [a]: [true, set],
                     });
                   }
                 }}
-                class={`${selected[a] ? "bg-green-200" : ""} w-min p-2`}
+                class={`${selected[a]?.[0] ? "bg-green-200" : ""} w-min p-2`}
               >
                 <Alg
                   alg={a}

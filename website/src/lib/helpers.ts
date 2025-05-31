@@ -1,5 +1,5 @@
-import { COLOR_MAP, DEFAULT_STICKERS, DEFAULT_STICKERS_TOP_ONLY } from "./constants"
-import type { Color, Face, Layer, Stickers } from "./types"
+import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, DEFAULT_STICKERS_TOP_ONLY, EPLL_ALGS, PLL_ALGS } from "./constants"
+import type { Color, Face, Layer, Randomization, Stickers } from "./types"
 import CubeJS from 'cubejs';
 const Cube = CubeJS;
 
@@ -103,12 +103,34 @@ const simplifySolution = (solution: string[], index: number) => {
 }
 
 // Generates a "random" looking scramble to produce the inverse state of an algorithm
-export const randomAlgScramble = (alg: string, numRandom: number) => {
+export const randomAlgScramble = (alg: string, numRandom: number, randomization: Randomization) => {
     alg = stripParentheses(alg);
     const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
                       "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
     const inverse = Cube.inverse(alg);
     const targetCube = new Cube();
+
+    // Apply randomization according to which randomization mode is selected
+    const auf1 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
+    const auf2 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
+    switch (randomization) {
+        case "AUF":
+            targetCube.move(auf2);
+            break;
+        case "EPLL":
+            const epll = EPLL_ALGS[Math.floor(Math.random() * EPLL_ALGS.length)];
+            targetCube.move(auf1);
+            targetCube.move(epll);
+            targetCube.move(auf2);
+            break;
+        case "PLL":
+            const pll = PLL_ALGS[Math.floor(Math.random() * PLL_ALGS.length)];
+            targetCube.move(auf1);
+            targetCube.move(pll);
+            targetCube.move(auf2);
+            break;
+    }
+
     targetCube.move(inverse);
 
     let currState = targetCube.clone();
