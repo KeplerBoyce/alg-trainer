@@ -45,10 +45,14 @@
     if (event.repeat) {
       return;
     }
-    if (event.key === ' ') {
-      // Go to next case on spacebar
-      showSolution = false;
-      event.preventDefault();
+    if (event.key === '1') {
+      updateAndNext(1);
+    } else if (event.key === '2') {
+      updateAndNext(2);
+    } else if (event.key === '3') {
+      updateAndNext(3);
+    } else if (event.key === '4') {
+      updateAndNext(4);
     } else if (event.key === 'Backspace') {
       // Reveal solution on backspace
       showSolution = true;
@@ -56,6 +60,9 @@
   }
 
   const updateAndNext = (difficulty: number) => {
+    if (!alg) {
+      return;
+    }
     const currAlg = alg;
     prevAlg = currAlg;
     if (difficulty === 1) {
