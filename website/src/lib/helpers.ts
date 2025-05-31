@@ -1,9 +1,25 @@
-import { COLOR_MAP, DEFAULT_STICKERS } from "./constants"
+import { COLOR_MAP, DEFAULT_STICKERS, DEFAULT_STICKERS_TOP_ONLY } from "./constants"
 import type { Color, Face, Layer, Stickers } from "./types"
 import CubeJS from 'cubejs';
 const Cube = CubeJS;
 
 Cube.initSolver();
+
+export const updateKnowledgeForgot = (num: number) => {
+    return Math.max(1, num / 10);
+}
+
+export const updateKnowledgeHard = (num: number) => {
+    return Math.max(1, num -= 10);
+}
+
+export const updateKnowledgeGood = (num: number) => {
+    return Math.min(100, num += 5);
+}
+
+export const updateKnowledgeEasy = (num: number) => {
+    return Math.min(100, num += 20);
+}
 
 export const casesStr = (num: number) => {
     return `${num} case${num != 1 ? "s" : ""}`;
@@ -35,6 +51,10 @@ export const emptyStyle = (small?: boolean) => {
         return "flex-shrink-0 w-2 h-2";
     }
     return "flex-shrink-0 w-4 h-4";
+}
+
+const stripParentheses = (alg: string) => {
+    return alg.replace(/[\(\)]/g, '');
 }
 
 const simplifySolution = (solution: string[], index: number) => {
@@ -84,6 +104,7 @@ const simplifySolution = (solution: string[], index: number) => {
 
 // Generates a "random" looking scramble to produce the inverse state of an algorithm
 export const randomAlgScramble = (alg: string, numRandom: number) => {
+    alg = stripParentheses(alg);
     const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
                       "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
     const inverse = Cube.inverse(alg);
@@ -113,8 +134,14 @@ export const randomAlgScramble = (alg: string, numRandom: number) => {
     return Cube.inverse(simplified);
 }
 
-export const getAlgStickers = (alg: string) => {
-    let stickers = structuredClone(DEFAULT_STICKERS);
+export const getAlgStickers = (alg: string, topColorOnly?: boolean) => {
+    alg = stripParentheses(alg);
+    let stickers;
+    if (topColorOnly) {
+        stickers = structuredClone(DEFAULT_STICKERS_TOP_ONLY);
+    } else {
+        stickers = structuredClone(DEFAULT_STICKERS);
+    }
     // Regex for matching all possible Rubik's Cube move notations, empty list on null
     const moves = alg.match(/[LMRUEDFSBlrudfbxyz][']?2?/g) || [];
 
@@ -179,21 +206,21 @@ export const cycleLayer = (stickers: Stickers, layer: Layer) => {
             stickers.f.middle.left = temp;
             break;
         case "M":
-            temp = stickers.u.top.middle;
-            stickers.u.top.middle = stickers.f.top.middle;
-            stickers.f.top.middle = stickers.d.top.middle;
-            stickers.d.top.middle = stickers.b.bottom.middle;
-            stickers.b.bottom.middle = temp;
-            temp = stickers.u.bottom.middle;
-            stickers.u.bottom.middle = stickers.f.bottom.middle;
-            stickers.f.bottom.middle = stickers.d.bottom.middle;
-            stickers.d.bottom.middle = stickers.b.top.middle;
-            stickers.b.top.middle = temp;
-            temp = stickers.u.middle.middle;
-            stickers.u.middle.middle = stickers.f.middle.middle;
-            stickers.f.middle.middle = stickers.d.middle.middle;
-            stickers.d.middle.middle = stickers.b.middle.middle;
-            stickers.b.middle.middle = temp;
+            temp = stickers.b.bottom.middle;
+            stickers.b.bottom.middle = stickers.d.top.middle;
+            stickers.d.top.middle = stickers.f.top.middle;
+            stickers.f.top.middle = stickers.u.top.middle;
+            stickers.u.top.middle = temp;
+            temp = stickers.b.top.middle;
+            stickers.b.top.middle = stickers.d.bottom.middle;
+            stickers.d.bottom.middle = stickers.f.bottom.middle;
+            stickers.f.bottom.middle = stickers.u.bottom.middle;
+            stickers.u.bottom.middle = temp;
+            temp = stickers.b.middle.middle;
+            stickers.b.middle.middle = stickers.d.middle.middle;
+            stickers.d.middle.middle = stickers.f.middle.middle;
+            stickers.f.middle.middle = stickers.u.middle.middle;
+            stickers.u.middle.middle = temp;
             break;
         case "R":
             cycleFace(stickers.r);
@@ -232,21 +259,21 @@ export const cycleLayer = (stickers: Stickers, layer: Layer) => {
             stickers.l.top.middle = temp;
             break;
         case "E":
-            temp = stickers.f.middle.left;
-            stickers.f.middle.left = stickers.r.middle.left;
-            stickers.r.middle.left = stickers.b.middle.left;
-            stickers.b.middle.left = stickers.l.middle.left;
-            stickers.l.middle.left = temp;
-            temp = stickers.f.middle.right;
-            stickers.f.middle.right = stickers.r.middle.right;
-            stickers.r.middle.right = stickers.b.middle.right;
-            stickers.b.middle.right = stickers.l.middle.right;
-            stickers.l.middle.right = temp;
-            temp = stickers.f.middle.middle;
-            stickers.f.middle.middle = stickers.r.middle.middle;
-            stickers.r.middle.middle = stickers.b.middle.middle;
-            stickers.b.middle.middle = stickers.l.middle.middle;
-            stickers.l.middle.middle = temp;
+            temp = stickers.l.middle.left;
+            stickers.l.middle.left = stickers.b.middle.left;
+            stickers.b.middle.left = stickers.r.middle.left;
+            stickers.r.middle.left = stickers.f.middle.left;
+            stickers.f.middle.left = temp;
+            temp = stickers.l.middle.right;
+            stickers.l.middle.right = stickers.b.middle.right;
+            stickers.b.middle.right = stickers.r.middle.right;
+            stickers.r.middle.right = stickers.f.middle.right;
+            stickers.f.middle.right = temp;
+            temp = stickers.l.middle.middle;
+            stickers.l.middle.middle = stickers.b.middle.middle;
+            stickers.b.middle.middle = stickers.r.middle.middle;
+            stickers.r.middle.middle = stickers.f.middle.middle;
+            stickers.f.middle.middle = temp;
             break;
         case "D":
             cycleFace(stickers.d);
@@ -435,13 +462,13 @@ export const applyMove = (stickers: Stickers, move: string) => {
         case "l":
             cycleLayer(stickers, "L");
             cycleLayer(stickers, "M");
-            cycleLayer(stickers, "M");
-            cycleLayer(stickers, "M");
             break;
         case "l'":
             cycleLayer(stickers, "L");
             cycleLayer(stickers, "L");
             cycleLayer(stickers, "L");
+            cycleLayer(stickers, "M");
+            cycleLayer(stickers, "M");
             cycleLayer(stickers, "M");
             break;
         case "l2":
@@ -453,13 +480,13 @@ export const applyMove = (stickers: Stickers, move: string) => {
         case "r":
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "M");
+            cycleLayer(stickers, "M");
+            cycleLayer(stickers, "M");
             break;
         case "r'":
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "R");
-            cycleLayer(stickers, "M");
-            cycleLayer(stickers, "M");
             cycleLayer(stickers, "M");
             break;
         case "r2":
@@ -471,13 +498,13 @@ export const applyMove = (stickers: Stickers, move: string) => {
         case "u":
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "E");
+            cycleLayer(stickers, "E");
+            cycleLayer(stickers, "E");
             break;
         case "u'":
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "U");
-            cycleLayer(stickers, "E");
-            cycleLayer(stickers, "E");
             cycleLayer(stickers, "E");
             break;
         case "u2":
@@ -488,14 +515,13 @@ export const applyMove = (stickers: Stickers, move: string) => {
             break;
         case "d":
             cycleLayer(stickers, "D");
-            cycleLayer(stickers, "E");
-            cycleLayer(stickers, "E");
-            cycleLayer(stickers, "E");
             break;
         case "d'":
             cycleLayer(stickers, "D");
             cycleLayer(stickers, "D");
             cycleLayer(stickers, "D");
+            cycleLayer(stickers, "E");
+            cycleLayer(stickers, "E");
             cycleLayer(stickers, "E");
             break;
         case "d2":

@@ -1,4 +1,120 @@
 {
+  "OLL": {
+    "Corners Oriented": [
+      "(r U R' U') M (U R U' R')",
+      "(R U R' U') M' (U R U' r')"
+    ],
+    "Awkward": [
+      "y (R U R') U' (R U' R') (F' U' F) (R U R')",
+      "y2 F U (R U2 R') U' (R U2 R') U' F'",
+      "y2 (R U R' U) (R U2 R') F (R U R' U') F'",
+      "(R' U' R U') (R' U2 R) F (R U R' U') F'"
+    ],
+    "C Shape": [
+      "y2 R U R2 U' R' F (R U R U') F'",
+      "R' U' (R' F R F') U R"
+    ],
+    "Dot": [
+      "(R U2 R') (R' F R F') U2 (R' F R F')",
+      "F (R U R' U') F' f (R U R' U') f'",
+      "y' f (R U R' U') f' (U') F (R U R' U') F'",
+      "y' f (R U R' U') f' (U) F (R U R' U') F'",
+      "(R U R' U) (R' F R F') U2 (R' F R F')",
+      "y (R U2 R') (R' F R F') U2 M' (U R U' r')",
+      "M U (R U R' U') M' (R' F R F')",
+      "(r U R' U') M2 (U R U' R') U' M'"
+    ],
+    "Fish": [
+      "y (R U R' U') (R' F R) (R U R' U') F'",
+      "(R U R' U) (R' F R F') (R U2 R')",
+      "(R U2 R') (R' F R F') (R U2 R')",
+      "F R (U' R' U') (R U R') F'"
+    ],
+    "Knight Move": [
+      "(r U' r') U' (r U r') (F' U F)",
+      "R' F (R U R') F' R (F U' F')",
+      "(r' U' r) (R' U' R U) (r' U r)",
+      "(r U r') (R U R' U') (r U' r')"
+    ],
+    "L Shape": [
+      "F' (L' U' L U) (L' U' L U) F",
+      "F (R U R' U') (R U R' U') F'",
+      "y2 r U' (r2 U) (r2 U) (r2) U' r",
+      "r' U (r2 U') (r2 U') (r2) U r'",
+      "(r' U' R U') (R' U R U') (R' U2 r)",
+      "(r U R' U) (R U' R' U) (R U2 r')"
+    ],
+    "Lightning": [
+      "r (U R' U R) U2 r'",
+      "y2 r' (U' R U' R') U2 r",
+      "M (R U R' U R U2 R') U M'",
+      "y' M' (R' U' R U' R' U2 R) U' M",
+      "y L F' (L' U' L U) F U' L'",
+      "y R' F (R U R' U') F' U R"
+    ],
+    "Line": [
+      "f (R U R' U') (R U R' U') f'",
+      "y2 R' (F' U' F U') (R U R' U) R",
+      "R U2 R2 (U' R U' R') U2 (F R F')",
+      "(r U r') (U R U' R') (U R U' R') (r U' r')"
+    ],
+    "OCLL": [
+      "(R U R' U) (R U' R' U) (R U2 R')",
+      "R U2 (R2' U') (R2 U') (R2' U') U' R",
+      "R2 D (R' U2 R) D' (R' U2 R')",
+      "(r U R' U') (r' F R F')",
+      "y (F' r U R') (U' r' F R)",
+      "y R U2 (R' U' R U') R'",
+      "(R U R' U) (R U2 R')"
+    ],
+    "P Shape": [
+      "(R' U' F) (U R U' R') F' R",
+      "S (R U R' U') (R' F R f')",
+      "y R' U' (F' U F) R",
+      "f (R U R' U') f'"
+    ],
+    "Square": [
+      "r' U2 (R U R' U) r",
+      "r U2 (R' U' R U') r'"
+    ],
+    "T Shape": [
+      "(R U R' U') (R' F R F')",
+      "F (R U R' U') F'"
+    ],
+    "W Shape": [
+      "y2 (L' U' L U') (L' U L U) (L F' L' F)",
+      "(R U R' U) (R U' R' U') (R' F R F')"
+    ]
+  },
+  "PLL": {
+    "Adj Swap": [
+      "x (R' U R') D2 (R U' R') D2 R2 x'",
+      "x R2 D2 (R U R') D2 (R U' R) x'",
+      "y (R' U' F') (R U R' U') R' F R2 (U' R' U') (R U R' U) R",
+      "R2 (U R' U R' U' R U') R2 D (U' R' U R) D'",
+      "(R' U' R U) D' R2 (U R' U R U' R U') R2 D",
+      "R2 (U' R U' R U R' U) R2 D' (U R U' R') D",
+      "(R U R' U') D R2 (U' R U' R' U R' U) R2 D'",
+      "y (R' U L') U2 (R U' R') U2 R L",
+      "(R U R' F') (R U R' U') R' F R2 U' R'",
+      "y (R U' R' U') (R U R D) (R' U' R D') (R' U2 R')",
+      "(R' U2) (R U2) (R' F R) (U R' U' R') F' R2",
+      "(R U R' U') (R' F R2) (U' R' U') (R U R' F')"
+    ],
+    "EPLL": [
+      "(M2 U' M2) U2 (M2 U' M2)",
+      "y2 (M2 U M) U2 (M' U M2)",
+      "y2 (M2 U' M) U2 (M' U' M2)",
+      "(M2 U) (M2 U) (M' U2) M2 (U2 M')"
+    ],
+    "Opp Swap": [
+      "y x' (R U' R' D) (R U R' D') (R U R' D) (R U' R' D') x",
+      "(R U R' U) (R U R' F') (R U R' U') R' F R2 U' R' U2 (R U' R')",
+      "(R' U R U' R') (F' U' F) (R U R') (F R' F') (R U' R)",
+      "(R' U R' U') (R D' R' D) (R' U D') (R2 U' R2) D R2",
+      "F R (U' R' U') (R U R' F') (R U R' U') (R' F R F')"
+    ]
+  },
   "2-Gen Last Layer": {
     "T": [
       "y2 R U' R' U2 R U R' U2 R U R' U R U' R'",

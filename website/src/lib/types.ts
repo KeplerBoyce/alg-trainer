@@ -1,4 +1,5 @@
-export type Color = "WHITE" | "YELLOW" | "GREEN" | "BLUE" | "RED" | "ORANGE";
+// Blank color is for nets with empty stickers like OLL
+export type Color = "WHITE" | "YELLOW" | "GREEN" | "BLUE" | "RED" | "ORANGE" | "BLANK";
 
 export type Layer = "L" | "M" | "R" | "U" | "E" | "D" | "F" | "S" | "B";
 
@@ -31,3 +32,10 @@ export type Stickers = {
     f: Face,
     b: Face,
 }
+
+export type AlgSetConfig = {
+    [key: string]: {
+        netStyle: string,
+        topOnly: boolean,
+    },
+};

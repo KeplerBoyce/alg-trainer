@@ -1,0 +1,14 @@
+{
+  "OLL": {
+    "netStyle": "LL",
+    "topOnly": true
+  },
+  "PLL": {
+    "netStyle": "LL",
+    "topOnly": false
+  },
+  "2-Gen Last Layer": {
+    "netStyle": "LL",
+    "topOnly": false
+  }
+}

@@ -1,6 +1,8 @@
 <script lang="ts">
   import ALGS from "$lib/algs.json";
+  import ALGS_CONFIG from "$lib/algs_config.json";
   import { casesStr } from "$lib/helpers";
+  import { type AlgSetConfig } from "$lib/types";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
 
@@ -19,7 +21,15 @@
   // Set of algset names that are minimized
   let setsMinimized: {
     [key: string]: boolean,
-  } = $state({});
+  } = $state((() => {
+    const initialMinimized: {
+      [key: string]: boolean,
+    } = {};
+    Object.entries(ALGS).forEach(([set, _]) => {
+      initialMinimized[set] = true;
+    })
+    return initialMinimized;
+  })());
   // Set of subset names that are minimized for each subset
   let subsetsMinimized: {
     [key: string]: {
@@ -80,7 +90,7 @@
   });
 </script>
 
-<div class="flex flex-col w-1/3 max-w-2xl gap-2">
+<div class="flex flex-col w-1/3 max-w-2xl gap-2 overflow-y-scroll border border-black p-2 rounded-lg">
   {#each Object.entries(ALGS) as [set, subsets]}
     <div class="flex items-center gap-4">
       <button
@@ -99,7 +109,7 @@
         }}
         class="flex items-center gap-1"
       >
-        <p class="text-lg font-bold">
+        <p class="text-lg font-bold text-left">
           {set} ({casesStr((() => {
             let count = 0;
             Object.values(subsets).forEach(subset => {
@@ -165,7 +175,7 @@
             }}
             class="flex items-center gap-1"
           >
-            <p class="font-bold">
+            <p class="font-bold text-left">
               {subset} ({casesStr(algs.length)})
             </p>
             <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
@@ -215,7 +225,13 @@
                 }}
                 class={`${selected[a] ? "bg-green-200" : ""} w-min p-2`}
               >
-                <Alg alg={a} netStyle="LL" hideSolution small />
+                <Alg
+                  alg={a}
+                  netStyle="LL"
+                  hideSolution
+                  small
+                  topOnly={(ALGS_CONFIG as AlgSetConfig)[set].topOnly}
+                />
               </button>
             {/each}
           </div>

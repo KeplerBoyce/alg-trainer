@@ -7,6 +7,7 @@ export const COLOR_MAP = {
     "BLUE": "bg-sky-400",
     "RED": "bg-rose-500",
     "ORANGE": "bg-amber-500",
+    "BLANK": "bg-gray-400",
 };
 
 const faceWithColor = (color: Color) => {
@@ -24,4 +25,14 @@ export const DEFAULT_STICKERS = {
     r: faceWithColor("ORANGE"),
     f: faceWithColor("GREEN"),
     b: faceWithColor("BLUE"),
+}
+
+
+export const DEFAULT_STICKERS_TOP_ONLY = {
+    u: faceWithColor("YELLOW"),
+    d: faceWithColor("BLANK"),
+    l: faceWithColor("BLANK"),
+    r: faceWithColor("BLANK"),
+    f: faceWithColor("BLANK"),
+    b: faceWithColor("BLANK"),
 }

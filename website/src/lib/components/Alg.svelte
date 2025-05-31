@@ -11,15 +11,17 @@
     name,
     hideSolution,
     small,
+    topOnly,
   }: {
     alg: string,
     netStyle: NetStyle,
     name?: string,
     hideSolution?: boolean,
     small?: boolean,
+    topOnly?: boolean,
   } = $props();
 
-  let stickers = $derived(getAlgStickers(alg));
+  let stickers = $derived(getAlgStickers(alg, topOnly ?? false));
 </script>
 
 <div class="flex flex-col items-center gap-4 min-w-min">
