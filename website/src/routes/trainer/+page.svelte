@@ -161,19 +161,19 @@
           </button>
           <button
             onclick={() => updateAndNext(2)}
-            class="transition bg-gray-200 hover:bg-red-200 active:bg-red-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+            class="transition bg-gray-200 hover:bg-amber-200 active:bg-amber-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
           >
             Hard (2)
           </button>
           <button
             onclick={() => updateAndNext(3)}
-            class="transition bg-gray-200 hover:bg-amber-200 active:bg-amber-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+            class="transition bg-gray-200 hover:bg-emerald-200 active:bg-emerald-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
           >
             Good (3)
           </button>
           <button
             onclick={() => updateAndNext(4)}
-            class="transition bg-gray-200 hover:bg-emerald-200 active:bg-emerald-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+            class="transition bg-gray-200 hover:bg-indigo-200 active:bg-indigo-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
           >
             Easy (4)
           </button>
