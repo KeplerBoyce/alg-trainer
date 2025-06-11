@@ -2,7 +2,7 @@
   import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
-  import { randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { reverseMoveString, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
 
@@ -43,6 +43,13 @@
     return arr[0];
   });
   let prevAlg: string = $state("");
+
+  let scramble: string = $derived.by(() => {
+    if (alg === "") {
+      return "";
+    }
+    return randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF");
+  });
 
   const handleKeydown = (event: KeyboardEvent) => {
     // Prevent repetition when user is holding down keys
@@ -98,7 +105,7 @@
           </p>
         {:else}
           <p>
-            {randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF")}
+            {scramble}
           </p>
         {/if}
       </div>
@@ -117,9 +124,10 @@
         {/if}
       </div>
     </div>
+        <!-- netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"} -->
     <Alg
-      {alg}
-      netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
+      alg={reverseMoveString(scramble)}
+      netStyle="FULL"
       topOnly={(ALGS_CONFIG as AlgSetConfig)[set]?.topOnly ?? false}
       hideSolution
     />

@@ -156,6 +156,7 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
     return Cube.inverse(simplified);
 }
 
+// Applies the reverse of an alg to the solved cube
 export const getAlgStickers = (alg: string, topColorOnly?: boolean) => {
     alg = stripParentheses(alg);
     let stickers;
@@ -170,7 +171,12 @@ export const getAlgStickers = (alg: string, topColorOnly?: boolean) => {
     for (const move of reverseMoves(moves)) {
         applyMove(stickers, move);
     }
+    console.log(stickers);
     return stickers;
+}
+
+export const reverseMoveString = (moves: string) => {
+    return reverseMoves(moves.split(' ')).join(' ');
 }
 
 export const reverseMoves = (moves: string[]) => {
@@ -360,7 +366,7 @@ export const cycleLayer = (stickers: Stickers, layer: Layer) => {
             temp = stickers.u.top.right;
             stickers.u.top.right = stickers.r.bottom.right;
             stickers.r.bottom.right = stickers.d.bottom.left;
-            stickers.b.bottom.left = stickers.l.top.left;
+            stickers.d.bottom.left = stickers.l.top.left;
             stickers.l.top.left = temp;
             temp = stickers.u.top.middle;
             stickers.u.top.middle = stickers.r.middle.right;
