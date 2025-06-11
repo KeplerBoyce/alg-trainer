@@ -102,6 +102,56 @@ const simplifySolution = (solution: string[], index: number) => {
     return solution;
 }
 
+// Adds or adjusts the y rotation at the start of an alg based on the random AUF
+export const adjustYRotation = (alg: string, auf: string) => {
+    const currRotation = (() => {
+        if (alg[0] !== 'y') {
+            return 0;
+        } else if (alg[1] === '\'') {
+            return 3;
+        } else if (alg[1] === '2') {
+            return 2;
+        }
+        return 1;
+    })();
+
+    // These are flipped because the "auf" arg is the AUF applied at scramble time
+    // (We want to apply a rotation to reverse that AUF)
+    const addedRotation = (() => {
+        if (auf === "") {
+            return 0;
+        } else if (auf === "U") {
+            return 3;
+        } else if (auf === "U2") {
+            return 2;
+        }
+        return 1;
+    })();
+
+    // Strip away the current rotation, if there is any
+    if (alg[0] === 'y') {
+        if (alg[1] === '\'') {
+            alg = alg.slice(2);
+        } else if (alg[1] === '2') {
+            alg = alg.slice(2);
+        } else if (alg[1] === ' ') {
+            alg = alg.slice(2);
+        } else {
+            // For if there is no space after the y, which shouldn't happen -- just for safety
+            alg = alg.slice(1);
+        }
+    }
+    const newRotation = (() => {
+        switch ((currRotation + addedRotation) % 4) {
+            case 0: return "";
+            case 1: return "y ";
+            case 2: return "y2 ";
+            default: return "y' ";
+        }
+    })();
+    return `${newRotation}${alg}`;
+}
+
 // Generates a "random" looking scramble to produce the inverse state of an algorithm
 export const randomAlgScramble = (alg: string, numRandom: number, randomization: Randomization) => {
     alg = stripParentheses(alg);
@@ -113,6 +163,7 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
     // Apply randomization according to which randomization mode is selected
     const auf1 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
     const auf2 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
+    const auf3 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
     switch (randomization) {
         case "AUF":
             targetCube.move(auf2);
@@ -132,6 +183,8 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
     }
 
     targetCube.move(inverse);
+    // Another AUF after the reversed algorithm (so user doesn't always see in same orientation)
+    targetCube.move(auf3);
 
     let currState = targetCube.clone();
     let randomMoves = [];
@@ -153,7 +206,9 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
     let solution = `${randomMoves.join(' ')} ${currState.solve()}`.split(' ');
     // Check for merging last random move with first solution move if same face
     const simplified = simplifySolution(solution, numRandom).join(' ');
-    return Cube.inverse(simplified);
+    // Return both the scramble and the final random AUF applied (so we can add the necessary
+    // rotation to the start of the solution)
+    return [Cube.inverse(simplified), auf3];
 }
 
 // Applies the reverse of an alg to the solved cube
@@ -171,7 +226,6 @@ export const getAlgStickers = (alg: string, topColorOnly?: boolean) => {
     for (const move of reverseMoves(moves)) {
         applyMove(stickers, move);
     }
-    console.log(stickers);
     return stickers;
 }
 

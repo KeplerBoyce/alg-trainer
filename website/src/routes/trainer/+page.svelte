@@ -2,7 +2,7 @@
   import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
-  import { reverseMoveString, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
 
@@ -44,9 +44,10 @@
   });
   let prevAlg: string = $state("");
 
-  let scramble: string = $derived.by(() => {
+  let [scramble, auf]: [string, string] = $derived.by(() => {
+    // Ensure that we aren't doing a funny AUF if no alg is selected
     if (alg === "") {
-      return "";
+      return ["", ""];
     }
     return randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF");
   });
@@ -124,10 +125,9 @@
         {/if}
       </div>
     </div>
-        <!-- netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"} -->
     <Alg
       alg={reverseMoveString(scramble)}
-      netStyle="FULL"
+      netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
       topOnly={(ALGS_CONFIG as AlgSetConfig)[set]?.topOnly ?? false}
       hideSolution
     />
@@ -154,7 +154,7 @@
                 Solution:
               </p>
               <p>
-                {alg}
+                {adjustYRotation(alg, auf)}
               </p>
             </div>
           {/if}
