@@ -18,6 +18,22 @@ const faceWithColor = (color: Color) => {
     }
 };
 
+const faceWithTopStrip = (color: Color) => {
+    return {
+        top: {left: color, middle: color, right: color},
+        middle: {left: "BLANK", middle: "BLANK", right: "BLANK"},
+        bottom: {left: "BLANK", middle: "BLANK", right: "BLANK"},
+    }
+}
+
+const faceWithTopCorners = (color: Color) => {
+    return {
+        top: {left: color, middle: "BLANK", right: color},
+        middle: {left: "BLANK", middle: "BLANK", right: "BLANK"},
+        bottom: {left: "BLANK", middle: "BLANK", right: "BLANK"},
+    }
+}
+
 export const DEFAULT_STICKERS = {
     u: faceWithColor("YELLOW"),
     d: faceWithColor("WHITE"),
@@ -27,7 +43,25 @@ export const DEFAULT_STICKERS = {
     b: faceWithColor("BLUE"),
 };
 
-export const DEFAULT_STICKERS_TOP_ONLY = {
+export const STICKERS_LL = {
+    u: faceWithColor("YELLOW"),
+    d: faceWithColor("BLANK"),
+    l: faceWithTopStrip("RED"),
+    r: faceWithTopStrip("ORANGE"),
+    f: faceWithTopStrip("GREEN"),
+    b: faceWithTopStrip("BLUE"),
+};
+
+export const STICKERS_COLL = {
+    u: faceWithColor("YELLOW"),
+    d: faceWithColor("BLANK"),
+    l: faceWithTopCorners("RED"),
+    r: faceWithTopCorners("ORANGE"),
+    f: faceWithTopCorners("GREEN"),
+    b: faceWithTopCorners("BLUE"),
+};
+
+export const STICKERS_OLL = {
     u: faceWithColor("YELLOW"),
     d: faceWithColor("BLANK"),
     l: faceWithColor("BLANK"),

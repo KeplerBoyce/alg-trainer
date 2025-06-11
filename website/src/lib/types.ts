@@ -10,6 +10,12 @@ export type NetStyle = "FULL" | "LL" | "ROUX";
 
 export type Randomization = "AUF" | "EPLL" | "PLL";
 
+// DEFAULT has all sticker colors
+// LL has only top layer stickers
+// COLL has only top face and corner side stickers
+// OLL has only top face stickers
+export type InitialStickerType = "DEFAULT" | "LL" | "COLL" | "OLL";
+
 export type AlgSet = string[];
 
 export type Row = {
@@ -39,6 +45,6 @@ export type AlgSetConfig = {
     [key: string]: {
         netStyle: NetStyle,
         randomization: Randomization,
-        topOnly: boolean,
+        initialStickers: InitialStickerType,
     },
 };

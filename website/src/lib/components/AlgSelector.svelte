@@ -1,7 +1,7 @@
 <script lang="ts">
   import ALGS from "$lib/algs.json";
   import ALGS_CONFIG from "$lib/algs_config.json";
-  import { casesStr } from "$lib/helpers";
+  import { casesStr, getInitialStickers } from "$lib/helpers";
   import { type AlgSetConfig } from "$lib/types";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
@@ -230,7 +230,7 @@
                   netStyle="LL"
                   hideSolution
                   small
-                  topOnly={(ALGS_CONFIG as AlgSetConfig)[set].topOnly}
+                  initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
                 />
               </button>
             {/each}

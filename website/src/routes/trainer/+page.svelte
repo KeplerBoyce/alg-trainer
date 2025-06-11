@@ -2,7 +2,7 @@
   import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
-  import { reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
 
@@ -76,14 +76,19 @@
       return;
     }
     prevAlg = alg;
+    // Make sure that there is an object for this set first
+    if (!$knowledge[set]) {
+      $knowledge[set] = {};
+    }
+    // Update knowledge level accordingly
     if (difficulty === 1) {
-      $knowledge[set][alg] = updateKnowledgeForgot($knowledge[set][alg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeForgot($knowledge[set]?.[alg] ?? 0);
     } else if (difficulty === 2) {
-      $knowledge[set][alg] = updateKnowledgeHard($knowledge[set][alg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeHard($knowledge[set]?.[alg] ?? 0);
     } else if (difficulty === 3) {
-      $knowledge[set][alg] = updateKnowledgeGood($knowledge[set][alg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeGood($knowledge[set]?.[alg] ?? 0);
     } else if (difficulty === 4) {
-      $knowledge[set][alg] = updateKnowledgeEasy($knowledge[set][alg] ?? 0);
+      $knowledge[set][alg] = updateKnowledgeEasy($knowledge[set]?.[alg] ?? 0);
     }
     showSolution = false;
   }
@@ -128,7 +133,7 @@
     <Alg
       alg={reverseMoveString(scramble)}
       netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
-      topOnly={(ALGS_CONFIG as AlgSetConfig)[set]?.topOnly ?? false}
+      initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
       hideSolution
     />
 

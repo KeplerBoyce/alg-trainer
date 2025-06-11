@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type NetStyle } from "$lib/types";
+  import { type NetStyle, type Stickers } from "$lib/types";
   import { getAlgStickers } from "$lib/helpers";
   import FullNet from "./nets/FullNet.svelte";
   import LLNet from "./nets/LLNet.svelte";
@@ -11,17 +11,17 @@
     name,
     hideSolution,
     small,
-    topOnly,
+    initialStickers,
   }: {
     alg: string,
     netStyle: NetStyle,
     name?: string,
     hideSolution?: boolean,
     small?: boolean,
-    topOnly?: boolean,
+    initialStickers?: Stickers,
   } = $props();
 
-  let stickers = $derived(getAlgStickers(alg, topOnly ?? false));
+  let stickers = $derived(getAlgStickers(alg, initialStickers));
 </script>
 
 <div class="flex flex-col items-center gap-4 min-w-min">

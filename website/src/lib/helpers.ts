@@ -1,5 +1,5 @@
-import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, DEFAULT_STICKERS_TOP_ONLY, EPLL_ALGS, PLL_ALGS } from "./constants"
-import type { Color, Face, Layer, Randomization, Stickers } from "./types"
+import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS } from "./constants"
+import type { Color, Face, InitialStickerType, Layer, Randomization, Stickers } from "./types"
 import CubeJS from 'cubejs';
 const Cube = CubeJS;
 
@@ -51,6 +51,15 @@ export const emptyStyle = (small?: boolean) => {
         return "flex-shrink-0 w-2 h-2";
     }
     return "flex-shrink-0 w-4 h-4";
+}
+
+export const getInitialStickers = (initialStickers?: InitialStickerType) => {
+    switch (initialStickers ?? "DEFAULT") {
+        case "LL": return STICKERS_LL;
+        case "COLL": return STICKERS_COLL;
+        case "OLL": return STICKERS_OLL;
+        default: return DEFAULT_STICKERS;
+    }
 }
 
 const stripParentheses = (alg: string) => {
@@ -212,14 +221,9 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
 }
 
 // Applies the reverse of an alg to the solved cube
-export const getAlgStickers = (alg: string, topColorOnly?: boolean) => {
+export const getAlgStickers = (alg: string, initialStickers?: Stickers) => {
     alg = stripParentheses(alg);
-    let stickers;
-    if (topColorOnly) {
-        stickers = structuredClone(DEFAULT_STICKERS_TOP_ONLY);
-    } else {
-        stickers = structuredClone(DEFAULT_STICKERS);
-    }
+    let stickers = structuredClone(initialStickers ?? DEFAULT_STICKERS);
     // Regex for matching all possible Rubik's Cube move notations, empty list on null
     const moves = alg.match(/[LMRUEDFSBlrudfbxyz][']?2?/g) || [];
 
