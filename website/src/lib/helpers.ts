@@ -1,9 +1,14 @@
+import { browser } from '$app/environment';
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS } from "./constants"
 import type { Color, Face, InitialStickerType, Layer, Randomization, Stickers } from "./types"
 import * as CubeJS from 'cubejs';
-const Cube = CubeJS.default;
 
-Cube.initSolver();
+let Cube: any;
+if (browser) {
+  Cube = CubeJS.default;
+  Cube.initSolver();
+}
+
 
 export const updateKnowledgeForgot = (num: number) => {
     return Math.max(1, num / 10);
@@ -163,6 +168,9 @@ export const adjustYRotation = (alg: string, auf: string) => {
 
 // Generates a "random" looking scramble to produce the inverse state of an algorithm
 export const randomAlgScramble = (alg: string, numRandom: number, randomization: Randomization) => {
+    if (!browser) {
+        return "";
+    }
     alg = stripParentheses(alg);
     const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
                       "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
