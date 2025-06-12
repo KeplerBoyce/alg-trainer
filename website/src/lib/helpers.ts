@@ -1,7 +1,7 @@
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS } from "./constants"
 import type { Color, Face, InitialStickerType, Layer, Randomization, Stickers } from "./types"
-import CubeJS from 'cubejs';
-const Cube = CubeJS;
+import * as CubeJS from 'cubejs';
+const Cube = CubeJS.default;
 
 Cube.initSolver();
 
