@@ -1,10 +1,17 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
-  import { getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { getInitialStickers, reverseMoveString, adjustYRotation, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
-  import { type AlgSetConfig } from "$lib/types";
+  import { type AlgSetConfig, type Randomization } from "$lib/types";
+
+  let randomAlgScramble: (alg: string, numRandom: number, randomization: Randomization) => string;
+  onMount(async () => {
+    const cubeHelpers = await import("$lib/cube.client.ts");
+    randomAlgScramble = cubeHelpers.randomAlgScramble;
+  });
 
   let showSolution = $state(false);
   // Tuples of alg, algset
@@ -46,7 +53,7 @@
 
   let [scramble, auf]: [string, string] = $derived.by(() => {
     // Ensure that we aren't doing a funny AUF if no alg is selected
-    if (alg === "") {
+    if (alg === "" || !randomAlgScramble) {
       return ["", ""];
     }
     return randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF");
