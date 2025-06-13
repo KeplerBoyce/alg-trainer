@@ -9,7 +9,11 @@
 
   let randomAlgScramble: (alg: string, numRandom: number, randomization: Randomization) => string;
   onMount(async () => {
-    ({ randomAlgScramble } = await import("$lib/cube.client.ts"));
+    try {
+      ({ randomAlgScramble } = await import("$lib/cube.client.ts"));
+    } catch (error) {
+      console.error("error:", error);
+    }
   });
 
   let showSolution = $state(false);
