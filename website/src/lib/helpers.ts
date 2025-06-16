@@ -1,7 +1,7 @@
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS, INITIAL_FACE_MAPPING } from "./constants"
 import type { Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
-import min2phase from "min2phase.js"
 
+const min2phase = require("min2phase.js");
 min2phase.initFull();
 
 export const updateKnowledgeForgot = (num: number) => {

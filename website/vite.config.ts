@@ -1,7 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
-import commonjs from '@rollup/plugin-commonjs';
+import commonjs from 'vite-plugin-commonjs';
 
 export default defineConfig({
   plugins: [
@@ -10,5 +10,10 @@ export default defineConfig({
     Icons({
       compiler: 'svelte',
     }),
-  ]
+  ],
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
 });
