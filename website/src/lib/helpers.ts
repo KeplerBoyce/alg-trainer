@@ -1,9 +1,8 @@
-import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS } from "./constants"
-import type { Color, Face, InitialStickerType, Layer, Randomization, Stickers } from "./types"
-import * as CubeJS from 'cubejs';
-const Cube = CubeJS.default;
+import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS, INITIAL_FACE_MAPPING } from "./constants"
+import type { Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
+import min2phase from "min2phase.js"
 
-Cube.initSolver();
+min2phase.initFull();
 
 export const updateKnowledgeForgot = (num: number) => {
     return Math.max(1, num / 10);
@@ -62,8 +61,13 @@ export const getInitialStickers = (initialStickers?: InitialStickerType) => {
     }
 }
 
-const stripParentheses = (alg: string) => {
-    return alg.replace(/[\(\)]/g, '');
+const cleanAlg = (alg: string) => {
+    // Remove parentheseses
+    alg = alg.replace(/[\(\)]/g, '');
+    // Replace all whitespace with single spaces (remove double spaces)
+    alg = alg.replace(/\s+/g, ' ');
+    // Trim leading and trailing whitespace
+    return alg.trim();
 }
 
 const simplifySolution = (solution: string[], index: number) => {
@@ -161,13 +165,125 @@ export const adjustYRotation = (alg: string, auf: string) => {
     return `${newRotation}${alg}`;
 }
 
+// Applies a rotation to a face mapping to remap faces
+const rotateFaceMapping = (faceMapping: FaceMapping, rotation: string) => {
+    const amount = (() => {
+        if (rotation.length === 1) {
+            return 1;
+        } else if (rotation[1] === '2') {
+            return 2;
+        }
+        return 3;
+    })();
+    
+    // Perform the rotation `amount` times
+    let temp: string;
+    for (let i = 0; i < amount; i++) {
+        switch (rotation[0]) {
+            case 'x':
+                temp = faceMapping.F;
+                faceMapping.F = faceMapping.D;
+                faceMapping.D = faceMapping.B;
+                faceMapping.B = faceMapping.U;
+                faceMapping.U = temp;
+                break;
+            case 'y':
+                temp = faceMapping.F;
+                faceMapping.F = faceMapping.R;
+                faceMapping.R = faceMapping.B;
+                faceMapping.B = faceMapping.L;
+                faceMapping.L = temp;
+                break;
+            case 'z':
+                temp = faceMapping.U;
+                faceMapping.U = faceMapping.L;
+                faceMapping.L = faceMapping.D;
+                faceMapping.D = faceMapping.R;
+                faceMapping.R = temp;
+                break;
+            default:
+                break;
+        }
+    }
+    return faceMapping;
+}
+
+// Convert sequence of moves into only FRUBLD face turns (no slice/wide moves, etc.)
+export const faceTurnsOnly = (alg: string) => {
+    // Mapping of which face is currently in which position
+    // e.g. after a y rotation, an F move will actually be an R move
+    let mapping = structuredClone(INITIAL_FACE_MAPPING);
+    let moves = alg.split(' ');
+
+    // First, translate slice moves and wide moves into only face turns and rotations
+    moves = moves.flatMap(move => {
+        switch (move) {
+            case "f": return ["B", "z"];
+            case "r": return ["L", "x"];
+            case "u": return ["D", "y"];
+            case "b": return ["F", "z'"];
+            case "l": return ["R", "x'"];
+            case "d": return ["U", "y'"];
+            case "f'": return ["B'", "z'"];
+            case "r'": return ["L'", "x'"];
+            case "u'": return ["D'", "y'"];
+            case "b'": return ["F'", "z"];
+            case "l'": return ["R'", "x"];
+            case "d'": return ["U'", "y"];
+            case "f2": return ["B2", "z2"];
+            case "r2": return ["L2", "x2"];
+            case "u2": return ["D2", "y2"];
+            case "b2": return ["F2", "z2"];
+            case "l2": return ["R2", "x2"];
+            case "d2": return ["U2", "y2"];
+            case "M": return ["L'", "R", "x'"];
+            case "S": return ["F'", "B", "z"];
+            case "E": return ["D'", "U", "y'"];
+            case "M'": return ["L", "R'", "x"];
+            case "S'": return ["F", "B'", "z'"];
+            case "E'": return ["D", "U'", "y"];
+            case "M2": return ["L2", "R2", "x2"];
+            case "S2": return ["F2", "B2", "z2"];
+            case "E2": return ["D2", "U2", "y2"];
+            default: return [move];
+        }
+    });
+
+    // Now, handle cube rotations to translate into only face turns
+    const finalMoves = [];
+    for (const move of moves) {
+        switch (move[0]) {
+            case 'x':
+            case 'y':
+            case 'z':
+                mapping = rotateFaceMapping(mapping, move);
+                break;
+            case 'F':
+            case 'R':
+            case 'U':
+            case 'B':
+            case 'L':
+            case 'D':
+                if (move.length === 1) {
+                    finalMoves.push(mapping[move[0]]);
+                } else {
+                    finalMoves.push(`${mapping[move[0]]}${move[1]}`);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return finalMoves.join(' ');
+}
+
 // Generates a "random" looking scramble to produce the inverse state of an algorithm
 export const randomAlgScramble = (alg: string, numRandom: number, randomization: Randomization) => {
-    alg = stripParentheses(alg);
-    const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
-                      "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
-    const inverse = Cube.inverse(alg);
-    const targetCube = new Cube();
+    if (!alg) {
+        return ["", ""];
+    }
+    const scramble: string[] = [];
+    alg = cleanAlg(alg);
 
     // Apply randomization according to which randomization mode is selected
     const auf1 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
@@ -175,29 +291,29 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
     const auf3 = AUF_ALGS[Math.floor(Math.random() * AUF_ALGS.length)];
     switch (randomization) {
         case "AUF":
-            targetCube.move(auf2);
+            scramble.push(auf1);
             break;
         case "EPLL":
             const epll = EPLL_ALGS[Math.floor(Math.random() * EPLL_ALGS.length)];
-            targetCube.move(auf1);
-            targetCube.move(epll);
-            targetCube.move(auf2);
+            scramble.push(auf1);
+            scramble.push(epll);
+            scramble.push(auf2);
             break;
         case "PLL":
             const pll = PLL_ALGS[Math.floor(Math.random() * PLL_ALGS.length)];
-            targetCube.move(auf1);
-            targetCube.move(pll);
-            targetCube.move(auf2);
+            scramble.push(auf1);
+            scramble.push(pll);
+            scramble.push(auf2);
             break;
     }
 
-    targetCube.move(inverse);
+    scramble.push(reverseMoveString(alg));
     // Another AUF after the reversed algorithm (so user doesn't always see in same orientation)
-    targetCube.move(auf3);
+    scramble.push(auf3);
 
-    let currState = targetCube.clone();
-    let randomMoves = [];
-
+    const allMoves = ["R", "R'", "R2", "U", "U'", "U2", "F", "F'", "F2",
+                      "L", "L'", "L2", "D", "D'", "D2", "B", "B'", "B2"];
+    const randomMoves = [];
     let lastFace = '';
     for (let i = 0; i < numRandom; i++) {
         while (true) {
@@ -206,23 +322,25 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
 
             if (chosenFace !== lastFace) {
                 randomMoves.push(chosenMove);
-                currState.move(chosenMove);
-                lastFace = chosenMove[0];
+                lastFace = chosenFace;
                 break;
             }
         }
     }
-    let solution = `${randomMoves.join(' ')} ${currState.solve()}`.split(' ');
+    const fullScramble = [faceTurnsOnly(cleanAlg(scramble.join(' '))), ...randomMoves].join(' ');
+    const cube = min2phase.fromScramble(fullScramble);
+    const solution = cleanAlg(min2phase.solve(cube));
+    const withRandom = `${randomMoves.join(' ')} ${solution}`;
     // Check for merging last random move with first solution move if same face
-    const simplified = simplifySolution(solution, numRandom).join(' ');
+    const simplified = simplifySolution(withRandom.split(' '), numRandom).join(' ');
     // Return both the scramble and the final random AUF applied (so we can add the necessary
     // rotation to the start of the solution)
-    return [Cube.inverse(simplified), auf3];
+    return [reverseMoveString(simplified), auf3];
 }
 
 // Applies the reverse of an alg to the solved cube
 export const getAlgStickers = (alg: string, initialStickers?: Stickers) => {
-    alg = stripParentheses(alg);
+    alg = cleanAlg(alg);
     let stickers = structuredClone(initialStickers ?? DEFAULT_STICKERS);
     // Regex for matching all possible Rubik's Cube move notations, empty list on null
     const moves = alg.match(/[LMRUEDFSBlrudfbxyz][']?2?/g) || [];
@@ -655,6 +773,8 @@ export const applyMove = (stickers: Stickers, move: string) => {
         case "x":
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "M");
+            cycleLayer(stickers, "M");
+            cycleLayer(stickers, "M");
             cycleLayer(stickers, "L");
             cycleLayer(stickers, "L");
             cycleLayer(stickers, "L");
@@ -663,8 +783,6 @@ export const applyMove = (stickers: Stickers, move: string) => {
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "R");
             cycleLayer(stickers, "R");
-            cycleLayer(stickers, "M");
-            cycleLayer(stickers, "M");
             cycleLayer(stickers, "M");
             cycleLayer(stickers, "L");
             break;
@@ -679,6 +797,8 @@ export const applyMove = (stickers: Stickers, move: string) => {
         case "y":
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "E");
+            cycleLayer(stickers, "E");
+            cycleLayer(stickers, "E");
             cycleLayer(stickers, "D");
             cycleLayer(stickers, "D");
             cycleLayer(stickers, "D");
@@ -687,8 +807,6 @@ export const applyMove = (stickers: Stickers, move: string) => {
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "U");
             cycleLayer(stickers, "U");
-            cycleLayer(stickers, "E");
-            cycleLayer(stickers, "E");
             cycleLayer(stickers, "E");
             cycleLayer(stickers, "D");
             break;

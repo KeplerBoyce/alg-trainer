@@ -34,6 +34,15 @@ const faceWithTopCorners = (color: Color) => {
     }
 }
 
+export const INITIAL_FACE_MAPPING = {
+    F: "F",
+    R: "R",
+    U: "U",
+    B: "B",
+    L: "L",
+    D: "D",
+};
+
 export const DEFAULT_STICKERS = {
     u: faceWithColor("YELLOW"),
     d: faceWithColor("WHITE"),

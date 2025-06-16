@@ -48,3 +48,12 @@ export type AlgSetConfig = {
         initialStickers: InitialStickerType,
     },
 };
+
+export type FaceMapping = {
+    F: string,
+    R: string,
+    U: string,
+    B: string,
+    L: string,
+    D: string,
+}
