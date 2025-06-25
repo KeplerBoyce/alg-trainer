@@ -34,7 +34,7 @@
   } = $state({});
 </script>
 
-<div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black">
+<div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black h-full">
   {#each Object.entries(ALGS) as [set, subsets]}
     <div class="w-full p-2">
       <button
