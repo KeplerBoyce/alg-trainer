@@ -190,8 +190,8 @@
       <NiceButton
         onclick={() => updateAndNext(1)}
         color="bg-gray-200"
-        hoverColor="bg-red-200"
-        activeColor="bg-red-300"
+        hoverColor="hover:bg-red-200"
+        activeColor="active:bg-red-300"
         disabled={selectedArr.length === 0}
       >
         Didn't know (1)
@@ -199,8 +199,8 @@
       <NiceButton
         onclick={() => updateAndNext(2)}
         color="bg-gray-200"
-        hoverColor="bg-amber-200"
-        activeColor="bg-amber-300"
+        hoverColor="hover:bg-amber-200"
+        activeColor="active:bg-amber-300"
         disabled={selectedArr.length === 0}
       >
         Hard (2)
@@ -208,8 +208,8 @@
       <NiceButton
         onclick={() => updateAndNext(3)}
         color="bg-gray-200"
-        hoverColor="bg-emerald-200"
-        activeColor="bg-emerald-300"
+        hoverColor="hover:bg-emerald-200"
+        activeColor="active:bg-emerald-300"
         disabled={selectedArr.length === 0}
       >
         Good (3)
@@ -217,8 +217,8 @@
       <NiceButton
         onclick={() => updateAndNext(4)}
         color="bg-gray-200"
-        hoverColor="bg-indigo-200"
-        activeColor="bg-indigo-300"
+        hoverColor="hover:bg-indigo-200"
+        activeColor="active:bg-indigo-300"
         disabled={selectedArr.length === 0}
       >
         Easy (4)

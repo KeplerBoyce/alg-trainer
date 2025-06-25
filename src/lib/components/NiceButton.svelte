@@ -24,7 +24,7 @@
       handleClick();
     }
   }}
-  class={`transition rounded-lg px-4 py-2 w-min whitespace-nowrap ${disabled ? "hover:cursor-default bg-gray-200 active:bg-gray-300" : `${color} hover:${hoverColor} active:${activeColor}`}`}
+  class={`transition rounded-lg px-4 py-2 w-min whitespace-nowrap ${disabled ? "hover:cursor-default bg-gray-200 active:bg-gray-300" : `${color} ${hoverColor} ${activeColor}`}`}
 >
   {@render children()}
 </button>

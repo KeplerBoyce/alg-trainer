@@ -2,12 +2,17 @@
   import AlgButton from "$lib/components/AlgButton.svelte";
   import ALGS from "$lib/algs.json";
   import Modal from "$lib/components/Modal.svelte";
+  import AlgInfoModal from "$lib/components/modals/AlgInfoModal.svelte";
+  import CreateSetModal from "$lib/components/modals/CreateSetModal.svelte";
   import Alg from "$lib/components/Alg.svelte";
+  import NiceButton from "$lib/components/NiceButton.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
   import { casesStr } from "$lib/helpers";
 
   let modalOpen: boolean = $state(false);
   let modalAlg: string = $state();
+
+  let createModalOpen: boolean = $state(false);
 
   const openAlg = (alg: string) => {
     modalOpen = true;
@@ -110,12 +115,23 @@
       {/if}
     </div>
   {/each}
+
+  <div class="w-full p-2">
+    <NiceButton
+      handleClick={() => {createModalOpen = true}}
+      color="bg-teal-200"
+      hoverColor="hover:bg-teal-300"
+      activeColor="active:bg-teal-400"
+    >
+      Create New Algset
+    </NiceButton>
+  </div>
 </div>
 
 <Modal open={modalOpen} close={() => {modalOpen = false}}>
-  <div class="bg-white p-8 rounded-xl flex flex-col gap-8">
-    {#if modalAlg}
-      <Alg alg={modalAlg} netStyle="LL" />
-    {/if}
-  </div>
+  <AlgInfoModal alg={modalAlg} />
+</Modal>
+
+<Modal open={createModalOpen} close={() => {createModalOpen = false}}>
+  <CreateSetModal />
 </Modal>
