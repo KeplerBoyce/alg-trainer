@@ -2,6 +2,7 @@
   import ALGS from "$lib/algs.json";
   import ALGS_CONFIG from "$lib/algs_config.json";
   import { casesStr, getInitialStickers } from "$lib/helpers";
+  import { knowledge } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
@@ -88,9 +89,22 @@
     });
     return map;
   });
+
+  const setAvgKnowledgeLevel = (set: string) => {
+    let totalKnowledge = 0;
+    let numAlgs = 0;
+    Object.values(ALGS[set]).forEach(subset => {
+      subset.forEach(alg => {
+        numAlgs += 1;
+        totalKnowledge += $knowledge[set]?.[alg] ?? 0;
+      });
+    });
+    
+    return (totalKnowledge / numAlgs).toFixed(2);
+  }
 </script>
 
-<div class="flex flex-col w-1/3 max-w-2xl divide-y divide-black overflow-y-scroll border border-black rounded-lg">
+<div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
   {#each Object.entries(ALGS) as [set, subsets]}
     <div class="p-2">
       <div class="flex items-center gap-4">
@@ -108,7 +122,7 @@
               };
             }
           }}
-          class="flex items-center gap-1 grow"
+          class="flex items-center gap-1 grow whitespace-nowrap"
         >
           <p class="text-lg font-bold text-left">
             {set} ({casesStr((() => {
@@ -121,6 +135,9 @@
           </p>
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
         </button>
+        <p class="italic whitespace-nowrap">
+          {`${setAvgKnowledgeLevel(set)}% learned`}
+        </p>
         <button
           onclick={() => {
             // If all are selected, deselect all, otherwise select all
@@ -142,7 +159,7 @@
               setSelected(newSelected);
             }
           }}
-          class={`transition px-2 py-1 rounded-lg ${allSelected[set]
+          class={`whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
             ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
             : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
           `}
@@ -199,7 +216,7 @@
                       setSelected(newSelected);
                     }
                   }}
-                  class={`transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
+                  class={`whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
                     ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
                     : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
                   `}
