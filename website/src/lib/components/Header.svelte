@@ -7,10 +7,10 @@
   </p>
   <div class="flex gap-4 pt-1.5">
     <NiceLink href="/">
-      Alg List
-    </NiceLink>
-    <NiceLink href="/trainer">
       Trainer
+    </NiceLink>
+    <NiceLink href="/alglist">
+      Alg List
     </NiceLink>
     <NiceLink href="/about">
       About
