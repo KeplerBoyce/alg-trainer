@@ -2,6 +2,7 @@
   import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
+  import NiceButton from "$lib/components/NiceButton.svelte";
   import { getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
@@ -72,7 +73,7 @@
   }
 
   const updateAndNext = (difficulty: number) => {
-    if (!alg) {
+    if (!alg || !selectedArr.length) {
       return;
     }
     prevAlg = alg;
@@ -162,30 +163,42 @@
 </div>
 
     <div class="w-full flex gap-2 p-2">
-      <button
+      <NiceButton
         onclick={() => updateAndNext(1)}
-        class="transition bg-gray-200 hover:bg-red-200 active:bg-red-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+        color="bg-gray-200"
+        hoverColor="bg-red-200"
+        activeColor="bg-red-300"
+        disabled={selectedArr.length === 0}
       >
         Didn't know (1)
-      </button>
-      <button
+      </NiceButton>
+      <NiceButton
         onclick={() => updateAndNext(2)}
-        class="transition bg-gray-200 hover:bg-amber-200 active:bg-amber-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+        color="bg-gray-200"
+        hoverColor="bg-amber-200"
+        activeColor="bg-amber-300"
+        disabled={selectedArr.length === 0}
       >
         Hard (2)
-      </button>
-      <button
+      </NiceButton>
+      <NiceButton
         onclick={() => updateAndNext(3)}
-        class="transition bg-gray-200 hover:bg-emerald-200 active:bg-emerald-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+        color="bg-gray-200"
+        hoverColor="bg-emerald-200"
+        activeColor="bg-emerald-300"
+        disabled={selectedArr.length === 0}
       >
         Good (3)
-      </button>
-      <button
+      </NiceButton>
+      <NiceButton
         onclick={() => updateAndNext(4)}
-        class="transition bg-gray-200 hover:bg-indigo-200 active:bg-indigo-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+        color="bg-gray-200"
+        hoverColor="bg-indigo-200"
+        activeColor="bg-indigo-300"
+        disabled={selectedArr.length === 0}
       >
         Easy (4)
-      </button>
+      </NiceButton>
     </div>
   </div>
   <AlgSelector {selected} {setSelected} />
