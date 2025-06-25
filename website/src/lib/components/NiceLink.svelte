@@ -12,11 +12,11 @@
 </script>
 
 {#if page.url.pathname === href}
-  <a href={href} class="text-black underline">
+  <a {href} class="text-black underline">
     {@render children()}
   </a>
 {:else}
-  <a href={href} class="transition text-blue-500 hover:text-blue-400 underline">
+  <a {href} class="transition text-blue-500 hover:text-blue-400 underline">
     {@render children()}
   </a>
 {/if}
