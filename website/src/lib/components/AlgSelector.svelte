@@ -90,153 +90,158 @@
   });
 </script>
 
-<div class="flex flex-col w-1/3 max-w-2xl gap-2 overflow-y-scroll border border-black p-2 rounded-lg">
+<div class="flex flex-col w-1/3 max-w-2xl divide-y divide-black overflow-y-scroll border border-black rounded-lg">
   {#each Object.entries(ALGS) as [set, subsets]}
-    <div class="flex items-center gap-4">
-      <button
-        onclick={() => {
-          if (setsMinimized[set]) {
-            setsMinimized = {
-              ...setsMinimized,
-              [set]: false,
-            };
-          } else {
-            setsMinimized = {
-              ...setsMinimized,
-              [set]: true,
-            };
-          }
-        }}
-        class="flex items-center gap-1"
-      >
-        <p class="text-lg font-bold text-left">
-          {set} ({casesStr((() => {
-            let count = 0;
-            Object.values(subsets).forEach(subset => {
-              count += subset.length;
-            });
-            return count;
-          })())})
-        </p>
-        <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-      </button>
-      <button
-        onclick={() => {
-          // If all are selected, deselect all, otherwise select all
-          if (allSelected[set]) {
-            const newSelected = {...selected};
-            Object.values(subsets).forEach(subset => {
-              subset.forEach(a => {
-                newSelected[a] = [false, set];
+    <div class="p-2">
+      <div class="flex items-center gap-4">
+        <button
+          onclick={() => {
+            if (setsMinimized[set]) {
+              setsMinimized = {
+                ...setsMinimized,
+                [set]: false,
+              };
+            } else {
+              setsMinimized = {
+                ...setsMinimized,
+                [set]: true,
+              };
+            }
+          }}
+          class="flex items-center gap-1 grow"
+        >
+          <p class="text-lg font-bold text-left">
+            {set} ({casesStr((() => {
+              let count = 0;
+              Object.values(subsets).forEach(subset => {
+                count += subset.length;
               });
-            });
-            setSelected(newSelected);
-          } else {
-            const newSelected = {...selected};
-            Object.values(subsets).forEach(subset => {
-              subset.forEach(a => {
-                newSelected[a] = [true, set];
-              });
-            });
-            setSelected(newSelected);
-          }
-        }}
-        class={`transition px-2 py-1 rounded-lg ${allSelected[set]
-          ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
-          : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
-        `}
-      >
-        {allSelected[set] ? "Deselect All" : "Select All"}
-      </button>
-    </div>
-
-    {#if !setsMinimized[set]}
-      {#each Object.entries(subsets) as [subset, algs]}
-        <div class="flex items-center gap-4 pl-4">
-          <button
-            onclick={() => {
-              if (subsetsMinimized[set]?.[subset]) {
-                subsetsMinimized = {
-                  ...subsetsMinimized,
-                  [set]: {
-                    ...subsetsMinimized[set],
-                    [subset]: false,
-                  }
-                };
-              } else {
-                subsetsMinimized = {
-                  ...subsetsMinimized,
-                  [set]: {
-                    ...subsetsMinimized[set],
-                    [subset]: true,
-                  }
-                };
-              }
-            }}
-            class="flex items-center gap-1"
-          >
-            <p class="font-bold text-left">
-              {subset} ({casesStr(algs.length)})
-            </p>
-            <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
-          </button>
-          <button
-            onclick={() => {
-              // If all are selected, deselect all, otherwise select all
-              if (subsetsAllSelected[set][subset]) {
-                const newSelected = {...selected};
-                algs.forEach(a => {
+              return count;
+            })())})
+          </p>
+          <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+        </button>
+        <button
+          onclick={() => {
+            // If all are selected, deselect all, otherwise select all
+            if (allSelected[set]) {
+              const newSelected = {...selected};
+              Object.values(subsets).forEach(subset => {
+                subset.forEach(a => {
                   newSelected[a] = [false, set];
                 });
-                setSelected(newSelected);
-              } else {
-                const newSelected = {...selected};
-                algs.forEach(a => {
+              });
+              setSelected(newSelected);
+            } else {
+              const newSelected = {...selected};
+              Object.values(subsets).forEach(subset => {
+                subset.forEach(a => {
                   newSelected[a] = [true, set];
                 });
-                setSelected(newSelected);
-              }
-            }}
-            class={`transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
-              ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
-              : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
-            `}
-          >
-            {subsetsAllSelected[set][subset] ? "Deselect All" : "Select All"}
-          </button>
-        </div>
+              });
+              setSelected(newSelected);
+            }
+          }}
+          class={`transition px-2 py-1 rounded-lg ${allSelected[set]
+            ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
+            : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
+          `}
+        >
+          {allSelected[set] ? "Deselect All" : "Select All"}
+        </button>
+      </div>
+      {#if !setsMinimized[set]}
+        <div class="mt-2 flex flex-col divide-y divide-black rounded-lg border border-black">
+          {#each Object.entries(subsets) as [subset, algs]}
+            <div class="p-1">
+              <div class="flex items-center gap-4 pl-1">
+                <button
+                  onclick={() => {
+                    if (subsetsMinimized[set]?.[subset]) {
+                      subsetsMinimized = {
+                        ...subsetsMinimized,
+                        [set]: {
+                          ...subsetsMinimized[set],
+                          [subset]: false,
+                        }
+                      };
+                    } else {
+                      subsetsMinimized = {
+                        ...subsetsMinimized,
+                        [set]: {
+                          ...subsetsMinimized[set],
+                          [subset]: true,
+                        }
+                      };
+                    }
+                  }}
+                  class="flex items-center gap-1 grow"
+                >
+                  <p class="font-bold text-left">
+                    {subset} ({casesStr(algs.length)})
+                  </p>
+                  <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+                </button>
+                <button
+                  onclick={() => {
+                    // If all are selected, deselect all, otherwise select all
+                    if (subsetsAllSelected[set][subset]) {
+                      const newSelected = {...selected};
+                      algs.forEach(a => {
+                        newSelected[a] = [false, set];
+                      });
+                      setSelected(newSelected);
+                    } else {
+                      const newSelected = {...selected};
+                      algs.forEach(a => {
+                        newSelected[a] = [true, set];
+                      });
+                      setSelected(newSelected);
+                    }
+                  }}
+                  class={`transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
+                    ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
+                    : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
+                  `}
+                >
+                  {subsetsAllSelected[set][subset] ? "Deselect All" : "Select All"}
+                </button>
+              </div>
 
-        {#if !subsetsMinimized[set]?.[subset]}
-          <div class="flex flex-wrap">
-            {#each algs as a}
-              <button
-                onclick={() => {
-                  if (selected[a]?.[0]) {
-                    setSelected({
-                      ...selected,
-                      [a]: [false, set],
-                    });
-                  } else {
-                    setSelected({
-                      ...selected,
-                      [a]: [true, set],
-                    });
-                  }
-                }}
-                class={`${selected[a]?.[0] ? "bg-green-200" : ""} w-min p-2`}
-              >
-                <Alg
-                  alg={a}
-                  netStyle="LL"
-                  hideSolution
-                  small
-                  initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
-                />
-              </button>
-            {/each}
-          </div>
-        {/if}
-      {/each}
-    {/if}
+              {#if !subsetsMinimized[set]?.[subset]}
+                <div class="flex flex-wrap">
+                  {#each algs as a}
+                    <button
+                      onclick={() => {
+                        if (selected[a]?.[0]) {
+                          setSelected({
+                            ...selected,
+                            [a]: [false, set],
+                          });
+                        } else {
+                          setSelected({
+                            ...selected,
+                            [a]: [true, set],
+                          });
+                        }
+                      }}
+                      class={`${selected[a]?.[0] ? "bg-green-200" : ""} w-min p-2`}
+                    >
+                      <Alg
+                        alg={a}
+                        netStyle="LL"
+                        hideSolution
+                        small
+                        initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
+                      />
+                    </button>
+                  {/each}
+                </div>
+              {/if}
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
   {/each}
 </div>
