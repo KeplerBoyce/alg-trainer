@@ -94,16 +94,15 @@
   }
 </script>
 
-<div class="w-full h-full flex justify-center gap-12">
-  <div class="grow flex flex-col justify-center items-center gap-6">
-
-    <p class="text-lg font-bold">
+<div class="w-full h-full flex justify-center gap-4">
+  <div class="w-min flex flex-col justify-center items-center divide-y divide-black rounded-lg border border-black">
+    <p class="text-lg font-bold p-2">
       {selectedArr.length} cases selected
     </p>
-    <div>
+    <div class="flex flex-col w-full p-2">
       <div class="flex gap-2">
         <p class="font-bold">
-          Scramble:
+          From set:
         </p>
         {#if selectedArr.length === 0}
           <p>
@@ -111,7 +110,7 @@
           </p>
         {:else}
           <p>
-            {scramble}
+            {set}
           </p>
         {/if}
       </div>
@@ -130,68 +129,63 @@
         {/if}
       </div>
     </div>
-    <Alg
-      alg={reverseMoveString(scramble)}
-      netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
-      initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
-      hideSolution
-    />
+    <div class="w-full grow flex flex-col justify-center items-center gap-6 p-2">
+      <div class="h-full flex items-end">
+        {#if selectedArr.length}
+          <p>
+            {scramble}
+          </p>
+        {/if}
+      </div>
+      <Alg
+        alg={reverseMoveString(scramble)}
+        netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
+        initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
+        hideSolution
+      />
+      <div class="h-full">
+        {#if selectedArr.length && !showSolution}
+          <button
+            onclick={() => {
+              showSolution = true;
+            }}
+            class="transition bg-gray-200 hover:bg-sky-200 active:bg-sky-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+          >
+            Reveal solution (Spacebar)
+          </button>
+        {:else}
+          <p>
+            {adjustYRotation(alg, auf)}
+          </p>
+        {/if}
+      </div>
+</div>
 
-    <div class="flex flex-col items-center">
-      {#if selectedArr.length === 0}
-        <p class="italic">
-          No cases selected!
-        </p>
-      {:else}
-        <div class="h-12">
-          {#if !showSolution}
-            <button
-              onclick={() => {
-                showSolution = true;
-              }}
-              class="transition bg-gray-200 hover:bg-sky-200 active:bg-sky-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
-            >
-              Reveal solution (Spacebar)
-            </button>
-          {:else}
-            <div class="flex gap-2">
-              <p class="font-bold">
-                Solution:
-              </p>
-              <p>
-                {adjustYRotation(alg, auf)}
-              </p>
-            </div>
-          {/if}
-        </div>
-
-        <div class="flex gap-2">
-          <button
-            onclick={() => updateAndNext(1)}
-            class="transition bg-gray-200 hover:bg-red-200 active:bg-red-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
-          >
-            Didn't know (1)
-          </button>
-          <button
-            onclick={() => updateAndNext(2)}
-            class="transition bg-gray-200 hover:bg-amber-200 active:bg-amber-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
-          >
-            Hard (2)
-          </button>
-          <button
-            onclick={() => updateAndNext(3)}
-            class="transition bg-gray-200 hover:bg-emerald-200 active:bg-emerald-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
-          >
-            Good (3)
-          </button>
-          <button
-            onclick={() => updateAndNext(4)}
-            class="transition bg-gray-200 hover:bg-indigo-200 active:bg-indigo-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
-          >
-            Easy (4)
-          </button>
-        </div>
-      {/if}
+    <div class="w-full flex gap-2 p-2">
+      <button
+        onclick={() => updateAndNext(1)}
+        class="transition bg-gray-200 hover:bg-red-200 active:bg-red-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+      >
+        Didn't know (1)
+      </button>
+      <button
+        onclick={() => updateAndNext(2)}
+        class="transition bg-gray-200 hover:bg-amber-200 active:bg-amber-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+      >
+        Hard (2)
+      </button>
+      <button
+        onclick={() => updateAndNext(3)}
+        class="transition bg-gray-200 hover:bg-emerald-200 active:bg-emerald-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+      >
+        Good (3)
+      </button>
+      <button
+        onclick={() => updateAndNext(4)}
+        class="transition bg-gray-200 hover:bg-indigo-200 active:bg-indigo-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+      >
+        Easy (4)
+      </button>
     </div>
   </div>
   <AlgSelector {selected} {setSelected} />

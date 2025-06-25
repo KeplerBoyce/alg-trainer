@@ -34,75 +34,81 @@
   } = $state({});
 </script>
 
-<div class="flex flex-col items-center mt-4">
+<div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black">
   {#each Object.entries(ALGS) as [set, subsets]}
-    <button
-      onclick={() => {
-        if (setsMinimized[set]) {
-          setsMinimized = {
-            ...setsMinimized,
-            [set]: false,
-          };
-        } else {
-          setsMinimized = {
-            ...setsMinimized,
-            [set]: true,
-          };
-        }
-      }}
-      class="flex items-center gap-1 mb-4"
-    >
-      <p class="text-2xl font-bold">
-        {set} ({casesStr((() => {
-          let count = 0;
-          Object.values(subsets).forEach(subset => {
-            count += subset.length;
-          });
-          return count;
-        })())})
-      </p>
-      <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-    </button>
+    <div class="w-full p-2">
+      <button
+        onclick={() => {
+          if (setsMinimized[set]) {
+            setsMinimized = {
+              ...setsMinimized,
+              [set]: false,
+            };
+          } else {
+            setsMinimized = {
+              ...setsMinimized,
+              [set]: true,
+            };
+          }
+        }}
+        class="flex items-center gap-1 w-full"
+      >
+        <p class="text-2xl font-bold">
+          {set} ({casesStr((() => {
+            let count = 0;
+            Object.values(subsets).forEach(subset => {
+              count += subset.length;
+            });
+            return count;
+          })())})
+        </p>
+        <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+      </button>
 
-    {#if !setsMinimized[set]}
-      {#each Object.entries(subsets) as [subset, algs]}
-        <button
-          onclick={() => {
-            if (subsetsMinimized[set]?.[subset]) {
-              subsetsMinimized = {
-                ...subsetsMinimized,
-                [set]: {
-                  ...subsetsMinimized[set],
-                  [subset]: false,
-                }
-              };
-            } else {
-              subsetsMinimized = {
-                ...subsetsMinimized,
-                [set]: {
-                  ...subsetsMinimized[set],
-                  [subset]: true,
-                }
-              };
-            }
-          }}
-          class="flex items-center gap-1 mb-2"
-        >
-          <p class="text-xl font-bold">
-            {subset} ({casesStr(algs.length)})
-          </p>
-          <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
-        </button>
+      {#if !setsMinimized[set]}
+        <div class="flex flex-col divide-y divide-black w-full mt-2 rounded-lg border border-black">
+          {#each Object.entries(subsets) as [subset, algs]}
+            <div class="p-2">
+              <button
+                onclick={() => {
+                  if (subsetsMinimized[set]?.[subset]) {
+                    subsetsMinimized = {
+                      ...subsetsMinimized,
+                      [set]: {
+                        ...subsetsMinimized[set],
+                        [subset]: false,
+                      }
+                    };
+                  } else {
+                    subsetsMinimized = {
+                      ...subsetsMinimized,
+                      [set]: {
+                        ...subsetsMinimized[set],
+                        [subset]: true,
+                      }
+                    };
+                  }
+                }}
+                class="flex items-center gap-1"
+              >
+                <p class="text-xl font-bold">
+                  {subset} ({casesStr(algs.length)})
+                </p>
+                <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+              </button>
 
-        {#if !subsetsMinimized[set]?.[subset]}
-          <div class="flex justify-center flex-wrap mb-4">
-            {#each algs as alg, i}
-              <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
-            {/each}
-          </div>
-        {/if}
-      {/each}
-    {/if}
+              {#if !subsetsMinimized[set]?.[subset]}
+                <div class="w-full flex flex-wrap">
+                  {#each algs as alg, i}
+                    <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
+                  {/each}
+                </div>
+              {/if}
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
   {/each}
 </div>
 
