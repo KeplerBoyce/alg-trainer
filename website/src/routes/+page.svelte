@@ -14,30 +14,31 @@
   }
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col mt-4">
   {#each Object.entries(ALGS) as [set, subsets]}
+    <div class="mb-8">
+      <h2 class="text-2xl text-center font-bold mb-4">
+        {set} ({casesStr((() => {
+          let count = 0;
+          Object.values(subsets).forEach(subset => {
+            count += subset.length;
+          });
+          return count;
+        })())})
+      </h2>
 
-    <p class="text-2xl text-center font-bold mb-8">
-      {set} ({casesStr((() => {
-        let count = 0;
-        Object.values(subsets).forEach(subset => {
-          count += subset.length;
-        });
-        return count;
-      })())})
-    </p>
+      {#each Object.entries(subsets) as [subset, algs]}
+        <h3 class="text-xl text-center font-bold mb-2">
+          {subset} ({casesStr(algs.length)})
+        </h3>
 
-    {#each Object.entries(subsets) as [subset, algs]}
-      <p class="text-2xl text-center font-bold mb-8">
-        {subset} ({casesStr(algs.length)})
-      </p>
-
-      <div class="flex justify-center flex-wrap gap-4 mb-12">
-        {#each algs as alg, i}
-          <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
-        {/each}
-      </div>
-    {/each}
+        <div class="flex justify-center flex-wrap mb-4">
+          {#each algs as alg, i}
+            <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
+          {/each}
+        </div>
+      {/each}
+    </div>
   {/each}
 </div>
 

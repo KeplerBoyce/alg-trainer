@@ -7,7 +7,7 @@
 </script>
 
 <button on:click={callback}>
-  <div class="bg-slate-100 drop-shadow-lg p-4 rounded-lg border transition-transform hover:scale-105 active:bg-slate-200 w-min">
-    <Alg alg={alg} netStyle="LL" name={name} />
+  <div class="transition-transform p-2 hover:bg-slate-100 active:bg-slate-200 w-min">
+    <Alg alg={alg} netStyle="LL" name={name} hideSolution small />
   </div>
 </button>
