@@ -99,8 +99,7 @@
         totalKnowledge += $knowledge[set]?.[alg] ?? 0;
       });
     });
-    
-    return (totalKnowledge / numAlgs).toFixed(2);
+    return (totalKnowledge / numAlgs).toFixed(1);
   }
 </script>
 

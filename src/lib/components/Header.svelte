@@ -15,7 +15,7 @@
       Alg List
     </NiceLink>
     <NiceLink href="/about">
-      About
+      About/Help
     </NiceLink>
   </div>
 </div>

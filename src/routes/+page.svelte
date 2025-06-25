@@ -93,6 +93,16 @@
     }
     showSolution = false;
   }
+
+  const selectionKnowledgeLevel = () => {
+    let totalKnowledge = 0;
+    let numAlgs = 0;
+    selectedArr.forEach(([a, s]) => {
+      totalKnowledge += $knowledge[s]?.[a] ?? 0;
+      numAlgs += 1;
+    });
+    return (totalKnowledge / numAlgs).toFixed(1);
+  }
 </script>
 
 <div class="w-full h-full flex justify-center gap-4">
@@ -117,7 +127,7 @@
       </div>
       <div class="flex gap-2">
         <p class="font-bold">
-          Knowledge level:
+          Case knowledge level:
         </p>
         {#if selectedArr.length === 0}
           <p>
@@ -126,6 +136,20 @@
         {:else}
           <p>
             {$knowledge[set]?.[alg] ?? 0}/100
+          </p>
+        {/if}
+      </div>
+      <div class="flex gap-2">
+        <p class="font-bold">
+          Selection knowledge level:
+        </p>
+        {#if selectedArr.length === 0}
+          <p>
+            N/A
+          </p>
+        {:else}
+          <p>
+            {selectionKnowledgeLevel()}/100
           </p>
         {/if}
       </div>
