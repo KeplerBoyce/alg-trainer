@@ -1,13 +1,12 @@
 <script lang="ts">
   import AlgButton from "$lib/components/AlgButton.svelte";
-  import ALGS from "$lib/algs.json";
   import Modal from "$lib/components/Modal.svelte";
   import AlgInfoModal from "$lib/components/modals/AlgInfoModal.svelte";
   import CreateSetModal from "$lib/components/modals/CreateSetModal.svelte";
   import Alg from "$lib/components/Alg.svelte";
   import NiceButton from "$lib/components/NiceButton.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
-  import { casesStr } from "$lib/helpers";
+  import { casesStr, allAlgsets } from "$lib/helpers";
 
   let modalOpen: boolean = $state(false);
   let modalAlg: string = $state();
@@ -26,7 +25,7 @@
     const initialMinimized: {
       [key: string]: boolean,
     } = {};
-    Object.entries(ALGS).forEach(([set, _]) => {
+    allAlgsets().forEach(([set, _]) => {
       initialMinimized[set] = true;
     })
     return initialMinimized;
@@ -40,7 +39,7 @@
 </script>
 
 <div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black h-full">
-  {#each Object.entries(ALGS) as [set, subsets]}
+  {#each allAlgsets() as [set, subsets]}
     <div class="w-full p-2">
       <button
         onclick={() => {
@@ -122,6 +121,7 @@
       color="bg-teal-200"
       hoverColor="hover:bg-teal-300"
       activeColor="active:bg-teal-400"
+      className="px-3 py-2"
     >
       Create New Algset
     </NiceButton>

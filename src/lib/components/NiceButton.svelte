@@ -8,6 +8,7 @@
     hoverColor,
     activeColor,
     disabled,
+    className,
   }: {
     children: Snippet,
     handleClick: () => void,
@@ -15,6 +16,7 @@
     hoverColor: string,
     activeColor: string,
     disabled?: boolean,
+    className?: string,
   } = $props();
 </script>
 
@@ -24,7 +26,7 @@
       handleClick();
     }
   }}
-  class={`transition rounded-lg px-4 py-2 w-min whitespace-nowrap ${disabled ? "hover:cursor-default bg-gray-200 active:bg-gray-300" : `${color} ${hoverColor} ${activeColor}`}`}
+  class={`${className ?? ""} transition border border-black rounded-lg whitespace-nowrap ${disabled ? "hover:cursor-default bg-gray-200 active:bg-gray-300" : `${color} ${hoverColor} ${activeColor}`}`}
 >
   {@render children()}
 </button>

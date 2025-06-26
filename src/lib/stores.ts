@@ -6,3 +6,10 @@ export const knowledge = localStorageStore<{
         [key: string]: number,
     },
 }>("knowledge", {});
+
+// User-created algsets, algset name maps to object in which subset name maps to alg list
+export const algsets = localStorageStore<{
+    [key: string]: {
+        [key: string]: string[],
+    },
+}>("algsets", {});

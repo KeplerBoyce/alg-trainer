@@ -193,6 +193,7 @@
         hoverColor="hover:bg-red-200"
         activeColor="active:bg-red-300"
         disabled={selectedArr.length === 0}
+        className="p-2"
       >
         Didn't know (1)
       </NiceButton>
@@ -202,6 +203,7 @@
         hoverColor="hover:bg-amber-200"
         activeColor="active:bg-amber-300"
         disabled={selectedArr.length === 0}
+        className="p-2"
       >
         Hard (2)
       </NiceButton>
@@ -211,6 +213,7 @@
         hoverColor="hover:bg-emerald-200"
         activeColor="active:bg-emerald-300"
         disabled={selectedArr.length === 0}
+        className="p-2"
       >
         Good (3)
       </NiceButton>
@@ -220,6 +223,7 @@
         hoverColor="hover:bg-indigo-200"
         activeColor="active:bg-indigo-300"
         disabled={selectedArr.length === 0}
+        className="p-2"
       >
         Easy (4)
       </NiceButton>

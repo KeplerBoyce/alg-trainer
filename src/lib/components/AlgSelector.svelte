@@ -158,7 +158,7 @@
               setSelected(newSelected);
             }
           }}
-          class={`whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
+          class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
             ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
             : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
           `}
@@ -215,7 +215,7 @@
                       setSelected(newSelected);
                     }
                   }}
-                  class={`whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
+                  class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
                     ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
                     : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
                   `}

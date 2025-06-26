@@ -1,8 +1,28 @@
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS, INITIAL_FACE_MAPPING } from "./constants"
 import type { Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
+import ALGS from "./algs.json";
+import { algsets } from "./stores";
+import { get } from "svelte/store";
 
 const min2phase = require("min2phase.js");
 min2phase.initFull();
+
+// Returns an array of tuples (set name, subsets) of default algsets merged with user algsets
+export const allAlgsets = () => {
+    const allSets: [
+        string,
+        {
+            [key: string]: string[],
+        },
+    ][] = [];
+    Object.entries(ALGS).forEach(([set, subsets]) => {
+        allSets.push([set, subsets]);
+    });
+    Object.entries(get(algsets)).forEach(([set, subsets]) => {
+        allSets.push([set, subsets]);
+    });
+    return allSets;
+}
 
 export const updateKnowledgeForgot = (num: number) => {
     return Math.max(1, num / 10);

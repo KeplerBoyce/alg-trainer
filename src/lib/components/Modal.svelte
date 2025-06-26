@@ -18,7 +18,7 @@
 </script>
 
 <div
-  class={`fixed inset-0 flex justify-center bg-black/50 items-center transition duration-300
+  class={`fixed inset-0 flex justify-center bg-black/30 items-center transition duration-300
     ${open ? "opacity-100" : "opacity-0"}
     ${internalOpen ? "z-[100]" : "-z-10"}`}
   on:click={() => {

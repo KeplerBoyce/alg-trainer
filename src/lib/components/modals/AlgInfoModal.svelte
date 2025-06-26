@@ -8,7 +8,7 @@
   } = $props();
 </script>
 
-<div class="bg-white p-8 rounded-xl flex flex-col gap-8">
+<div class="border border-black bg-white p-8 rounded-xl flex flex-col gap-8">
   {#if alg}
     <Alg {alg} netStyle="LL" />
   {/if}
