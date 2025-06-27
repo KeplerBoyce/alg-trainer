@@ -64,7 +64,7 @@
 
 <div class="max-h-[80vh] border border-black bg-white p-8 rounded-xl flex flex-col gap-2 w-32rem max-w-[90vw]">
   <h1 class="font-bold text-2xl text-center mb-2">
-    {editing ? "New Algset" : "Editing Algset"}
+    {editing ? "Editing Algset" : "New Algset"}
   </h1>
 
   <div class="flex flex-col gap-1">
