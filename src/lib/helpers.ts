@@ -35,8 +35,8 @@ export const algIsValid = (alg: string) => {
     let mustStartMove = true;
     const startingChars = "FRUBLDMSEfrubldxyz";
     for (let i = 0; i < alg.length; i++) {
-        // Skip spaces for simplicity here
-        if (alg[i] === ' ') {
+        // Skip spaces and parentheses for simplicity here
+        if (alg[i] === ' ' || alg[i] === '(' || alg[i] === ')') {
             continue;
         }
         if (mustStartMove && startingChars.indexOf(alg[i]) < 0) {
@@ -46,7 +46,9 @@ export const algIsValid = (alg: string) => {
             mustStartMove = false;
         } else if (startingChars.indexOf(alg[i]) >= 0) {
             mustStartMove = false;
-        } else if (alg[i] === '2' || alg[i] === '\'') {
+        } else if (alg[i] === '2') {
+            continue;
+        } else if (alg[i] === '\'') {
             mustStartMove = true;
         } else {
             // Invalid second character of move

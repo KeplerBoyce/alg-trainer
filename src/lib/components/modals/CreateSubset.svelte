@@ -6,18 +6,36 @@
     setName,
     algs,
     setAlgs,
+    canDelete,
+    deleteSubset,
   }: {
     name: string,
     setName: (x: string) => void,
     algs: string[],
     setAlgs: (x: string[]) => void,
+    canDelete: boolean,
+    deleteSubset: () => void,
   } = $props();
 </script>
 
 <div class="w-full flex flex-col gap-1 p-1">
-  <p class="font-bold text-sm">
-    Subset Name
-  </p>
+  <div class="flex items-end">
+    <p class="grow font-bold text-sm">
+      Subset Name
+    </p>
+    <NiceButton
+      handleClick={() => {
+        deleteSubset();
+      }}
+      className="px-1.5 py-1 text-white font-bold text-sm"
+      color="bg-red-500"
+      hoverColor="hover:bg-red-600"
+      activeColor="active:bg-red-700"
+      disabled={!canDelete}
+    >
+      Delete Subset
+    </NiceButton>
+  </div>
   <input
     type="text"
     value={name}
@@ -32,17 +50,33 @@
     Algorithms
   </p>
   {#each algs as alg, i}
-    <input
-      type="text"
-      value={alg}
-      oninput={(e) => {
-        const newAlgs = [...algs];
-        newAlgs[i] = e.target.value;
-        setAlgs(newAlgs);
-      }}
-      class="px-1 rounded-lg border border-black"
-      placeholder="e.g. F R U R' U' F'"
-    >
+    <div class="w-full flex gap-1">
+      <input
+        type="text"
+        value={alg}
+        oninput={(e) => {
+          const newAlgs = [...algs];
+          newAlgs[i] = e.target.value;
+          setAlgs(newAlgs);
+        }}
+        class="min-w-0 grow px-1 rounded-lg border border-black"
+        placeholder="e.g. F R U R' U' F'"
+      >
+      <NiceButton
+        handleClick={() => {
+          const newAlgs = [...algs];
+          newAlgs.splice(i, 1);
+          setAlgs(newAlgs);
+        }}
+        className="px-1.5 text-white font-bold text-xs"
+        color="bg-red-500"
+        hoverColor="hover:bg-red-600"
+        activeColor="active:bg-red-700"
+        disabled={algs.length === 1}
+      >
+        Delete
+      </NiceButton>
+    </div>
   {/each}
   <NiceButton
     handleClick={() => {

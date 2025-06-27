@@ -62,7 +62,7 @@
   });
 </script>
 
-<div class="border border-black bg-white p-8 rounded-xl flex flex-col gap-2 min-w-[24rem]">
+<div class="max-h-[80vh] border border-black bg-white p-8 rounded-xl flex flex-col gap-2 w-32rem max-w-[90vw]">
   <h1 class="font-bold text-2xl text-center mb-2">
     {editing ? "New Algset" : "Editing Algset"}
   </h1>
@@ -82,24 +82,32 @@
     >
   </div>
 
-  <div class="flex flex-col divide-y divide-black rounded-lg border border-black">
+  <div class="flex flex-col divide-y divide-black rounded-lg border border-black overflow-y-hidden">
     <h2 class="font-bold text-xl p-1">
       Subsets
     </h2>
-    {#each subsets as [subset, algs], i}
-      <div class="px-2 py-3">
-        <CreateSubset
-          name={subset}
-          setName={(x) => {
-            subsets[i][0] = x;
-          }}
-          {algs}
-          setAlgs={(x) => {
-            subsets[i][1] = x;
-          }}
-        />
-      </div>
-    {/each}
+    <div class="flex flex-col divide-y divide-black overflow-y-scroll">
+      {#each subsets as [subset, algs], i}
+        <div class="px-2 pt-2 pb-4">
+          <CreateSubset
+            name={subset}
+            setName={(x) => {
+              subsets[i][0] = x;
+            }}
+            {algs}
+            setAlgs={(x) => {
+              subsets[i][1] = x;
+            }}
+            canDelete={subsets.length > 1}
+            deleteSubset={() => {
+              const newSubsets = [...subsets];
+              newSubsets.splice(i, 1);
+              subsets = newSubsets;
+            }}
+          />
+        </div>
+      {/each}
+    </div>
     <div class="p-1">
       <NiceButton
         handleClick={() => {

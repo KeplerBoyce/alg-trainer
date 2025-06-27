@@ -102,6 +102,28 @@
         
         <NiceButton
           handleClick={() => {
+            let newName = set;
+            // Set of algset names that are already in use
+            const usedNames = {};
+            allSets.forEach(([name]) => {
+              usedNames[name] = true;
+            });
+            // Keep adding asterisks until the name isn't used (can't have duplicate names)
+            while (usedNames[newName]) {
+              newName += '*';
+            }
+            setsMinimized[newName] = true;
+            $algsets[newName] = subsets;
+          }}
+          className="px-2 text-sm font-bold text-white mr-1"
+          color="bg-orange-400"
+          hoverColor="hover:bg-orange-500"
+          activeColor="active:bg-orange-600"
+        >
+          Copy
+        </NiceButton>
+        <NiceButton
+          handleClick={() => {
             editAlgset(set);
           }}
           className="px-2 text-sm font-bold text-white mr-1"
@@ -182,7 +204,7 @@
       color="bg-teal-200"
       hoverColor="hover:bg-teal-300"
       activeColor="active:bg-teal-400"
-      className="px-3 py-2"
+      className="w-full px-3 py-2 font-bold"
     >
       Create New Algset
     </NiceButton>
