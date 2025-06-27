@@ -1,8 +1,7 @@
 <script lang="ts">
-  import ALGS from "$lib/algs.json";
   import ALGS_CONFIG from "$lib/algs_config.json";
-  import { casesStr, getInitialStickers } from "$lib/helpers";
-  import { knowledge } from "$lib/stores";
+  import { casesStr, getInitialStickers, allAlgsets } from "$lib/helpers";
+  import { knowledge, algsets } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
@@ -19,6 +18,9 @@
     }) => void,
   } = $props();
 
+  // A derived store here just to force reactivity
+  let allSets = $derived(allAlgsets($algsets));
+
   // Set of algset names that are minimized
   let setsMinimized: {
     [key: string]: boolean,
@@ -26,7 +28,7 @@
     const initialMinimized: {
       [key: string]: boolean,
     } = {};
-    Object.entries(ALGS).forEach(([set, _]) => {
+    allSets.forEach(([set, _]) => {
       initialMinimized[set] = true;
     })
     return initialMinimized;
@@ -45,7 +47,7 @@
     let map: {
       [key: string]: boolean,
     } = {};
-    Object.entries(ALGS).forEach(([set, subsets]) => {
+    allSets.forEach(([set, subsets]) => {
       let allSelected = true;
       Object.values(subsets).forEach(subset => {
         subset.forEach(a => {
@@ -74,7 +76,7 @@
         [key: string]: boolean,
       },
     } = {};
-    Object.entries(ALGS).forEach(([set, subsets]) => {
+    allSets.forEach(([set, subsets]) => {
       map[set] = {};
       Object.entries(subsets).forEach(([subset, algs]) => {
         let allSelected = true;
@@ -91,9 +93,17 @@
   });
 
   const setAvgKnowledgeLevel = (set: string) => {
+    let subsets = [];
+    // Find the proper subset by name
+    for (let i = 0; i < allSets.length; i++) {
+      if (allSets[i][0] === set) {
+        subsets = Object.values(allSets[i][1]);
+      }
+    }
+    // Find total knowledge level
     let totalKnowledge = 0;
     let numAlgs = 0;
-    Object.values(ALGS[set]).forEach(subset => {
+    subsets.forEach(subset => {
       subset.forEach(alg => {
         numAlgs += 1;
         totalKnowledge += $knowledge[set]?.[alg] ?? 0;
@@ -104,7 +114,7 @@
 </script>
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
-  {#each Object.entries(ALGS) as [set, subsets]}
+  {#each allSets as [set, subsets]}
     <div class="p-2">
       <div class="flex items-center gap-4">
         <button
@@ -121,7 +131,7 @@
               };
             }
           }}
-          class="flex items-center gap-1 grow whitespace-nowrap"
+          class="flex items-center gap-1 whitespace-nowrap"
         >
           <p class="text-lg font-bold text-left">
             {set} ({casesStr((() => {
@@ -134,37 +144,39 @@
           </p>
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
         </button>
-        <p class="italic whitespace-nowrap">
+        <p class="grow italic whitespace-nowrap">
           {`${setAvgKnowledgeLevel(set)}% learned`}
         </p>
-        <button
-          onclick={() => {
-            // If all are selected, deselect all, otherwise select all
-            if (allSelected[set]) {
-              const newSelected = {...selected};
-              Object.values(subsets).forEach(subset => {
-                subset.forEach(a => {
-                  newSelected[a] = [false, set];
+        <div class="w-[7rem] flex justify-end">
+          <button
+            onclick={() => {
+              // If all are selected, deselect all, otherwise select all
+              if (allSelected[set]) {
+                const newSelected = {...selected};
+                Object.values(subsets).forEach(subset => {
+                  subset.forEach(a => {
+                    newSelected[a] = [false, set];
+                  });
                 });
-              });
-              setSelected(newSelected);
-            } else {
-              const newSelected = {...selected};
-              Object.values(subsets).forEach(subset => {
-                subset.forEach(a => {
-                  newSelected[a] = [true, set];
+                setSelected(newSelected);
+              } else {
+                const newSelected = {...selected};
+                Object.values(subsets).forEach(subset => {
+                  subset.forEach(a => {
+                    newSelected[a] = [true, set];
+                  });
                 });
-              });
-              setSelected(newSelected);
-            }
-          }}
-          class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
-            ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
-            : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
-          `}
-        >
-          {allSelected[set] ? "Deselect All" : "Select All"}
-        </button>
+                setSelected(newSelected);
+              }
+            }}
+            class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
+              ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
+              : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
+            `}
+          >
+            {allSelected[set] ? "Deselect All" : "Select All"}
+          </button>
+        </div>
       </div>
       {#if !setsMinimized[set]}
         <div class="mt-2 flex flex-col divide-y divide-black rounded-lg border border-black">
