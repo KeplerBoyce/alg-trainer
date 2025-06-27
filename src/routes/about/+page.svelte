@@ -36,7 +36,7 @@
     Once you have chosen the bank of algorithms you would like to train, the trainer will test you on the case that currently has the lowest knowledge level. A scramble to set up the cube for that particular case will be shown. The scrambles are randomized as much as possible to fully test your case recognition—for example, if a COLL case is selected, it will randomize the edge permutation and AUF to make sure you aren't accidentally recognizing by edge stickers and learning only one orientation.
   </p>
   <p>
-    Note that this means the cube may not be entirely solved after applying the solution—for a COLL case, for example, you will be left with a random EPLL case after applying the solution, consistent with how it would look when you use COLL in a real solve. If you're training only COLL cases, this is perfectly fine, since having a random edge permutation won't mess up the next case's setup. However, if you mix cases from multiple different algsets in your training selection, this will cause issues. For example, training a PLL case requires the last layer to be completely solved before applying the setup scramble, which isn't guaranteed if you just did an OLL or COLL case right before. If you would like to mix together multiple algsets and are fine with less-complete recognition practice, you can change the randomization option for that algset in the Alg List page as explained later.
+    Note that this means the cube may not be entirely solved after applying the solution—for a COLL case, for example, you will be left with a random EPLL case after applying the solution, consistent with how it would look when you use COLL in a real solve. If you're training only COLL cases, this is perfectly fine, since having a random edge permutation won't mess up the next case's setup. However, if you mix cases from multiple different algsets in your training selection, this will cause issues. For example, training a PLL case requires the last layer to be completely solved before applying the setup scramble, which isn't guaranteed if you just did an OLL or COLL case right before. If you would like to mix together multiple algsets and are fine with less-complete recognition practice, you can change the randomization option for that algset in the Algsets page as explained later.
   </p>
 
   <h2>
@@ -47,14 +47,14 @@
   </p>
 
   <h2>
-    Adding and Editing Algsets
+    Creating and Editing Algsets
   </h2>
   <p>
-    On the Alg List page, you can see a simple list of every algset and all of their subsets offered. You can use this if there is a particular case you want to see the solution for or if you want to create your own algsets or adjust existing ones.
+    On the Algsets page, you can see a simple list of every algset and all of their subsets offered. You can use this if there is a particular case you want to see the solution for or if you want to create your own algsets or adjust existing ones.
   </p>
 
   <p>
-    To create a new algset, use the button at the bottom of the list on the Alg List page. This will open a popup modal where you can specify the subsets you want to define for your algset and type in all of the algorithms (i.e. solutions for the cases) in each subset. All basic 3x3 move notations are supported: FRUBLD face turns, MSE slice turns, frubld wide turns, and xyz cube rotations, with ' or 2 to designate CCW or 180 degree turns. There is also an option to duplicate an existing algset, e.g. if you would like to make adjustments to one of the provided algsets.
+    To create a new algset, use the button at the bottom of the list on the Algsets page. This will open a popup modal where you can specify the subsets you want to define for your algset and type in all of the algorithms (i.e. solutions for the cases) in each subset. All basic 3x3 move notations are supported: FRUBLD face turns, MSE slice turns, frubld wide turns, and xyz cube rotations, with ' or 2 to designate CCW or 180 degree turns. There is also an option to duplicate an existing algset, e.g. if you would like to make adjustments to one of the provided algsets.
   </p>
   <p>
     The "cube net" option selects the style of the net in the trainer when that case is selected: Full shows all six faces of the cube, Last Layer shows only the top face and stickers around the sides of the top layer, and Roux shows the same as Last Layer but with the bottom M slice edges included as well.

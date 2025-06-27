@@ -11,8 +11,8 @@
     <NiceLink href="/">
       Trainer
     </NiceLink>
-    <NiceLink href="/alglist">
-      Alg List
+    <NiceLink href="/algsets">
+      Algsets
     </NiceLink>
     <NiceLink href="/about">
       About/Help
