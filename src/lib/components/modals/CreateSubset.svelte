@@ -20,11 +20,12 @@
   </p>
   <input
     type="text"
-    onchange={(e) => {
+    value={name}
+    oninput={(e) => {
       setName(e.target.value);
     }}
     class="p-1 rounded-lg border border-black"
-    placeholder="Enter a name..."
+    placeholder="Enter a subset name..."
   >
 
   <p class="font-bold text-sm mt-2">
@@ -33,10 +34,11 @@
   {#each algs as alg, i}
     <input
       type="text"
-      onchange={(e) => {
+      value={alg}
+      oninput={(e) => {
         const newAlgs = [...algs];
         newAlgs[i] = e.target.value;
-        setAlgs = newAlgs;
+        setAlgs(newAlgs);
       }}
       class="px-1 rounded-lg border border-black"
       placeholder="e.g. F R U R' U' F'"

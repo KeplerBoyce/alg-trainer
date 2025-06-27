@@ -26,7 +26,7 @@
       handleClick();
     }
   }}
-  class={`${className ?? ""} transition border border-black rounded-lg whitespace-nowrap ${disabled ? "hover:cursor-default bg-gray-200 active:bg-gray-300" : `${color} ${hoverColor} ${activeColor}`}`}
+  class={`${className ?? ""} transition border border-black rounded-lg whitespace-nowrap ${disabled ? "hover:cursor-default text-gray-400 bg-gray-200 active:bg-gray-300" : `${color} ${hoverColor} ${activeColor}`}`}
 >
   {@render children()}
 </button>

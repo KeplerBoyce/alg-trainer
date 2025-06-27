@@ -7,6 +7,10 @@
   import NiceButton from "$lib/components/NiceButton.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
   import { casesStr, allAlgsets } from "$lib/helpers";
+  import { algsets } from "$lib/stores";
+
+  // A derived store here just to force reactivity
+  let allSets = $derived(allAlgsets($algsets));
 
   let modalOpen: boolean = $state(false);
   let modalAlg: string = $state();
@@ -25,7 +29,7 @@
     const initialMinimized: {
       [key: string]: boolean,
     } = {};
-    allAlgsets().forEach(([set, _]) => {
+    allSets.forEach(([set, _]) => {
       initialMinimized[set] = true;
     })
     return initialMinimized;
@@ -36,38 +40,91 @@
       [key: string]: boolean,
     },
   } = $state({});
+
+  // Default info to fill in create set modal
+  let defaultName: string = $state("");
+  let defaultInfo: [
+    string,
+    string[],
+  ] = $state(["", [""]]);
+  // True when an existing set is being edited
+  let editingSet: boolean = $state(false);
+
+  const editAlgset = (algset: string) => {
+    const info = [];
+    Object.entries($algsets[algset]).forEach(([subset, algs]) => {
+      info.push([subset, algs]);
+    });
+    console.log(info)
+    defaultInfo = info;
+    defaultName = algset;
+    editingSet = true;
+    createModalOpen = true;
+  }
+
+  const deleteAlgset = (algset: string) => {
+    delete $algsets[algset];
+    $algsets = {...$algsets};
+  }
 </script>
 
 <div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black h-full">
-  {#each allAlgsets() as [set, subsets]}
+  {#each allSets as [set, subsets, defaultSet]}
     <div class="w-full p-2">
-      <button
-        onclick={() => {
-          if (setsMinimized[set]) {
-            setsMinimized = {
-              ...setsMinimized,
-              [set]: false,
-            };
-          } else {
-            setsMinimized = {
-              ...setsMinimized,
-              [set]: true,
-            };
-          }
-        }}
-        class="flex items-center gap-1 w-full"
-      >
-        <p class="text-2xl font-bold">
-          {set} ({casesStr((() => {
-            let count = 0;
-            Object.values(subsets).forEach(subset => {
-              count += subset.length;
-            });
-            return count;
-          })())})
-        </p>
-        <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-      </button>
+      <div class="w-full flex">
+        <button
+          onclick={() => {
+            if (setsMinimized[set]) {
+              setsMinimized = {
+                ...setsMinimized,
+                [set]: false,
+              };
+            } else {
+              setsMinimized = {
+                ...setsMinimized,
+                [set]: true,
+              };
+            }
+          }}
+          class="flex items-center gap-1 w-full"
+        >
+          <p class="text-2xl font-bold">
+            {set} ({casesStr((() => {
+              let count = 0;
+              Object.values(subsets).forEach(subset => {
+                count += subset.length;
+              });
+              return count;
+            })())})
+          </p>
+          <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+        </button>
+        
+        <NiceButton
+          handleClick={() => {
+            editAlgset(set);
+          }}
+          className="px-2 text-sm font-bold text-white mr-1"
+          color="bg-sky-400"
+          hoverColor="hover:bg-sky-500"
+          activeColor="active:bg-sky-600"
+          disabled={defaultSet}
+        >
+          Edit
+        </NiceButton>
+        <NiceButton
+          handleClick={() => {
+            deleteAlgset(set);
+          }}
+          className="px-2 text-sm font-bold text-white"
+          color="bg-red-500"
+          hoverColor="hover:bg-red-600"
+          activeColor="active:bg-red-700"
+          disabled={defaultSet}
+        >
+          Delete
+        </NiceButton>
+      </div>
 
       {#if !setsMinimized[set]}
         <div class="flex flex-col divide-y divide-black w-full mt-2 rounded-lg border border-black">
@@ -117,7 +174,11 @@
 
   <div class="w-full p-2">
     <NiceButton
-      handleClick={() => {createModalOpen = true}}
+      handleClick={() => {
+        defaultInfo = ["", [""]];
+        editingSet = false;
+        createModalOpen = true;
+      }}
       color="bg-teal-200"
       hoverColor="hover:bg-teal-300"
       activeColor="active:bg-teal-400"
@@ -133,5 +194,11 @@
 </Modal>
 
 <Modal open={createModalOpen} close={() => {createModalOpen = false}}>
-  <CreateSetModal />
+  <CreateSetModal
+    open={createModalOpen}
+    close={() => {createModalOpen = false}}
+    {defaultName}
+    {defaultInfo}
+    editing={editingSet}
+  />
 </Modal>

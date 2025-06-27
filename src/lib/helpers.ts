@@ -1,27 +1,59 @@
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS, INITIAL_FACE_MAPPING } from "./constants"
 import type { Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
 import ALGS from "./algs.json";
-import { algsets } from "./stores";
-import { get } from "svelte/store";
 
 const min2phase = require("min2phase.js");
 min2phase.initFull();
 
-// Returns an array of tuples (set name, subsets) of default algsets merged with user algsets
-export const allAlgsets = () => {
+// Returns an array of tuples (set name, subsets, default) of default algsets merged with user algsets
+export const allAlgsets = (userSets: {
+    [key: string]: {
+        [key: string]: string[],
+    },
+}) => {
     const allSets: [
         string,
         {
             [key: string]: string[],
         },
+        boolean,
     ][] = [];
     Object.entries(ALGS).forEach(([set, subsets]) => {
-        allSets.push([set, subsets]);
+        allSets.push([set, subsets, true]);
     });
-    Object.entries(get(algsets)).forEach(([set, subsets]) => {
-        allSets.push([set, subsets]);
+    Object.entries(userSets).forEach(([set, subsets]) => {
+        allSets.push([set, subsets, false]);
     });
     return allSets;
+}
+
+export const algIsValid = (alg: string) => {
+    if (!alg) {
+        return false;
+    }
+    // True when the next character must be a valid move starting character
+    let mustStartMove = true;
+    const startingChars = "FRUBLDMSEfrubldxyz";
+    for (let i = 0; i < alg.length; i++) {
+        // Skip spaces for simplicity here
+        if (alg[i] === ' ') {
+            continue;
+        }
+        if (mustStartMove && startingChars.indexOf(alg[i]) < 0) {
+            // Invalid starting character of move
+            return false;
+        } else if (mustStartMove) {
+            mustStartMove = false;
+        } else if (startingChars.indexOf(alg[i]) >= 0) {
+            mustStartMove = false;
+        } else if (alg[i] === '2' || alg[i] === '\'') {
+            mustStartMove = true;
+        } else {
+            // Invalid second character of move
+            return false;
+        }
+    }
+    return true;
 }
 
 export const updateKnowledgeForgot = (num: number) => {
