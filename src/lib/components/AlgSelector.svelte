@@ -11,10 +11,18 @@
     setSelected,
   }: {
     selected: {
-      [key: string]: [boolean, string],
+      [key: string]: {
+        [key: string]: {
+          [key: string]: [boolean, string],
+        },
+      },
     },
     setSelected: (x: {
-      [key: string]: [boolean, string],
+      [key: string]: {
+        [key: string]: {
+          [key: string]: [boolean, string],
+        },
+      },
     }) => void,
   } = $props();
 
@@ -51,7 +59,7 @@
       let allSelected = true;
       Object.values(subsets).forEach(subset => {
         subset.forEach(a => {
-          if (!selected[a]?.[0]) {
+          if (!selected[set]?.[subset]?.[a]) {
             allSelected = false;
             return;
           }
@@ -81,7 +89,7 @@
       Object.entries(subsets).forEach(([subset, algs]) => {
         let allSelected = true;
         algs.forEach(a => {
-          if (!selected[a]?.[0]) {
+          if (!selected[set]?.[subset]?.[a]) {
             allSelected = false;
             return;
           }
@@ -151,23 +159,13 @@
           <button
             onclick={() => {
               // If all are selected, deselect all, otherwise select all
-              if (allSelected[set]) {
-                const newSelected = {...selected};
-                Object.values(subsets).forEach(subset => {
-                  subset.forEach(a => {
-                    newSelected[a] = [false, set];
-                  });
+              const newSelected = {...selected};
+              Object.values(subsets).forEach(subset => {
+                subset.forEach(a => {
+                  newSelected[set][subset][a] = !allSelected[set];
                 });
-                setSelected(newSelected);
-              } else {
-                const newSelected = {...selected};
-                Object.values(subsets).forEach(subset => {
-                  subset.forEach(a => {
-                    newSelected[a] = [true, set];
-                  });
-                });
-                setSelected(newSelected);
-              }
+              });
+              setSelected(newSelected);
             }}
             class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
               ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
@@ -185,23 +183,14 @@
               <div class="flex items-center gap-4 pl-1">
                 <button
                   onclick={() => {
-                    if (subsetsMinimized[set]?.[subset]) {
-                      subsetsMinimized = {
-                        ...subsetsMinimized,
-                        [set]: {
-                          ...subsetsMinimized[set],
-                          [subset]: false,
-                        }
-                      };
-                    } else {
-                      subsetsMinimized = {
-                        ...subsetsMinimized,
-                        [set]: {
-                          ...subsetsMinimized[set],
-                          [subset]: true,
-                        }
-                      };
-                    }
+                    // Invert minimized value
+                    subsetsMinimized = {
+                      ...subsetsMinimized,
+                      [set]: {
+                        ...subsetsMinimized[set],
+                        [subset]: !subsetsMinimized[set]?.[subset],
+                      }
+                    };
                   }}
                   class="flex items-center gap-1 grow"
                 >
@@ -213,19 +202,11 @@
                 <button
                   onclick={() => {
                     // If all are selected, deselect all, otherwise select all
-                    if (subsetsAllSelected[set][subset]) {
-                      const newSelected = {...selected};
-                      algs.forEach(a => {
-                        newSelected[a] = [false, set];
-                      });
-                      setSelected(newSelected);
-                    } else {
-                      const newSelected = {...selected};
-                      algs.forEach(a => {
-                        newSelected[a] = [true, set];
-                      });
-                      setSelected(newSelected);
-                    }
+                    const newSelected = {...selected};
+                    algs.forEach(a => {
+                      newSelected[set][subset][a] = !subsetsAllSelected[set][subset];
+                    });
+                    setSelected(newSelected);
                   }}
                   class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
                     ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
@@ -241,19 +222,17 @@
                   {#each algs as a}
                     <button
                       onclick={() => {
-                        if (selected[a]?.[0]) {
-                          setSelected({
-                            ...selected,
-                            [a]: [false, set],
-                          });
-                        } else {
-                          setSelected({
-                            ...selected,
-                            [a]: [true, set],
-                          });
+                        const newSelected = {...selected};
+                        if (!(set in newSelected)) {
+                          newSelected[set] = {};
                         }
+                        if (!(subset in newSelected[set])) {
+                          newSelected[set][subset] = {};
+                        }
+                        newSelected[set][subset][a] = !selected[set]?.[subset]?.[a];
+                        setSelected(newSelected);
                       }}
-                      class={`${selected[a]?.[0] ? "bg-green-200" : ""} w-min p-2`}
+                      class={`${selected[set]?.[subset]?.[a] ? "bg-green-200" : ""} w-min p-2`}
                     >
                       <Alg
                         alg={a}

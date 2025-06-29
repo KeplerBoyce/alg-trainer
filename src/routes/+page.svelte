@@ -8,23 +8,26 @@
   import { type AlgSetConfig } from "$lib/types";
 
   let showSolution = $state(false);
-  // Tuples of alg, algset
+  // Algset key maps to object where subset key maps to set of selected algs
   let selected: {
-    [key: string]: [boolean, string],
+    [key: string]: {
+      [key: string]: {
+        [key: string]: boolean,
+      },
+    },
   } = $state({});
-  const setSelected = (x: {
-    [key: string]: [boolean, string],
-  }) => {
-    selected = x;
-  }
 
   // Tuples of alg, algset
   let selectedArr: [string, string][] = $derived.by(() => {
     const arr: [string, string][] = [];
-    Object.keys(selected).forEach((a) => {
-      if (selected[a]?.[0]) {
-        arr.push([a, selected[a][1]]);
-      }
+    Object.entries(selected).forEach(([s, subsets]) => {
+      Object.entries(subsets).forEach(([subset, algs]) => {
+        Object.keys(algs).forEach(a => {
+          if (!!selected[s]?.[subset]?.[a]) {
+            arr.push([a, s]);
+          }
+        });
+      })
     });
     return arr;
   });
@@ -229,7 +232,7 @@
       </NiceButton>
     </div>
   </div>
-  <AlgSelector {selected} {setSelected} />
+  <AlgSelector {selected} setSelected={(x) => {selected = x}} />
 </div>
 
 <svelte:window on:keydown={handleKeydown} />
