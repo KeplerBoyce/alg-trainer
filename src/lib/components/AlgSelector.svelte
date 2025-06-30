@@ -1,7 +1,6 @@
 <script lang="ts">
-  import ALGS_CONFIG from "$lib/algs_config.json";
   import { casesStr, getInitialStickers, allAlgsets } from "$lib/helpers";
-  import { knowledge, algsets } from "$lib/stores";
+  import { knowledge, algsets, configs } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
@@ -27,7 +26,7 @@
   } = $props();
 
   // A derived store here just to force reactivity
-  let allSets = $derived(allAlgsets($algsets));
+  let allSets = $derived(allAlgsets($algsets, $configs));
 
   // Set of algset names that are minimized
   let setsMinimized: {
@@ -122,7 +121,7 @@
 </script>
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
-  {#each allSets as [set, subsets]}
+  {#each allSets as [set, subsets, defaultSet, config]}
     <div class="p-2">
       <div class="flex items-center gap-4">
         <button
@@ -239,7 +238,7 @@
                         netStyle="LL"
                         hideSolution
                         small
-                        initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
+                        initialStickers={getInitialStickers(config.initialStickers)}
                       />
                     </button>
                   {/each}

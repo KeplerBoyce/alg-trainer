@@ -1,30 +1,55 @@
 import { AUF_ALGS, COLOR_MAP, DEFAULT_STICKERS, STICKERS_LL, STICKERS_COLL, STICKERS_OLL, EPLL_ALGS, PLL_ALGS, INITIAL_FACE_MAPPING } from "./constants"
-import type { Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
+import type { AlgSetConfig, Color, Face, FaceMapping, InitialStickerType, Layer, Randomization, Stickers } from "./types"
 import ALGS from "./algs.json";
+import CONFIGS from "./algs_config.json";
 
 const min2phase = require("min2phase.js");
 min2phase.initFull();
 
-// Returns an array of tuples (set name, subsets, default) of default algsets merged with user algsets
-export const allAlgsets = (userSets: {
-    [key: string]: {
-        [key: string]: string[],
+// Returns an array of tuples (set name, subsets, default, config) of default algsets merged with user algsets
+export const allAlgsets = (
+    userSets: {
+        [key: string]: {
+            [key: string]: string[],
+        },
     },
-}) => {
+    userConfigs: {
+        [key: string]: AlgSetConfig,
+    },
+) => {
     const allSets: [
         string,
         {
             [key: string]: string[],
         },
         boolean,
+        AlgSetConfig,
     ][] = [];
     Object.entries(ALGS).forEach(([set, subsets]) => {
-        allSets.push([set, subsets, true]);
+        allSets.push([
+            set,
+            subsets,
+            true,
+            (CONFIGS as {
+                [key: string]: AlgSetConfig,
+            })[set],
+        ]);
     });
     Object.entries(userSets).forEach(([set, subsets]) => {
-        allSets.push([set, subsets, false]);
+        allSets.push([
+            set,
+            subsets,
+            false,
+            userConfigs[set],
+        ]);
     });
     return allSets;
+}
+
+// For reversing objects such that we get value => key rather than key => value
+// Used for reversing enum => name maps, for example
+export const reverseObject = (obj: Object) => {
+    return Object.fromEntries(Object.entries(obj).map(([k, v]) => [v, k]));
 }
 
 export const algIsValid = (alg: string) => {

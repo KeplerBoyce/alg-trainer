@@ -1,10 +1,9 @@
 <script lang="ts">
-  import ALGS_CONFIG from "$lib/algs_config.json";
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
   import NiceButton from "$lib/components/NiceButton.svelte";
-  import { getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
-  import { knowledge } from "$lib/stores";
+  import { allAlgsets, getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { knowledge, algsets, configs } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
 
   let showSolution = $state(false);
@@ -31,6 +30,7 @@
     });
     return arr;
   });
+  // Current alg being shown and the algset it's from
   let [alg, set]: [string, string] = $derived.by(() => {
     if (selectedArr.length === 0) {
       return ["", ""];
@@ -46,6 +46,9 @@
     }
     return arr[0];
   });
+  // Config for the current alg's algset
+  let config: AlgSetConfig = $derived(allAlgsets($algsets, $configs)[set]);
+
   let prevAlg: string = $state("");
 
   let [scramble, auf]: [string, string] = $derived.by(() => {
@@ -53,7 +56,7 @@
     if (alg === "") {
       return ["", ""];
     }
-    return randomAlgScramble(alg, 2, (ALGS_CONFIG as AlgSetConfig)[set]?.randomization ?? "AUF");
+    return randomAlgScramble(alg, 2, config?.randomization ?? "AUF");
   });
 
   const handleKeydown = (event: KeyboardEvent) => {
@@ -167,8 +170,8 @@
       </div>
       <Alg
         alg={reverseMoveString(scramble)}
-        netStyle={(ALGS_CONFIG as AlgSetConfig)[set]?.netStyle ?? "LL"}
-        initialStickers={getInitialStickers((ALGS_CONFIG as AlgSetConfig)[set]?.initialStickers)}
+        netStyle={config?.netStyle ?? "LL"}
+        initialStickers={getInitialStickers(config?.initialStickers)}
         hideSolution
       />
       <div class="h-full">

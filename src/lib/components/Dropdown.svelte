@@ -7,11 +7,6 @@
     chosen: string,
   } = $props();
 
-  // By default, choose the first option as the chosen one
-  $effect(() => {
-    chosen = options[0];
-  });
-
   let open: boolean = $state(false);
   let delayedOpen: boolean = $state(false);
 

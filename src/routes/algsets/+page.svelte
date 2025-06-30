@@ -6,11 +6,12 @@
   import Alg from "$lib/components/Alg.svelte";
   import NiceButton from "$lib/components/NiceButton.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
+  import { type AlgSetConfig } from "$lib/types";
   import { casesStr, allAlgsets } from "$lib/helpers";
-  import { algsets } from "$lib/stores";
+  import { algsets, configs } from "$lib/stores";
 
   // A derived store here just to force reactivity
-  let allSets = $derived(allAlgsets($algsets));
+  let allSets = $derived(allAlgsets($algsets, $configs));
 
   let modalOpen: boolean = $state(false);
   let modalAlg: string = $state();
@@ -47,17 +48,23 @@
     string,
     string[],
   ] = $state(["", [""]]);
+  let defaultConfig: AlgSetConfig = $state({
+    netStyle: "FULL",
+    randomization: "AUF",
+    initialStickers: "DEFAULT",
+  });
   // True when an existing set is being edited
   let editingSet: boolean = $state(false);
 
   const editAlgset = (algset: string) => {
-    const info = [];
+    // Copy info and config from algset to pre-fill modal
+    const info: [string, string[]][] = [];
     Object.entries($algsets[algset]).forEach(([subset, algs]) => {
       info.push([subset, algs]);
     });
-    console.log(info)
     defaultInfo = info;
     defaultName = algset;
+    defaultConfig = $configs[algset];
     editingSet = true;
     createModalOpen = true;
   }
@@ -65,11 +72,13 @@
   const deleteAlgset = (algset: string) => {
     delete $algsets[algset];
     $algsets = {...$algsets};
+    delete $configs[algset];
+    $configs = {...$configs};
   }
 </script>
 
 <div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black min-h-full">
-  {#each allSets as [set, subsets, defaultSet]}
+  {#each allSets as [set, subsets, defaultSet, config]}
     <div class="w-full p-2">
       <div class="w-full flex">
         <button
@@ -114,6 +123,8 @@
             }
             setsMinimized[newName] = true;
             $algsets[newName] = subsets;
+            // Copy config options
+            $configs[newName] = config;
           }}
           className="px-2 text-sm font-bold text-white mr-1"
           color="bg-orange-400"
@@ -197,7 +208,13 @@
   <div class="w-full p-2">
     <NiceButton
       handleClick={() => {
+        defaultName = "";
         defaultInfo = ["", [""]];
+        defaultConfig = {
+          netStyle: "FULL",
+          randomization: "AUF",
+          initialStickers: "DEFAULT",
+        };
         editingSet = false;
         createModalOpen = true;
       }}
@@ -221,6 +238,7 @@
     close={() => {createModalOpen = false}}
     {defaultName}
     {defaultInfo}
+    {defaultConfig}
     editing={editingSet}
   />
 </Modal>

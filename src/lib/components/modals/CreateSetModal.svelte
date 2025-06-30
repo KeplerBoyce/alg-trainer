@@ -1,14 +1,18 @@
 <script lang="ts">
   import CreateSubset from "./CreateSubset.svelte";
   import NiceButton from "$lib/components/NiceButton.svelte";
-  import { algIsValid } from "$lib/helpers";
-  import { algsets } from "$lib/stores";
+  import Dropdown from "$lib/components/Dropdown.svelte";
+  import { type AlgSetConfig } from "$lib/types";
+  import { NET_STYLE_MAP, RANDOMIZATION_MAP, INITIAL_STICKERS_MAP } from "$lib/constants";
+  import { algIsValid, reverseObject } from "$lib/helpers";
+  import { algsets, configs } from "$lib/stores";
 
   let {
     open,
     close,
     defaultName, // The values to fill in initially, in case we're editing 
     defaultInfo,
+    defaultConfig,
     editing,
   }: {
     open: boolean,
@@ -18,6 +22,7 @@
       string,
       string[],
     ],
+    defaultConfig: AlgSetConfig,
     editing: boolean,
   } = $props();
 
@@ -28,6 +33,11 @@
     string,
     string[],
   ][] = $state([["", [""]]]);
+
+  // Net style, randomization, and sticker style choices
+  let netStyle: string = $state("");
+  let randomization: string = $state("");
+  let stickers: string = $state("");
 
   // Determines whether the set is valid to create
   let valid: boolean = $derived.by(() => {
@@ -58,11 +68,14 @@
     if (open) {
       name = defaultName;
       subsets = defaultInfo;
+      netStyle = NET_STYLE_MAP[defaultConfig.netStyle];
+      randomization = RANDOMIZATION_MAP[defaultConfig.randomization];
+      stickers = INITIAL_STICKERS_MAP[defaultConfig.initialStickers];
     }
   });
 </script>
 
-<div class="max-h-[80vh] border border-black bg-white p-8 rounded-xl flex flex-col gap-2 w-32rem max-w-[90vw]">
+<div class="max-h-[80vh] border border-black bg-white p-8 rounded-xl flex flex-col gap-6 w-32rem max-w-[90vw]">
   <h1 class="font-bold text-2xl text-center mb-2">
     {editing ? "Editing Algset" : "New Algset"}
   </h1>
@@ -123,11 +136,42 @@
     </div>
   </div>
 
+  <div class="flex gap-4 w-full whitespace-nowrap">
+    <div class="w-full">
+      <p class="text-sm font-bold">
+        Cube Net Style
+      </p>
+      <Dropdown
+        options={["Full", "Last Layer", "Roux"]}
+        bind:chosen={netStyle}
+      />
+    </div>
+    <div class="w-full">
+      <p class="text-sm font-bold">
+        Randomization
+      </p>
+      <Dropdown
+        options={["AUF", "EPLL", "PLL"]}
+        bind:chosen={randomization}
+      />
+    </div>
+    <div class="w-full">
+      <p class="text-sm font-bold">
+        Sticker Style
+      </p>
+      <Dropdown
+        options={["All", "Last Layer", "COLL", "OLL"]}
+        bind:chosen={stickers}
+      />
+    </div>
+  </div>
+
   <NiceButton
     handleClick={() => {
-      // If we're editing, delete old algset
+      // If we're editing, delete old algset and config
       if (editing) {
         delete $algsets[defaultName];
+        delete $configs[defaultName];
       }
       // Add new algset
       const subsetsObj: {
@@ -137,6 +181,12 @@
         subsetsObj[subset] = algs;
       });
       $algsets[name] = subsetsObj;
+      // Also save config choices
+      $configs[name] = {
+        netStyle: reverseObject(NET_STYLE_MAP)[netStyle],
+        randomization: reverseObject(RANDOMIZATION_MAP)[randomization],
+        initialStickers: reverseObject(INITIAL_STICKERS_MAP)[stickers],
+      };
       close();
     }}
     color="bg-green-200"

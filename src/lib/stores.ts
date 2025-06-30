@@ -1,4 +1,5 @@
 import { localStorageStore } from "./localStorageStore";
+import type { AlgSetConfig } from "./types";
 
 // Maps from algset (string) to object mapping alg (string) knowledge level (number 0-100)
 export const knowledge = localStorageStore<{
@@ -13,3 +14,6 @@ export const algsets = localStorageStore<{
         [key: string]: string[],
     },
 }>("algsets", {});
+
+// Configs for user-created algsets, algset name maps to object containing net style, randomization, and stickers
+export const configs = localStorageStore<AlgSetConfig>("configs", {});

@@ -42,11 +42,9 @@ export type Stickers = {
 }
 
 export type AlgSetConfig = {
-    [key: string]: {
-        netStyle: NetStyle,
-        randomization: Randomization,
-        initialStickers: InitialStickerType,
-    },
+    netStyle: NetStyle,
+    randomization: Randomization,
+    initialStickers: InitialStickerType,
 };
 
 export type FaceMapping = {

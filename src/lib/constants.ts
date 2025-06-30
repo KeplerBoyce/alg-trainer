@@ -118,3 +118,21 @@ export const PLL_ALGS = [
     "R' U R' U' R D' R' D R' U D' R2 U' R2 D R2",
     "F R U' R' U' R U R' F' R U R' U' R' F R F'",
 ];
+
+// Maps from net style, randomization, and initial sticker enums to string names
+export const NET_STYLE_MAP = {
+    "FULL": "Full",
+    "LL": "Last Layer",
+    "ROUX": "Roux",
+};
+export const RANDOMIZATION_MAP = {
+    "AUF": "AUF",
+    "EPLL": "EPLL",
+    "PLL": "PLL",
+};
+export const INITIAL_STICKERS_MAP = {
+    "DEFAULT": "All",
+    "LL": "Last Layer",
+    "COLL": "COLL",
+    "OLL": "OLL",
+};
