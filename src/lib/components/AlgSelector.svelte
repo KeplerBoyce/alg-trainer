@@ -145,7 +145,7 @@
             <p class="text-lg font-bold text-left">
               {set}
             </p>
-            <p class="text-sm font-bold italic p-1">
+            <p class="text-sm font-bold p-1">
               ({casesStr((() => {
                 let count = 0;
                 Object.values(subsets).forEach(subset => {
@@ -197,9 +197,14 @@
                   }}
                   class="h-full flex items-center gap-1 grow hover:bg-gray-100 p-2 rounded-lg"
                 >
-                  <p class="font-bold text-left">
-                    {subset} ({casesStr(algs.length)})
-                  </p>
+                  <div class="flex items-end gap-1">
+                    <p class="font-bold text-left">
+                      {subset}
+                    </p>
+                    <p class="text-sm font-bold p-0.5">
+                      ({casesStr(algs.length)})
+                    </p>
+                  </div>
                   <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
                 </button>
                 <button

@@ -101,7 +101,7 @@
             <p class="text-2xl font-bold">
               {set}
             </p>
-            <p class="font-bold italic p-0.5">
+            <p class="font-bold p-0.5">
               ({casesStr((() => {
                 let count = 0;
                 Object.values(subsets).forEach(subset => {
@@ -196,7 +196,7 @@
                   <p class="text-xl font-bold">
                     {subset}
                   </p>
-                  <p class="text-sm font-bold italic p-1">
+                  <p class="text-sm font-bold p-1">
                     ({casesStr(algs.length)})
                   </p>
                 </div>
@@ -226,7 +226,7 @@
     <NiceButton
       handleClick={() => {
         defaultName = "";
-        defaultInfo = ["", [""]];
+        defaultInfo = [["", [""]]];
         defaultConfig = {
           netStyle: "FULL",
           randomization: "AUF",
