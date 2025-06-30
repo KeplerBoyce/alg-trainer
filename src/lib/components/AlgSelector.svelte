@@ -56,19 +56,19 @@
       [key: string]: boolean,
     } = {};
     allSets.forEach(([set, subsets]) => {
-      let allSelected = true;
-      Object.values(subsets).forEach(subset => {
-        subset.forEach(a => {
+      let val = true;
+      Object.entries(subsets).forEach(([subset, algs]) => {
+        algs.forEach(a => {
           if (!selected[set]?.[subset]?.[a]) {
-            allSelected = false;
+            val = false;
             return;
           }
         });
-        if (!allSelected) {
+        if (!val) {
           return;
         }
       });
-      map[set] = allSelected;
+      map[set] = val;
     });
     return map;
   });
@@ -87,18 +87,20 @@
     allSets.forEach(([set, subsets]) => {
       map[set] = {};
       Object.entries(subsets).forEach(([subset, algs]) => {
-        let allSelected = true;
+        let val = true;
         algs.forEach(a => {
           if (!selected[set]?.[subset]?.[a]) {
-            allSelected = false;
+            val = false;
             return;
           }
         });
-        map[set][subset] = allSelected;
+        map[set][subset] = val;
       });
     });
     return map;
   });
+
+  $inspect(selected["OLL"]);
 </script>
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
@@ -107,17 +109,10 @@
       <div class="flex items-center">
         <button
           onclick={() => {
-            if (setsMinimized[set]) {
-              setsMinimized = {
-                ...setsMinimized,
-                [set]: false,
-              };
-            } else {
-              setsMinimized = {
-                ...setsMinimized,
-                [set]: true,
-              };
-            }
+            setsMinimized = {
+              ...setsMinimized,
+              [set]: !setsMinimized[set],
+            };
           }}
           class="grow flex items-center gap-1 whitespace-nowrap hover:bg-gray-100 p-2 rounded-lg"
         >
@@ -143,10 +138,17 @@
         <button
           onclick={() => {
             // If all are selected, deselect all, otherwise select all
-            const newSelected = {...selected};
-            Object.values(subsets).forEach(subset => {
-              subset.forEach(a => {
-                newSelected[set][subset][a] = !allSelected[set];
+            let newSelected = {...selected};
+            const val = !allSelected[set];
+            if (!(set in newSelected)) {
+              newSelected[set] = {};
+            }
+            Object.entries(subsets).forEach(([subset, algs]) => {
+              if (!(subset in newSelected[set])) {
+                newSelected[set][subset] = {};
+              }
+              algs.forEach(a => {
+                newSelected[set][subset][a] = val;
               });
             });
             setSelected(newSelected);
@@ -193,9 +195,16 @@
                 <button
                   onclick={() => {
                     // If all are selected, deselect all, otherwise select all
-                    const newSelected = {...selected};
+                    let newSelected = {...selected};
+                    const val = !subsetsAllSelected[set][subset];
+                    if (!(set in newSelected)) {
+                      newSelected[set] = {};
+                    }
+                    if (!(subset in newSelected[set])) {
+                      newSelected[set][subset] = {};
+                    }
                     algs.forEach(a => {
-                      newSelected[set][subset][a] = !subsetsAllSelected[set][subset];
+                      newSelected[set][subset][a] = val;
                     });
                     setSelected(newSelected);
                   }}
@@ -204,7 +213,7 @@
                     : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
                   `}
                 >
-                  {subsetsAllSelected[set][subset] ? "Deselect All" : "Select All"}
+                  {subsetsAllSelected[set][subset] ? "Deselect" : "Select All"}
                 </button>
               </div>
 

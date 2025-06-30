@@ -216,6 +216,7 @@
                       {alg}
                       name={`${i + 1}.`}
                       initialStickers={config.initialStickers}
+                      knowledgeLevel={$knowledge[set]?.[alg] ?? 0}
                       callback={() => openAlg(alg)}
                     />
                   {/each}

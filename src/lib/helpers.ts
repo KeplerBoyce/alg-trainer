@@ -115,6 +115,20 @@ export const subsetAvgKnowledgeLevel = (
     return (totalKnowledge / algs.length).toFixed(1);
 }
 
+// Gets Tailwind classes for background color based on knowledge level
+export const algKnowledgeBg = (knowledgeLevel: number) => {
+    if (knowledgeLevel === 0) {
+        return "bg-red-100 hover:bg-red-200 active:bg-red-300";
+    } else if (knowledgeLevel < 20) {
+        return "bg-orange-100 hover:bg-orange-200 active:bg-orange-300";
+    } else if (knowledgeLevel < 50) {
+        return "bg-amber-100 hover:bg-amber-200 active:bg-amber-300";
+    } else if (knowledgeLevel < 100) {
+        return "bg-emerald-100 hover:bg-emerald-200 active:bg-emerald-300";
+    }
+    return "bg-sky-100 hover:bg-sky-200 active:bg-sky-300";
+}
+
 // For reversing objects such that we get value => key rather than key => value
 // Used for reversing enum => name maps, for example
 export const reverseObject = (obj: Object) => {
