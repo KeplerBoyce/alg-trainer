@@ -77,9 +77,9 @@
   }
 </script>
 
-<div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black min-h-full">
+<div class="flex flex-col items-center divide-y divide-black rounded-lg max-w-3xl mx-auto border border-black h-full overflow-y-scroll">
   {#each allSets as [set, subsets, defaultSet, config]}
-    <div class="w-full p-2">
+    <div class="w-full">
       <div class="w-full flex">
         <button
           onclick={() => {
@@ -95,7 +95,7 @@
               };
             }
           }}
-          class="flex items-center gap-1 w-full"
+          class="flex items-center gap-1 w-full hover:bg-gray-100 rounded-lg p-2"
         >
           <div class="flex items-end gap-1">
             <p class="text-2xl font-bold">
@@ -114,60 +114,62 @@
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
         </button>
         
-        <NiceButton
-          handleClick={() => {
-            let newName = set;
-            // Set of algset names that are already in use
-            const usedNames = {};
-            allSets.forEach(([name]) => {
-              usedNames[name] = true;
-            });
-            // Keep adding asterisks until the name isn't used (can't have duplicate names)
-            while (usedNames[newName]) {
-              newName += '*';
-            }
-            setsMinimized[newName] = true;
-            $algsets[newName] = subsets;
-            // Copy config options
-            $configs[newName] = config;
-          }}
-          className="px-2 text-sm font-bold text-white mr-1"
-          color="bg-orange-400"
-          hoverColor="hover:bg-orange-500"
-          activeColor="active:bg-orange-600"
-        >
-          Copy
-        </NiceButton>
-        <NiceButton
-          handleClick={() => {
-            editAlgset(set);
-          }}
-          className="px-2 text-sm font-bold text-white mr-1"
-          color="bg-sky-400"
-          hoverColor="hover:bg-sky-500"
-          activeColor="active:bg-sky-600"
-          disabled={defaultSet}
-        >
-          Edit
-        </NiceButton>
-        <NiceButton
-          handleClick={() => {
-            deleteAlgset(set);
-          }}
-          className="px-2 text-sm font-bold text-white"
-          color="bg-red-500"
-          hoverColor="hover:bg-red-600"
-          activeColor="active:bg-red-700"
-          disabled={defaultSet}
-        >
-          Delete
-        </NiceButton>
+        <div class="m-2 flex">
+          <NiceButton
+            handleClick={() => {
+              let newName = set;
+              // Set of algset names that are already in use
+              const usedNames = {};
+              allSets.forEach(([name]) => {
+                usedNames[name] = true;
+              });
+              // Keep adding asterisks until the name isn't used (can't have duplicate names)
+              while (usedNames[newName]) {
+                newName += '*';
+              }
+              setsMinimized[newName] = true;
+              $algsets[newName] = subsets;
+              // Copy config options
+              $configs[newName] = config;
+            }}
+            className="px-2 text-sm font-bold text-white mr-1"
+            color="bg-orange-400"
+            hoverColor="hover:bg-orange-500"
+            activeColor="active:bg-orange-600"
+          >
+            Copy
+          </NiceButton>
+          <NiceButton
+            handleClick={() => {
+              editAlgset(set);
+            }}
+            className="px-2 text-sm font-bold text-white mr-1"
+            color="bg-sky-400"
+            hoverColor="hover:bg-sky-500"
+            activeColor="active:bg-sky-600"
+            disabled={defaultSet}
+          >
+            Edit
+          </NiceButton>
+          <NiceButton
+            handleClick={() => {
+              deleteAlgset(set);
+            }}
+            className="px-2 text-sm font-bold text-white"
+            color="bg-red-500"
+            hoverColor="hover:bg-red-600"
+            activeColor="active:bg-red-700"
+            disabled={defaultSet}
+          >
+            Delete
+          </NiceButton>
+        </div>
       </div>
 
       {#if !setsMinimized[set]}
-        <div class="flex flex-col divide-y divide-black w-full mt-2 rounded-lg border border-black">
+        <div class="flex flex-col divide-y divide-black mx-2 mb-2 rounded-lg border border-black">
           {#each Object.entries(subsets) as [subset, algs]}
-            <div class="p-2">
+            <div class="w-full">
               <button
                 onclick={() => {
                   if (subsetsMinimized[set]?.[subset]) {
@@ -188,11 +190,16 @@
                     };
                   }
                 }}
-                class="flex items-center gap-1"
+                class="w-full flex items-center gap-1 hover:bg-gray-100 rounded-lg p-2"
               >
-                <p class="text-xl font-bold">
-                  {subset} ({casesStr(algs.length)})
-                </p>
+                <div class="flex items-end gap-1">
+                  <p class="text-xl font-bold">
+                    {subset}
+                  </p>
+                  <p class="text-sm font-bold italic p-1">
+                    ({casesStr(algs.length)})
+                  </p>
+                </div>
                 <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
               </button>
 
