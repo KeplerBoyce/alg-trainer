@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { casesStr, getInitialStickers, allAlgsets } from "$lib/helpers";
+  import { casesStr, allAlgsets } from "$lib/helpers";
   import { knowledge, algsets, configs } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
+  import { STICKERS_OBJECT_MAP } from "$lib/constants";
   import Alg from "./Alg.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
 
@@ -238,7 +239,7 @@
                         netStyle="LL"
                         hideSolution
                         small
-                        initialStickers={getInitialStickers(config.initialStickers)}
+                        initialStickers={STICKERS_OBJECT_MAP[config.initialStickers]}
                       />
                     </button>
                   {/each}

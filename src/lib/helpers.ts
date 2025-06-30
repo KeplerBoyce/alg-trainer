@@ -131,15 +131,6 @@ export const emptyStyle = (small?: boolean) => {
     return "flex-shrink-0 w-4 h-4";
 }
 
-export const getInitialStickers = (initialStickers?: InitialStickerType) => {
-    switch (initialStickers ?? "DEFAULT") {
-        case "LL": return STICKERS_LL;
-        case "COLL": return STICKERS_COLL;
-        case "OLL": return STICKERS_OLL;
-        default: return DEFAULT_STICKERS;
-    }
-}
-
 const cleanAlg = (alg: string) => {
     // Remove parentheseses
     alg = alg.replace(/[\(\)]/g, '');

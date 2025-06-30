@@ -2,9 +2,10 @@
   import Alg from "$lib/components/Alg.svelte";
   import AlgSelector from "$lib/components/AlgSelector.svelte";
   import NiceButton from "$lib/components/NiceButton.svelte";
-  import { allAlgsets, getInitialStickers, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
+  import { allAlgsets, reverseMoveString, adjustYRotation, randomAlgScramble, updateKnowledgeEasy, updateKnowledgeForgot, updateKnowledgeGood, updateKnowledgeHard } from "$lib/helpers";
   import { knowledge, algsets, configs } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
+  import { STICKERS_OBJECT_MAP } from "$lib/constants";
 
   let showSolution = $state(false);
   // Algset key maps to object where subset key maps to set of selected algs
@@ -47,7 +48,14 @@
     return arr[0];
   });
   // Config for the current alg's algset
-  let config: AlgSetConfig = $derived(allAlgsets($algsets, $configs)[set]);
+  let config: AlgSetConfig = $derived.by(() => {
+    const allSets = allAlgsets($algsets, $configs);
+    for (const [s, subsets, defaultSet, config] of allSets) {
+      if (s === set) {
+        return config;
+      }
+    }
+  });
 
   let prevAlg: string = $state("");
 
@@ -171,7 +179,7 @@
       <Alg
         alg={reverseMoveString(scramble)}
         netStyle={config?.netStyle ?? "LL"}
-        initialStickers={getInitialStickers(config?.initialStickers)}
+        initialStickers={STICKERS_OBJECT_MAP[config?.initialStickers]}
         hideSolution
       />
       <div class="h-full">
