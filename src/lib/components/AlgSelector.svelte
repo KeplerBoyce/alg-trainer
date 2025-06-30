@@ -123,8 +123,8 @@
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
   {#each allSets as [set, subsets, defaultSet, config]}
-    <div class="p-2">
-      <div class="flex items-center gap-4">
+    <div>
+      <div class="flex items-center">
         <button
           onclick={() => {
             if (setsMinimized[set]) {
@@ -139,48 +139,51 @@
               };
             }
           }}
-          class="flex items-center gap-1 whitespace-nowrap"
+          class="grow flex items-center gap-1 whitespace-nowrap hover:bg-gray-100 p-2 rounded-lg"
         >
-          <p class="text-lg font-bold text-left">
-            {set} ({casesStr((() => {
-              let count = 0;
-              Object.values(subsets).forEach(subset => {
-                count += subset.length;
-              });
-              return count;
-            })())})
-          </p>
-          <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-        </button>
-        <p class="grow italic whitespace-nowrap">
-          {`${setAvgKnowledgeLevel(set)}% learned`}
-        </p>
-        <div class="w-[7rem] flex justify-end">
-          <button
-            onclick={() => {
-              // If all are selected, deselect all, otherwise select all
-              const newSelected = {...selected};
-              Object.values(subsets).forEach(subset => {
-                subset.forEach(a => {
-                  newSelected[set][subset][a] = !allSelected[set];
+          <div class="flex items-end gap-1">
+            <p class="text-lg font-bold text-left">
+              {set}
+            </p>
+            <p class="text-sm font-bold italic p-1">
+              ({casesStr((() => {
+                let count = 0;
+                Object.values(subsets).forEach(subset => {
+                  count += subset.length;
                 });
+                return count;
+              })())})
+            </p>
+          </div>
+          <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+          <p class="grow italic whitespace-nowrap text-left">
+            {`${setAvgKnowledgeLevel(set)}% learned`}
+          </p>
+        </button>
+        <button
+          onclick={() => {
+            // If all are selected, deselect all, otherwise select all
+            const newSelected = {...selected};
+            Object.values(subsets).forEach(subset => {
+              subset.forEach(a => {
+                newSelected[set][subset][a] = !allSelected[set];
               });
-              setSelected(newSelected);
-            }}
-            class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
-              ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
-              : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
-            `}
-          >
-            {allSelected[set] ? "Deselect All" : "Select All"}
-          </button>
-        </div>
+            });
+            setSelected(newSelected);
+          }}
+          class={`w-24 m-1 border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${allSelected[set]
+            ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
+            : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
+          `}
+        >
+          {allSelected[set] ? "Deselect" : "Select All"}
+        </button>
       </div>
       {#if !setsMinimized[set]}
-        <div class="mt-2 flex flex-col divide-y divide-black rounded-lg border border-black">
+        <div class="mx-2 mb-2 flex flex-col divide-y divide-black rounded-lg border border-black">
           {#each Object.entries(subsets) as [subset, algs]}
-            <div class="p-1">
-              <div class="flex items-center gap-4 pl-1">
+            <div>
+              <div class="flex items-center">
                 <button
                   onclick={() => {
                     // Invert minimized value
@@ -192,7 +195,7 @@
                       }
                     };
                   }}
-                  class="flex items-center gap-1 grow"
+                  class="h-full flex items-center gap-1 grow hover:bg-gray-100 p-2 rounded-lg"
                 >
                   <p class="font-bold text-left">
                     {subset} ({casesStr(algs.length)})
@@ -208,7 +211,7 @@
                     });
                     setSelected(newSelected);
                   }}
-                  class={`border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
+                  class={`w-24 m-1 border border-black whitespace-nowrap transition px-2 py-1 rounded-lg ${subsetsAllSelected[set][subset]
                     ? "bg-purple-200 hover:bg-purple-300 active:bg-purple-400"
                     : "bg-gray-200 hover:bg-gray-300 active:bg-gray-400"}
                   `}

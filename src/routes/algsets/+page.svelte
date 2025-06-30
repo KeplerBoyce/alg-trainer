@@ -97,15 +97,20 @@
           }}
           class="flex items-center gap-1 w-full"
         >
-          <p class="text-2xl font-bold">
-            {set} ({casesStr((() => {
-              let count = 0;
-              Object.values(subsets).forEach(subset => {
-                count += subset.length;
-              });
-              return count;
-            })())})
-          </p>
+          <div class="flex items-end gap-1">
+            <p class="text-2xl font-bold">
+              {set}
+            </p>
+            <p class="font-bold italic p-0.5">
+              ({casesStr((() => {
+                let count = 0;
+                Object.values(subsets).forEach(subset => {
+                  count += subset.length;
+                });
+                return count;
+              })())})
+            </p>
+          </div>
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
         </button>
         
