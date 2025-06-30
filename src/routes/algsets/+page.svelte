@@ -194,7 +194,12 @@
               {#if !subsetsMinimized[set]?.[subset]}
                 <div class="w-full flex flex-wrap">
                   {#each algs as alg, i}
-                    <AlgButton {alg} name={`${i + 1}.`} callback={() => openAlg(alg)} />
+                    <AlgButton
+                      {alg}
+                      name={`${i + 1}.`}
+                      initialStickers={config.initialStickers}
+                      callback={() => openAlg(alg)}
+                    />
                   {/each}
                 </div>
               {/if}

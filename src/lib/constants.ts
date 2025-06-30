@@ -136,3 +136,11 @@ export const INITIAL_STICKERS_MAP = {
     "COLL": "COLL",
     "OLL": "OLL",
 };
+
+// Maps from initial stickers option to Stickers object
+export const STICKERS_OBJECT_MAP = {
+    "DEFAULT": DEFAULT_STICKERS,
+    "LL": STICKERS_LL,
+    "COLL": STICKERS_COLL,
+    "OLL": STICKERS_OLL,
+};
