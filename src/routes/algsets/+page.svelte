@@ -7,8 +7,8 @@
   import NiceButton from "$lib/components/NiceButton.svelte";
   import Arrow from '~icons/material-symbols/keyboard-arrow-down';
   import { type AlgSetConfig } from "$lib/types";
-  import { casesStr, allAlgsets } from "$lib/helpers";
-  import { algsets, configs } from "$lib/stores";
+  import { casesStr, allAlgsets, setAvgKnowledgeLevel, subsetAvgKnowledgeLevel } from "$lib/helpers";
+  import { algsets, configs, knowledge } from "$lib/stores";
 
   // A derived store here just to force reactivity
   let allSets = $derived(allAlgsets($algsets, $configs));
@@ -112,6 +112,9 @@
             </p>
           </div>
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+          <p class="grow whitespace-nowrap text-left px-2">
+            {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
+          </p>
         </button>
         
         <div class="m-2 flex">
@@ -201,6 +204,9 @@
                   </p>
                 </div>
                 <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+                <p class="grow whitespace-nowrap text-left px-2">
+                  {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
+                </p>
               </button>
 
               {#if !subsetsMinimized[set]?.[subset]}

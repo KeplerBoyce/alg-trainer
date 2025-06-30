@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { casesStr, allAlgsets } from "$lib/helpers";
+  import { casesStr, allAlgsets, setAvgKnowledgeLevel, subsetAvgKnowledgeLevel } from "$lib/helpers";
   import { knowledge, algsets, configs } from "$lib/stores";
   import { type AlgSetConfig } from "$lib/types";
   import { STICKERS_OBJECT_MAP } from "$lib/constants";
@@ -99,26 +99,6 @@
     });
     return map;
   });
-
-  const setAvgKnowledgeLevel = (set: string) => {
-    let subsets = [];
-    // Find the proper subset by name
-    for (let i = 0; i < allSets.length; i++) {
-      if (allSets[i][0] === set) {
-        subsets = Object.values(allSets[i][1]);
-      }
-    }
-    // Find total knowledge level
-    let totalKnowledge = 0;
-    let numAlgs = 0;
-    subsets.forEach(subset => {
-      subset.forEach(alg => {
-        numAlgs += 1;
-        totalKnowledge += $knowledge[set]?.[alg] ?? 0;
-      });
-    });
-    return (totalKnowledge / numAlgs).toFixed(1);
-  }
 </script>
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
@@ -156,8 +136,8 @@
             </p>
           </div>
           <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-          <p class="grow italic whitespace-nowrap text-left">
-            {`${setAvgKnowledgeLevel(set)}% learned`}
+          <p class="text-sm grow whitespace-nowrap text-left px-2">
+            {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
           </p>
         </button>
         <button
@@ -206,6 +186,9 @@
                     </p>
                   </div>
                   <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+                  <p class="text-sm grow whitespace-nowrap text-left px-2">
+                    {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
+                  </p>
                 </button>
                 <button
                   onclick={() => {

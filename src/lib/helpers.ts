@@ -46,6 +46,75 @@ export const allAlgsets = (
     return allSets;
 }
 
+export const setAvgKnowledgeLevel = (
+    set: string,
+    allSets: [
+        string,
+        {
+            [key: string]: string[],
+        },
+        boolean,
+        AlgSetConfig,
+    ][],
+    knowledge: {
+        [key: string]: {
+            [key: string]: number,
+        },
+    },
+) => {
+    let subsets: string[][] = [];
+    // Find the subsets of the proper set by name
+    for (let i = 0; i < allSets.length; i++) {
+        if (allSets[i][0] === set) {
+            subsets = Object.values(allSets[i][1]);
+            break;
+        }
+    }
+    // Find total knowledge level
+    let totalKnowledge = 0;
+    let numAlgs = 0;
+    subsets.forEach(subset => {
+        subset.forEach(alg => {
+            numAlgs += 1;
+            totalKnowledge += knowledge[set]?.[alg] ?? 0;
+        });
+    });
+    return (totalKnowledge / numAlgs).toFixed(1);
+}
+
+export const subsetAvgKnowledgeLevel = (
+    set: string,
+    subset: string,
+    allSets: [
+        string,
+        {
+            [key: string]: string[],
+        },
+        boolean,
+        AlgSetConfig,
+    ][],
+    knowledge: {
+        [key: string]: {
+            [key: string]: number,
+        },
+    },
+) => {
+    let algs: string[] = [];
+    // Find the proper subset by name
+    for (let i = 0; i < allSets.length; i++) {
+        if (allSets[i][0] === set) {
+            algs = allSets[i][1][subset];
+            break;
+        }
+    }
+    // Find total knowledge level
+    let totalKnowledge = 0;
+    algs.forEach(alg => {
+        totalKnowledge += knowledge[set]?.[alg] ?? 0;
+    });
+    return (totalKnowledge / algs.length).toFixed(1);
+}
+
 // For reversing objects such that we get value => key rather than key => value
 // Used for reversing enum => name maps, for example
 export const reverseObject = (obj: Object) => {
