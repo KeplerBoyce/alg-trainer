@@ -199,7 +199,7 @@
                       }
                     };
                   }}
-                  class="h-full flex items-center gap-1 grow hover:bg-gray-100 p-2 rounded-lg"
+                  class="h-full grow hover:bg-gray-100 p-2 rounded-lg"
                 >
                   <div class="hidden lg:flex items-center gap-1 whitespace-nowrap ">
                     <div class="flex items-end gap-1">
@@ -223,10 +223,10 @@
                     <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
                     </div>
                     <div class="flex gap-3 items-center">
-                      <p class="text-sm font-bold p-0.5">
+                      <p class="text-sm font-bold">
                         ({casesStr(algs.length)})
                       </p>
-                    <p class="text-sm grow whitespace-nowrap text-left px-2">
+                    <p class="text-sm grow whitespace-nowrap text-left">
                       {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
                     </p>
                     </div>

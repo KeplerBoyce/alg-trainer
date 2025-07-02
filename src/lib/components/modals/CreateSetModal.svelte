@@ -75,7 +75,7 @@
   });
 </script>
 
-<div class="max-h-[80vh] border border-black bg-white p-8 rounded-xl flex flex-col gap-6 w-32rem max-w-[90vw]">
+<div class="max-h-[90vh] border border-black bg-white p-4 sm:p-8 rounded-xl flex flex-col gap-6 w-32rem max-w-[95vw]">
   <h1 class="font-bold text-2xl text-center mb-2">
     {editing ? "Editing Algset" : "New Algset"}
   </h1>
@@ -136,8 +136,8 @@
     </div>
   </div>
 
-  <div class="flex gap-4 w-full whitespace-nowrap">
-    <div class="w-full">
+  <div class="flex flex-wrap gap-4 w-full whitespace-nowrap">
+    <div class="grow">
       <p class="text-sm font-bold">
         Cube Net Style
       </p>
@@ -146,7 +146,7 @@
         bind:chosen={netStyle}
       />
     </div>
-    <div class="w-full">
+    <div class="grow">
       <p class="text-sm font-bold">
         Randomization
       </p>
@@ -155,7 +155,7 @@
         bind:chosen={randomization}
       />
     </div>
-    <div class="w-full">
+    <div class="grow">
       <p class="text-sm font-bold">
         Sticker Style
       </p>

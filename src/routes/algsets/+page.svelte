@@ -78,16 +78,19 @@
 </script>
 
 <div class="h-full max-w-3xl mx-auto flex flex-col gap-3">
-  <div class="w-min whitespace-nowrap mx-auto text-sm">
+  <div class="max-w-full whitespace-nowrap mx-auto text-sm">
     <p class="mb-1 font-bold">
       Legend for case knowledge levels
     </p>
-    <div class="flex gap-2">
-      <p class="p-2 bg-red-100 border border-black rounded-lg">
+    <div class="flex gap-1 sm:gap-2 flex-wrap">
+      <p class="hidden sm:block p-2 bg-red-100 border border-black rounded-lg">
         Never seen
       </p>
+      <p class="block sm:hidden p-2 bg-red-100 border border-black rounded-lg">
+        0%
+      </p>
       <p class="p-2 bg-orange-100 border border-black rounded-lg">
-        0-19%
+        1-19%
       </p>
       <p class="p-2 bg-amber-100 border border-black rounded-lg">
         20-49%
@@ -95,13 +98,16 @@
       <p class="p-2 bg-emerald-100 border border-black rounded-lg">
         50-99%
       </p>
-      <p class="p-2 bg-sky-100 border border-black rounded-lg">
+      <p class="hidden sm:block p-2 bg-sky-100 border border-black rounded-lg">
         Mastered
+      </p>
+      <p class="block sm:hidden p-2 bg-sky-100 border border-black rounded-lg">
+        100%
       </p>
     </div>
   </div>
 
-  <div class="flex flex-col items-center divide-y divide-black rounded-lg border border-black h-full overflow-y-scroll">
+  <div class="flex flex-col items-center divide-y divide-black rounded-lg border border-black h-full overflow-y-scroll whitespace-nowrap">
     {#each allSets as [set, subsets, defaultSet, config]}
       <div class="w-full">
         <div class="w-full flex">
@@ -119,29 +125,53 @@
                 };
               }
             }}
-            class="flex items-center gap-1 w-full hover:bg-gray-100 rounded-lg p-2"
+            class="w-full hover:bg-gray-100 rounded-lg p-2"
           >
-            <div class="flex items-end gap-1">
-              <p class="text-2xl font-bold">
-                {set}
-              </p>
-              <p class="font-bold p-0.5">
-                ({casesStr((() => {
-                  let count = 0;
-                  Object.values(subsets).forEach(subset => {
-                    count += subset.length;
-                  });
-                  return count;
-                })())})
+            <div class="hidden md:flex items-center gap-1 whitespace-nowrap ">
+              <div class="flex items-end gap-1">
+                <p class="text-2xl font-bold">
+                  {set}
+                </p>
+                <p class="font-bold p-0.5">
+                  ({casesStr((() => {
+                    let count = 0;
+                    Object.values(subsets).forEach(subset => {
+                      count += subset.length;
+                    });
+                    return count;
+                  })())})
+                </p>
+              </div>
+              <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+              <p class="grow whitespace-nowrap text-left px-2">
+                {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
               </p>
             </div>
-            <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-            <p class="grow whitespace-nowrap text-left px-2">
-              {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
-            </p>
+            <div class="flex flex-col md:hidden">
+              <div class="flex gap-1 items-center">
+                <p class="text-xl font-bold">
+                  {set}
+                </p>
+                <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+              </div>
+              <div class="flex gap-3 items-center">
+                <p class="text-sm font-bold p-0.5">
+                  ({casesStr((() => {
+                    let count = 0;
+                    Object.values(subsets).forEach(subset => {
+                      count += subset.length;
+                    });
+                    return count;
+                  })())})
+                </p>
+                <p class="text-sm grow whitespace-nowrap text-left">
+                  {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
+                </p>
+              </div>
+            </div>
           </button>
           
-          <div class="m-2 flex">
+          <div class="m-2 flex h-min">
             <NiceButton
               handleClick={() => {
                 let newName = set;
@@ -159,7 +189,7 @@
                 // Copy config options
                 $configs[newName] = config;
               }}
-              className="px-2 text-sm font-bold text-white mr-1"
+              className="p-2 text-sm font-bold text-white mr-1"
               color="bg-orange-400"
               hoverColor="hover:bg-orange-500"
               activeColor="active:bg-orange-600"
@@ -170,7 +200,7 @@
               handleClick={() => {
                 editAlgset(set);
               }}
-              className="px-2 text-sm font-bold text-white mr-1"
+              className="p-2 text-sm font-bold text-white mr-1"
               color="bg-sky-400"
               hoverColor="hover:bg-sky-500"
               activeColor="active:bg-sky-600"
@@ -182,7 +212,7 @@
               handleClick={() => {
                 deleteAlgset(set);
               }}
-              className="px-2 text-sm font-bold text-white"
+              className="p-2 text-sm font-bold text-white"
               color="bg-red-500"
               hoverColor="hover:bg-red-600"
               activeColor="active:bg-red-700"
@@ -228,7 +258,7 @@
                     </p>
                   </div>
                   <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
-                  <p class="grow whitespace-nowrap text-left px-2">
+                  <p class="grow whitespace-nowrap text-left text-sm md:text-base px-2">
                     {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
                   </p>
                 </button>
