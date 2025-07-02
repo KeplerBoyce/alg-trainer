@@ -89,7 +89,7 @@ export const subsetAvgKnowledgeLevel = (
         string,
         {
             [key: string]: string[],
-        },
+      },
         boolean,
         AlgSetConfig,
     ][],

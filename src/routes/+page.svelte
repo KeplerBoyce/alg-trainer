@@ -188,7 +188,7 @@
             onclick={() => {
               showSolution = true;
             }}
-            class="transition bg-gray-200 hover:bg-sky-200 active:bg-sky-300 rounded-lg px-4 py-2 w-min whitespace-nowrap"
+            class="transition bg-gray-200 hover:bg-sky-200 active:bg-sky-300 rounded-lg px-4 py-2 w-min whitespace-nowrap border border-black"
           >
             Reveal solution (Spacebar)
           </button>
