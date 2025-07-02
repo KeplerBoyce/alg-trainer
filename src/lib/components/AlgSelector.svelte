@@ -99,8 +99,6 @@
     });
     return map;
   });
-
-  $inspect(selected["OLL"]);
 </script>
 
 <div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">

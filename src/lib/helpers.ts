@@ -270,6 +270,7 @@ const simplifySolution = (solution: string[], index: number) => {
 
 // Adds or adjusts the y rotation at the start of an alg based on the random AUF
 export const adjustYRotation = (alg: string, auf: string) => {
+    console.log(alg, auf)
     const currRotation = (() => {
         if (alg[0] !== 'y') {
             return 0;
@@ -451,6 +452,7 @@ export const randomAlgScramble = (alg: string, numRandom: number, randomization:
             scramble.push(auf1);
             scramble.push(epll);
             scramble.push(auf2);
+            console.log(auf1, epll, auf2, auf3)
             break;
         case "PLL":
             const pll = PLL_ALGS[Math.floor(Math.random() * PLL_ALGS.length)];

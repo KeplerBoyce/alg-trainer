@@ -67,6 +67,13 @@
     return randomAlgScramble(alg, 2, config?.randomization ?? "AUF");
   });
 
+  // Whenever selected alg changes, rehide solution
+  $effect(() => {
+    // To run this upon change to "alg" variable
+    const _ = alg;
+    showSolution = false;
+  });
+
   const handleKeydown = (event: KeyboardEvent) => {
     // Prevent repetition when user is holding down keys
     if (event.repeat) {
@@ -171,7 +178,7 @@
     <div class="w-full grow flex flex-col justify-center items-center gap-6 p-2">
       <div class="h-full flex items-end">
         {#if selectedArr.length}
-          <p>
+          <p class="text-center">
             {scramble}
           </p>
         {/if}
@@ -193,7 +200,7 @@
             Reveal solution (Spacebar)
           </button>
         {:else}
-          <p>
+          <p class="text-center">
             {adjustYRotation(alg, auf)}
           </p>
         {/if}
