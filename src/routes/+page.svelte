@@ -7,6 +7,9 @@
   import { type AlgSetConfig } from "$lib/types";
   import { STICKERS_OBJECT_MAP } from "$lib/constants";
 
+  // For mobile UI, true = show alg selector, false = show trainer
+  let mobileShowSelector = $state(false);
+
   let showSolution = $state(false);
   // Algset key maps to object where subset key maps to set of selected algs
   let selected: {
@@ -127,10 +130,20 @@
 </script>
 
 <div class="w-full h-full flex justify-center gap-4">
-  <div class="w-min flex flex-col justify-center items-center divide-y divide-black rounded-lg border border-black">
-    <p class="text-lg font-bold p-2">
-      {selectedArr.length} cases selected
-    </p>
+  <div class={`w-full sm:w-min flex flex-col justify-center items-center divide-y divide-black rounded-lg border border-black ${mobileShowSelector ? "hidden" : "flex"}`}>
+    <div class="p-1 flex gap-2 w-full">
+      <p class="p-1 grow text-lg font-bold lg:text-center">
+        {selectedArr.length} cases selected
+      </p>
+      <button
+        onclick={() => {
+          mobileShowSelector = true;
+        }}
+        class="lg:hidden transition bg-gray-200 hover:bg-gray-300 active:bg-gray-400 rounded-lg border border-black px-2"
+      >
+        Select Algs
+      </button>
+    </div>
     <div class="flex flex-col w-full p-2">
       <div class="flex gap-2">
         <p class="font-bold">
@@ -205,52 +218,87 @@
           </p>
         {/if}
       </div>
-</div>
+    </div>
 
-    <div class="w-full flex gap-2 p-2">
+    <div class="w-full flex justify-center flex-wrap sm:flex-nowrap gap-2 p-2">
       <NiceButton
-        onclick={() => updateAndNext(1)}
+        handleClick={() => updateAndNext(1)}
         color="bg-gray-200"
         hoverColor="hover:bg-red-200"
         activeColor="active:bg-red-300"
         disabled={selectedArr.length === 0}
         className="p-2"
       >
-        Didn't know (1)
+        <p class="hidden sm:block">
+          Didn't know (1)
+        </p>
+        <p class="block sm:hidden">
+          Didn't know
+        </p>
       </NiceButton>
       <NiceButton
-        onclick={() => updateAndNext(2)}
+        handleClick={() => updateAndNext(2)}
         color="bg-gray-200"
         hoverColor="hover:bg-amber-200"
         activeColor="active:bg-amber-300"
         disabled={selectedArr.length === 0}
         className="p-2"
       >
-        Hard (2)
+        <p class="hidden sm:block">
+          Hard (2)
+        </p>
+        <p class="block sm:hidden">
+          Hard
+        </p>
       </NiceButton>
       <NiceButton
-        onclick={() => updateAndNext(3)}
+        handleClick={() => updateAndNext(3)}
         color="bg-gray-200"
         hoverColor="hover:bg-emerald-200"
         activeColor="active:bg-emerald-300"
         disabled={selectedArr.length === 0}
         className="p-2"
       >
-        Good (3)
+        <p class="hidden sm:block">
+          Good (3)
+        </p>
+        <p class="block sm:hidden">
+          Good
+        </p>
       </NiceButton>
       <NiceButton
-        onclick={() => updateAndNext(4)}
+        handleClick={() => updateAndNext(4)}
         color="bg-gray-200"
         hoverColor="hover:bg-indigo-200"
         activeColor="active:bg-indigo-300"
         disabled={selectedArr.length === 0}
         className="p-2"
       >
-        Easy (4)
+        <p class="hidden sm:block">
+          Easy (4)
+        </p>
+        <p class="block sm:hidden">
+          Easy
+        </p>
       </NiceButton>
     </div>
   </div>
-  <AlgSelector {selected} setSelected={(x) => {selected = x}} />
+  <div class={`${mobileShowSelector ? "w-full flex flex-col gap-1" : "hidden"} lg:flex lg:flex-col`}>
+    <div class="p-1 flex gap-2 w-full border border-black rounded-lg lg:hidden">
+      <p class="p-1 grow text-lg font-bold sm:text-center">
+        {selectedArr.length} cases selected
+      </p>
+      <button
+        onclick={() => {
+          mobileShowSelector = false;
+        }}
+        class="transition bg-gray-200 hover:bg-gray-300 active:bg-gray-400 rounded-lg border border-black px-2"
+      >
+        Done
+      </button>
+    </div>
+    <AlgSelector {selected} setSelected={(x) => {selected = x}} />
+  </div>
 </div>
 
 <svelte:window on:keydown={handleKeydown} />

@@ -2,7 +2,7 @@
   import NiceLink from "$lib/components/NiceLink.svelte";
 </script>
 
-<div class="prose">
+<div class="prose px-2 sm:px-0">
   <h1>
     About This Website
   </h1>

@@ -101,10 +101,10 @@
   });
 </script>
 
-<div class="flex flex-col w-1/3 min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
+<div class="grow w-full flex flex-col lg:w-1/3 lg:min-w-min max-w-[38rem] divide-y divide-black overflow-y-scroll border border-black rounded-lg">
   {#each allSets as [set, subsets, defaultSet, config]}
     <div>
-      <div class="flex items-center">
+      <div class="flex items-start lg:items-center">
         <button
           onclick={() => {
             setsMinimized = {
@@ -112,26 +112,50 @@
               [set]: !setsMinimized[set],
             };
           }}
-          class="grow flex items-center gap-1 whitespace-nowrap hover:bg-gray-100 p-2 rounded-lg"
+          class="grow hover:bg-gray-100 p-2 rounded-lg"
         >
-          <div class="flex items-end gap-1">
-            <p class="text-lg font-bold text-left">
-              {set}
-            </p>
-            <p class="text-sm font-bold p-1">
-              ({casesStr((() => {
-                let count = 0;
-                Object.values(subsets).forEach(subset => {
-                  count += subset.length;
-                });
-                return count;
-              })())})
+          <div class="hidden lg:flex items-center gap-1 whitespace-nowrap ">
+            <div class="flex items-end gap-1">
+              <p class="text-lg font-bold text-left">
+                {set}
+              </p>
+              <p class="text-sm font-bold p-1">
+                ({casesStr((() => {
+                  let count = 0;
+                  Object.values(subsets).forEach(subset => {
+                    count += subset.length;
+                  });
+                  return count;
+                })())})
+              </p>
+            </div>
+            <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+            <p class="text-sm grow whitespace-nowrap text-left px-2">
+              {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
             </p>
           </div>
-          <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
-          <p class="text-sm grow whitespace-nowrap text-left px-2">
-            {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
-          </p>
+          <div class="flex flex-col lg:hidden">
+            <div class="flex gap-1 items-center">
+              <p class="text-lg font-bold text-left">
+                {set}
+              </p>
+              <Arrow class={`transition ${setsMinimized[set] ? "" : "rotate-180"}`} />
+            </div>
+            <div class="flex gap-3 items-center">
+              <p class="text-sm font-bold">
+                ({casesStr((() => {
+                  let count = 0;
+                  Object.values(subsets).forEach(subset => {
+                    count += subset.length;
+                  });
+                  return count;
+                })())})
+              </p>
+              <p class="text-sm grow whitespace-nowrap text-left">
+                {`${setAvgKnowledgeLevel(set, allSets, $knowledge)}% learned`}
+              </p>
+            </div>
+          </div>
         </button>
         <button
           onclick={() => {
@@ -163,7 +187,7 @@
         <div class="mx-2 mb-2 flex flex-col divide-y divide-black rounded-lg border border-black">
           {#each Object.entries(subsets) as [subset, algs]}
             <div>
-              <div class="flex items-center">
+              <div class="flex items-start lg:items-center">
                 <button
                   onclick={() => {
                     // Invert minimized value
@@ -177,18 +201,36 @@
                   }}
                   class="h-full flex items-center gap-1 grow hover:bg-gray-100 p-2 rounded-lg"
                 >
-                  <div class="flex items-end gap-1">
-                    <p class="font-bold text-left">
-                      {subset}
-                    </p>
-                    <p class="text-sm font-bold p-0.5">
-                      ({casesStr(algs.length)})
+                  <div class="hidden lg:flex items-center gap-1 whitespace-nowrap ">
+                    <div class="flex items-end gap-1">
+                      <p class="font-bold text-left">
+                        {subset}
+                      </p>
+                      <p class="text-sm font-bold p-0.5">
+                        ({casesStr(algs.length)})
+                      </p>
+                    </div>
+                    <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+                    <p class="text-sm grow whitespace-nowrap text-left px-2">
+                      {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
                     </p>
                   </div>
-                  <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
-                  <p class="text-sm grow whitespace-nowrap text-left px-2">
-                    {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
-                  </p>
+                  <div class="flex flex-col lg:hidden">
+                    <div class="flex gap-1 items-center">
+                      <p class="font-bold text-left">
+                        {subset}
+                      </p>
+                    <Arrow class={`transition ${subsetsMinimized[set]?.[subset] ? "" : "rotate-180"}`} />
+                    </div>
+                    <div class="flex gap-3 items-center">
+                      <p class="text-sm font-bold p-0.5">
+                        ({casesStr(algs.length)})
+                      </p>
+                    <p class="text-sm grow whitespace-nowrap text-left px-2">
+                      {`${subsetAvgKnowledgeLevel(set, subset, allSets, $knowledge)}% learned`}
+                    </p>
+                    </div>
+                  </div>
                 </button>
                 <button
                   onclick={() => {

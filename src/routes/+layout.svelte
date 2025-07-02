@@ -5,6 +5,6 @@
 </script>
 
 <Header />
-<div class="w-screen h-screen p-4 pt-24 pb-24 overflow-y-scroll">
+<div class="w-screen h-screen p-1 pt-[3.25rem] sm:p-4 sm:pt-24 sm:pb-24 overflow-y-scroll">
   {@render children()}
 </div>
